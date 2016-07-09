@@ -5,7 +5,7 @@
 
 ![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/stepper.png)
 
-A super simple implementation of the classic UIStepper. Check out props below for customization.
+A super simple react-native implementation of the classic UIStepper from iOS. Check out the props below for customization.
 
 ### Demo
 ---

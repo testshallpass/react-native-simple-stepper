@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-stepper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A super simple implementation of the classic UIStepper.",
   "main": "SimpleStepper.js",
   "directories": {

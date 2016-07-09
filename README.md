@@ -13,10 +13,10 @@ A super simple implementation of the classic UIStepper. Check out props below fo
 
 | Name | Type | Description | Default
 | ------------ | ------------- | ------------ |------------ |------------ |
-| ```initialValue``` | Number  | start value | 0
+| ```initialValue``` | Number  | initial value | 0
 | ```minimumValue``` | Number  | minimum value | 0
 | ```maximumValue``` | Number  | maximum value | 10
-| ```stepValue``` | Number  | step | null
+| ```stepValue``` | Number  | step value (i.e. increment by 10) | null
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
 | ```underlayColor``` | String  | tap color | lightgray

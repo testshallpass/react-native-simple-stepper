@@ -2,7 +2,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableHighlight, Image, View} from 'react-native';
 
-var SimpleStepperCo = React.createClass({
+var SimpleStepper = React.createClass({
   getDefaultProps: function() {
       return {
         initialValue: 0,
@@ -109,4 +109,4 @@ var styles = StyleSheet.create({
     width: 0.5,
   },
 })
-module.exports = SimpleStepperCo
+module.exports = SimpleStepper

@@ -2,6 +2,15 @@
 
 A super simple implementation of the classic UIStepper. Check out props below for customization.
 
+### Demo
+---
+![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/demo.gif)
+
+### Screenshot
+---
+
+![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/stepper.png)
+
 ### Props
 ---
 

@@ -1,0 +1,30 @@
+{
+  "name": "react-native-simple-stepper",
+  "version": "1.0.0",
+  "description": "A super simple implementation of the classic UIStepper.",
+  "main": "SimpleStepper.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devBrian/react-native-simple-stepper.git"
+  },
+  "keywords": [
+    "stepper",
+    "react-component",
+    "ios",
+    "android",
+    "react-native",
+    "UIStepper"
+  ],
+  "author": "Brian Sinnicke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devBrian/react-native-simple-stepper/issues"
+  },
+  "homepage": "https://github.com/devBrian/react-native-simple-stepper#readme"
+}

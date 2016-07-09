@@ -1,31 +1,42 @@
 
-import React from 'react';
+import React, {Component, PropTypes} from 'react'
 import {StyleSheet, Text, TouchableHighlight, Image, View} from 'react-native';
 
-var SimpleStepper = React.createClass({
-  getDefaultProps: function() {
-      return {
-        initialValue: 0,
-        minimumValue: 0,
-        maximumValue: 10,
-        stepValue: 1,
-        backgroundColor: 'transparent',
-        tintColor: 'blue',
-        underlayColor: 'lightgray',
-      }
-  },
-  getInitialState: function() {
-    return {
-      value: this.props.initialValue,
+export default class SimpleStepper extends Component {
+  static propTypes = {
+    initialValue: React.PropTypes.number,
+    minimumValue: React.PropTypes.number,
+    maximumValue: React.PropTypes.number,
+    stepValue: React.PropTypes.number,
+    backgroundColor: React.PropTypes.string,
+    tintColor: React.PropTypes.string,
+    underlayColor: React.PropTypes.string
+  }
+  static defaultProps = {
+    initialValue: 0,
+    minimumValue: 0,
+    maximumValue: 10,
+    stepValue: 1,
+    backgroundColor: 'transparent',
+    tintColor: 'blue',
+    underlayColor: 'lightgray'
+  }
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: props.initialValue,
       decrementOpacity: 1,
       incrementOpacity: 1,
       hasReachedMin: false,
       hasReachedMax: false
     }
-  },
-  componentWillMount: function() {
+    this.decrementAction = this.decrementAction.bind(this)
+    this.incrementAction = this.incrementAction.bind(this)
+    this.validateValue = this.validateValue.bind(this)
+  }
+  componentWillMount() {
     this.validateValue(this.props.initialValue)
-  },
+  }
   render() {
     return (
       <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
@@ -38,20 +49,20 @@ var SimpleStepper = React.createClass({
         </TouchableHighlight>
       </View>
     )
-  },
-  decrementAction: function() {
+  }
+  decrementAction() {
     var value = this.state.value
     var stepValue = this.props.stepValue
     value -= stepValue
     this.validateValue(value)
-  },
-  incrementAction: function() {
+  }
+  incrementAction() {
     var value = this.state.value
     var stepValue = this.props.stepValue
     value += stepValue
     this.validateValue(value)
-  },
-  validateValue: function(value) {
+  }
+  validateValue(value) {
     var maximumValue = this.props.maximumValue
     var minimumValue = this.props.minimumValue
     if (value >= maximumValue) {
@@ -85,7 +96,7 @@ var SimpleStepper = React.createClass({
       this.props.valueChanged(value)
     }
   }
-})
+}
 
 var styles = StyleSheet.create({
   container: {
@@ -109,4 +120,3 @@ var styles = StyleSheet.create({
     width: 0.5,
   },
 })
-module.exports = SimpleStepper

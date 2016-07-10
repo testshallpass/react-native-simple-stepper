@@ -2,6 +2,7 @@
 
 [![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper "View this project on npm")
 [![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper "View this project on npm")
+[![License](https://img.shields.io/dub/l/vibe-d.svg)](https://raw.github.com/devBrian/react-native-simple-stepper/master/LICENSE)
 
 ![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/stepper.png)
 
@@ -13,7 +14,6 @@ A super simple react-native implementation of the classic UIStepper from iOS. Ch
 
 ### Props
 ---
-
 | Name | Type | Description | Default
 | ------------ | ------------- | ------------ |------------ |------------ |
 | ```initialValue``` | Number  | initial value | 0
@@ -23,8 +23,3 @@ A super simple react-native implementation of the classic UIStepper from iOS. Ch
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
 | ```underlayColor``` | String  | tap color | lightgray
-
-### License
----
-
-[MIT](https://raw.github.com/devBrian/react-native-simple-stepper/master/LICENSE)

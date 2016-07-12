@@ -1,4 +1,4 @@
-### react-native-simple-stepper
+## react-native-simple-stepper
 
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
@@ -8,6 +8,12 @@
 ![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/stepper.png)
 
 A super simple react-native implementation of the classic UIStepper from iOS. Check out the props below for customization.
+
+### Installation
+---
+```bash
+npm i react-native-simple-stepper --save
+```
 
 ### Demo
 ---

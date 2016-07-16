@@ -11,7 +11,13 @@ export default class SimpleStepper extends Component {
     backgroundColor: React.PropTypes.string,
     tintColor: React.PropTypes.string,
     underlayColor: React.PropTypes.string,
-    valueChanged: React.PropTypes.func
+    valueChanged: React.PropTypes.func,
+    incrementImageSrc: React.PropTypes.number,
+    incrementImageUri: React.PropTypes.string,
+    decrementImageSrc: React.PropTypes.number,
+    decrementImageUri: React.PropTypes.string,
+    tintOnIncrementImage: React.PropTypes.bool,
+    tintOnDecrementImage: React.PropTypes.bool
   }
   static defaultProps = {
     initialValue: 0,
@@ -21,7 +27,13 @@ export default class SimpleStepper extends Component {
     backgroundColor: 'transparent',
     tintColor: 'blue',
     underlayColor: 'lightgray',
-    valueChanged: null
+    valueChanged: null,
+    decrementImageSrc: null,
+    decrementImageUri: '',
+    incrementImageSrc: null,
+    incrementImageUri: '',
+    tintOnIncrementImage: true,
+    tintOnDecrementImage: true,
   }
   constructor(props) {
     super(props)
@@ -40,14 +52,43 @@ export default class SimpleStepper extends Component {
     this.validateValue(this.props.initialValue)
   }
   render() {
+    var tintIncrementStyle
+    var tintDecrementStyle
+    if (this.props.tintOnIncrementImage) {
+      tintIncrementStyle = {tintColor: this.props.tintColor}
+    }
+    if (this.props.tintOnDecrementImage) {
+      tintDecrementStyle = {tintColor: this.props.tintColor}
+    }
+    var imageStyle
+    var incrementImageSrc = require('./assets/increment.png')
+    var decrementImageSrc = require('./assets/decrement.png')
+    if (this.props.incrementImageUri || this.props.incrementImageSrc) {
+      imageStyle = {width: 24, height: 24, paddingTop: 1}
+      if (this.props.incrementImageUri.length > 0) {
+        incrementImageSrc = {uri: this.props.incrementImageUri}
+      }
+      if (this.props.incrementImageSrc > 0) {
+        incrementImageSrc = this.props.incrementImageSrc
+      }
+    }
+    if (this.props.decrementImageUri || this.props.decrementImageSrc) {
+      imageStyle = {width: 24, height: 24, paddingTop: 1}
+      if (this.props.decrementImageUri.length > 0) {
+        incrementImageSrc = {uri: this.props.incrementImageUri}
+      }
+      if (this.props.decrementImageSrc > 0) {
+        incrementImageSrc = this.props.incrementImageSrc
+      }
+    }
     return (
       <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
         <TouchableHighlight style={[styles.stepButton, {opacity: this.state.decrementOpacity}]} underlayColor={this.props.underlayColor} onPress={this.decrementAction} disabled={this.state.hasReachedMin}>
-          <Image style={{tintColor: this.props.tintColor}} source={require('./assets/decrement.png')} />
+          <Image style={[tintDecrementStyle, imageStyle]} source={decrementImageSrc} resizeMode="contain" />
         </TouchableHighlight>
         <View style={[styles.divider, {backgroundColor: this.props.tintColor}]} />
         <TouchableHighlight style={[styles.stepButton, {opacity: this.state.incrementOpacity}]} underlayColor={this.props.underlayColor} onPress={this.incrementAction} disabled={this.state.hasReachedMax}>
-          <Image style={{tintColor: this.props.tintColor}} source={require('./assets/increment.png')} />
+          <Image style={[tintIncrementStyle, imageStyle]} source={incrementImageSrc} resizeMode="contain" />
         </TouchableHighlight>
       </View>
     )
@@ -115,7 +156,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     width: 46,
     height: 28,
-    paddingTop: 2,
+    paddingTop: 2
   },
   divider: {
     height: 28,

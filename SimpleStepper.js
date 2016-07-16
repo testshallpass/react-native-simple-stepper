@@ -10,7 +10,8 @@ export default class SimpleStepper extends Component {
     stepValue: React.PropTypes.number,
     backgroundColor: React.PropTypes.string,
     tintColor: React.PropTypes.string,
-    underlayColor: React.PropTypes.string
+    underlayColor: React.PropTypes.string,
+    valueChanged: React.PropTypes.func
   }
   static defaultProps = {
     initialValue: 0,
@@ -19,7 +20,8 @@ export default class SimpleStepper extends Component {
     stepValue: 1,
     backgroundColor: 'transparent',
     tintColor: 'blue',
-    underlayColor: 'lightgray'
+    underlayColor: 'lightgray',
+    valueChanged: null
   }
   constructor(props) {
     super(props)

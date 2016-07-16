@@ -30,3 +30,4 @@ npm i react-native-simple-stepper --save
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
 | ```underlayColor``` | String  | tap color | lightgray
+| ```valueChanged``` | Function  | Fires when value changes and it will be passed down | null

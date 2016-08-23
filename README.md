@@ -10,17 +10,31 @@
 A super simple react-native implementation of the classic UIStepper from iOS. Check out the props below for customization.
 
 ### Installation
----
-```bash
+```
 npm i react-native-simple-stepper --save
+
+```
+### Usage
+```javascript
+import SimpleStepper from 'react-native-simple-stepper'
+//...
+render() {
+  return (
+    <SimpleStepper valueChanged={(value) => this.valueChanged(value)} />
+  )
+}
+valueChanged(value) {
+  // Update UI ...
+}
+//...
 ```
 
 ### Demo
----
+
 ![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/demo.gif)
 
 ### Props
----
+
 | Name | Type | Description | Default
 | ------------ | ------------- | ------------ |------------ |------------ |
 | ```initialValue``` | Number  | initial value | 0

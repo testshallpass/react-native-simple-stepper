@@ -45,9 +45,7 @@ valueChanged(value) {
 | ```tintColor``` | String  | color for border, divider and images | blue
 | ```underlayColor``` | String  | tap color | lightgray
 | ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
-| ```incrementImageSrc``` | Number  | local image | null
-| ```incrementImageUri``` | String  | network image | ''
-| ```decrementImageSrc``` | Number  | local image | null
-| ```decrementImageUri``` | String  | network image | ''
+| ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')
+| ```decrementImage``` | String or Number  | network or local image | require('./assets/decrement.png')
 | ```tintOnIncrementImage``` | Boolean  | whether or not you want tintColor applied to increment image | true
 | ```tintOnDecrementImage``` | Boolean  | whether or not you want tintColor applied to decrement image | true

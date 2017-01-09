@@ -10,6 +10,7 @@ export default class SimpleStepper extends Component {
     backgroundColor: PropTypes.string,
     tintColor: PropTypes.string,
     underlayColor: PropTypes.string,
+    padding: PropTypes.number,
     valueChanged: PropTypes.func,
     tintOnIncrementImage: PropTypes.bool,
     tintOnDecrementImage: PropTypes.bool,
@@ -35,6 +36,7 @@ export default class SimpleStepper extends Component {
     incrementImage: require('./assets/increment.png'),
     tintOnIncrementImage: true,
     tintOnDecrementImage: true,
+    padding: 4
   }
   constructor(props) {
     super(props)
@@ -109,12 +111,11 @@ export default class SimpleStepper extends Component {
     }
     return (
       <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
-        <TouchableHighlight style={[styles.stepButton, {opacity: this.state.decrementOpacity}]} underlayColor={this.props.underlayColor} onPress={this.decrementAction} disabled={this.state.hasReachedMin}>
-          <Image style={[tintDecrementStyle, styles.imageStyle]} source={this.props.decrementImage} resizeMode="contain" />
+        <TouchableHighlight style={[styles.leftButton, {opacity: this.state.decrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.decrementAction} disabled={this.state.hasReachedMin}>
+          <Image style={tintDecrementStyle} source={this.props.decrementImage} resizeMode="contain" />
         </TouchableHighlight>
-        <View style={[styles.divider, {backgroundColor: this.props.tintColor}]} />
-        <TouchableHighlight style={[styles.stepButton, {opacity: this.state.incrementOpacity}]} underlayColor={this.props.underlayColor} onPress={this.incrementAction} disabled={this.state.hasReachedMax}>
-          <Image style={[tintIncrementStyle, styles.imageStyle]} source={this.props.incrementImage} resizeMode="contain" />
+        <TouchableHighlight style={[styles.rightButton, {opacity: this.state.incrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.incrementAction} disabled={this.state.hasReachedMax}>
+          <Image style={tintIncrementStyle} source={this.props.incrementImage} resizeMode="contain" />
         </TouchableHighlight>
       </View>
     )
@@ -123,28 +124,23 @@ export default class SimpleStepper extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    width: 94,
-    height: 29,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
     borderWidth: 1,
     borderRadius: 3,
     overflow: 'hidden'
   },
-  stepButton: {
+  leftButton: {
     alignItems: 'center',
-    width: 46,
-    height: 28,
-    paddingTop: 2
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0
   },
-  divider: {
-    height: 28,
-    width: 0.5,
-  },
-  image: {
-    width: 24,
-    height: 24,
-    paddingTop: 1
+  rightButton: {
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderRightWidth: 0
   }
 })

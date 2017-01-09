@@ -44,6 +44,7 @@ valueChanged(value) {
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
 | ```underlayColor``` | String  | tap color | lightgray
+| ```padding``` | Number | stepper padding | 4
 | ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
 | ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')
 | ```decrementImage``` | String or Number  | network or local image | require('./assets/decrement.png')

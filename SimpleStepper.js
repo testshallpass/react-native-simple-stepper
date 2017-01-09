@@ -131,10 +131,7 @@ var styles = StyleSheet.create({
     overflow: 'hidden'
   },
   leftButton: {
-    alignItems: 'center',
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    borderLeftWidth: 0
+    alignItems: 'center'
   },
   rightButton: {
     alignItems: 'center',

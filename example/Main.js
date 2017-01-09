@@ -1,5 +1,4 @@
-
-import SimpleStepper from './SimpleStepper'
+import SimpleStepper from 'react-native-simple-stepper'
 import React, { Component } from 'react';
 import {
   AppRegistry,

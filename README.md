@@ -10,10 +10,8 @@
 A super simple react-native implementation of the classic UIStepper from iOS. Check out the props below for customization.
 
 ### Installation
-```
-npm i react-native-simple-stepper --save
+```npm i react-native-simple-stepper --save```
 
-```
 ### Usage
 ```javascript
 import SimpleStepper from 'react-native-simple-stepper'
@@ -24,7 +22,7 @@ render() {
   )
 }
 valueChanged(value) {
-  // Update UI ...
+  // ...
 }
 //...
 ```
@@ -50,3 +48,5 @@ valueChanged(value) {
 | ```decrementImage``` | String or Number  | network or local image | require('./assets/decrement.png')
 | ```tintOnIncrementImage``` | Boolean  | whether or not you want tintColor applied to increment image | true
 | ```tintOnDecrementImage``` | Boolean  | whether or not you want tintColor applied to decrement image | true
+| ```imageHeight``` | Number  | network image height | 36
+| ```imageWidth``` | Number  | network image width | 36

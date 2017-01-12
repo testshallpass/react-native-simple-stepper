@@ -14,6 +14,8 @@ export default class SimpleStepper extends Component {
     valueChanged: PropTypes.func,
     tintOnIncrementImage: PropTypes.bool,
     tintOnDecrementImage: PropTypes.bool,
+    imageHeight: PropTypes.number,
+    imageWidth: PropTypes.number,
     incrementImage: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -36,7 +38,9 @@ export default class SimpleStepper extends Component {
     incrementImage: require('./assets/increment.png'),
     tintOnIncrementImage: true,
     tintOnDecrementImage: true,
-    padding: 4
+    padding: 4,
+    imageHeight: 36,
+    imageWidth: 36
   }
   constructor(props) {
     super(props)
@@ -100,22 +104,38 @@ export default class SimpleStepper extends Component {
       this.props.valueChanged(value)
     }
   }
+  tintStyle(status) {
+    if (status) {
+      return {tintColor: this.props.tintColor}
+    }
+    return null
+  }
+  imageSrc(src) {
+    if (typeof src == 'string') {
+      return {'uri': src}
+    }
+    return src
+  }
+  imageStyle(src) {
+    if (typeof src == 'string') {
+      return {width: this.props.imageWidth, height: this.props.imageHeight}
+    }
+    return null
+  }
   render() {
-    var tintIncrementStyle
-    var tintDecrementStyle
-    if (this.props.tintOnIncrementImage) {
-      tintIncrementStyle = {tintColor: this.props.tintColor}
-    }
-    if (this.props.tintOnDecrementImage) {
-      tintDecrementStyle = {tintColor: this.props.tintColor}
-    }
+    var tintIncrementStyle = this.tintStyle(this.props.tintOnIncrementImage)
+    var tintDecrementStyle = this.tintStyle(this.props.tintOnDecrementImage)
+    var decrementImageSrc = this.imageSrc(this.props.decrementImage)
+    var incrementImageSrc = this.imageSrc(this.props.incrementImage)
+    var incrementStyle = this.imageStyle(this.props.incrementImage)
+    var decrementStyle = this.imageStyle(this.props.decrementImage)
     return (
       <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
         <TouchableHighlight style={[styles.leftButton, {opacity: this.state.decrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.decrementAction} disabled={this.state.hasReachedMin}>
-          <Image style={tintDecrementStyle} source={this.props.decrementImage} resizeMode="contain" />
+          <Image style={[decrementStyle, tintDecrementStyle]} source={decrementImageSrc} />
         </TouchableHighlight>
         <TouchableHighlight style={[styles.rightButton, {opacity: this.state.incrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.incrementAction} disabled={this.state.hasReachedMax}>
-          <Image style={tintIncrementStyle} source={this.props.incrementImage} resizeMode="contain" />
+          <Image style={[incrementStyle, tintIncrementStyle]} source={incrementImageSrc}  />
         </TouchableHighlight>
       </View>
     )
@@ -128,7 +148,8 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderRadius: 3,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    alignItems: 'center'
   },
   leftButton: {
     alignItems: 'center'

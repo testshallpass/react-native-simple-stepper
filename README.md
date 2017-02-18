@@ -3,6 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
 [![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![Build Status](https://travis-ci.org/devBrian/react-native-simple-stepper.svg?branch=master)](https://travis-ci.org/devBrian/react-native-simple-stepper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-simple-stepper/master/LICENSE)
 
 ![screenshot](https://raw.github.com/devBrian/react-native-simple-stepper/master/screenshots/stepper.png)

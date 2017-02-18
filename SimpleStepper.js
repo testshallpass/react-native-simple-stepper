@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {StyleSheet, Text, TouchableHighlight, Image, View} from 'react-native'
+import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native'
 
 export default class SimpleStepper extends Component {
   static propTypes = {
@@ -16,6 +16,8 @@ export default class SimpleStepper extends Component {
     tintOnDecrementImage: PropTypes.bool,
     imageHeight: PropTypes.number,
     imageWidth: PropTypes.number,
+    activeOpacity: PropTypes.number,
+    disabledOpacity: PropTypes.number,
     incrementImage: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -32,7 +34,6 @@ export default class SimpleStepper extends Component {
     stepValue: 1,
     backgroundColor: 'transparent',
     tintColor: 'blue',
-    underlayColor: 'lightgray',
     valueChanged: null,
     decrementImage: require('./assets/decrement.png'),
     incrementImage: require('./assets/increment.png'),
@@ -40,7 +41,9 @@ export default class SimpleStepper extends Component {
     tintOnDecrementImage: true,
     padding: 4,
     imageHeight: 36,
-    imageWidth: 36
+    imageWidth: 36,
+    activeOpacity: 0.4,
+    disabledOpacity: 0.5
   }
   constructor(props) {
     super(props)
@@ -79,8 +82,8 @@ export default class SimpleStepper extends Component {
         value: maximumValue,
         hasReachedMax: true,
         hasReachedMin: false,
-        incrementOpacity: 0.5,
-        decrementOpacity: 1
+        decrementOpacity: 1,
+        incrementOpacity: this.props.disabledOpacity
       })
     } else if (value <= minimumValue) {
       value = minimumValue // prevent overflow value
@@ -88,17 +91,23 @@ export default class SimpleStepper extends Component {
         value: minimumValue,
         hasReachedMin: true,
         hasReachedMax: false,
-        decrementOpacity: 0.5,
+        decrementOpacity: this.props.disabledOpacity,
         incrementOpacity: 1
       })
     } else {
-      this.setState({
-        value: value,
-        hasReachedMin: false,
-        hasReachedMax: false,
-        incrementOpacity: 1,
-        decrementOpacity: 1
-      })
+      if (this.state.hasReachedMax || this.state.hasReachedMin) {
+        this.setState({
+          value: value,
+          hasReachedMin: false,
+          hasReachedMax: false,
+          decrementOpacity: 1,
+          incrementOpacity: 1
+        })
+      } else {
+        this.setState({
+          value: value
+        })
+      }
     }
     if (this.props.valueChanged) {
       this.props.valueChanged(value)
@@ -131,12 +140,22 @@ export default class SimpleStepper extends Component {
     var decrementStyle = this.imageStyle(this.props.decrementImage)
     return (
       <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
-        <TouchableHighlight style={[styles.leftButton, {opacity: this.state.decrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.decrementAction} disabled={this.state.hasReachedMin}>
-          <Image style={[decrementStyle, tintDecrementStyle]} source={decrementImageSrc} />
-        </TouchableHighlight>
-        <TouchableHighlight style={[styles.rightButton, {opacity: this.state.incrementOpacity, borderColor: this.props.tintColor, padding: this.props.padding}]} underlayColor={this.props.underlayColor} onPress={this.incrementAction} disabled={this.state.hasReachedMax}>
-          <Image style={[incrementStyle, tintIncrementStyle]} source={incrementImageSrc}  />
-        </TouchableHighlight>
+      <TouchableOpacity
+        ref={(ref) => this.decrementButton = ref}
+        activeOpacity={this.props.activeOpacity}
+        style={[styles.leftButton, {borderColor: this.props.tintColor, padding: this.props.padding}]}
+        onPress={this.decrementAction}
+        disabled={this.state.hasReachedMin}>
+        <Image style={[decrementStyle, tintDecrementStyle, {opacity: this.state.decrementOpacity}]} source={decrementImageSrc} />
+      </TouchableOpacity>
+      <TouchableOpacity
+        ref={(ref) => this.incrementButton = ref}
+        activeOpacity={this.props.activeOpacity}
+        style={[styles.rightButton, {borderColor: this.props.tintColor, padding: this.props.padding}]}
+        onPress={this.incrementAction}
+        disabled={this.state.hasReachedMax}>
+        <Image style={[incrementStyle, tintIncrementStyle, {opacity: this.state.incrementOpacity}]} source={incrementImageSrc}  />
+      </TouchableOpacity>
       </View>
     )
   }

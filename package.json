@@ -7,7 +7,11 @@
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "repository": {
     "type": "git",
@@ -29,5 +33,13 @@
   "bugs": {
     "url": "https://github.com/devBrian/react-native-simple-stepper/issues"
   },
-  "homepage": "https://github.com/devBrian/react-native-simple-stepper#readme"
+  "homepage": "https://github.com/devBrian/react-native-simple-stepper#readme",
+  "devDependencies": {
+    "babel-jest": "^18.0.0",
+    "babel-preset-react-native": "^1.9.1",
+    "jest": "^18.1.0",
+    "react": "^15.4.2",
+    "react-native": "^0.41.2",
+    "react-test-renderer": "^15.4.2"
+  }
 }

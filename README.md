@@ -41,7 +41,6 @@ valueChanged(value) {
 | ```stepValue``` | Number  | step value (i.e. increment by 10) | 1
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
-| ```underlayColor``` | String  | tap color | lightgray
 | ```padding``` | Number | stepper padding | 4
 | ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
 | ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')
@@ -50,3 +49,5 @@ valueChanged(value) {
 | ```tintOnDecrementImage``` | Boolean  | whether or not you want tintColor applied to decrement image | true
 | ```imageHeight``` | Number  | network image height | 36
 | ```imageWidth``` | Number  | network image width | 36
+| ```activeOpacity``` | Number  | touch opacity | 0.4
+| ```disabledOpacity``` | Number  | when step button is disabled | 0.5

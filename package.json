@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devBrian/react-native-simple-stepper.git"
+    "url": "git+https://github.com/testshallpass/react-native-simple-stepper.git"
   },
   "keywords": [
     "react-component",
@@ -31,9 +31,9 @@
   "author": "Brian Sinnicke",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devBrian/react-native-simple-stepper/issues"
+    "url": "https://github.com/testshallpass/react-native-simple-stepper/issues"
   },
-  "homepage": "https://github.com/devBrian/react-native-simple-stepper#readme",
+  "homepage": "https://github.com/testshallpass/react-native-simple-stepper#readme",
   "devDependencies": {
     "babel-jest": "^18.0.0",
     "babel-preset-react-native": "^1.9.1",

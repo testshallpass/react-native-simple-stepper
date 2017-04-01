@@ -1,88 +1,89 @@
 import SimpleStepper from 'react-native-simple-stepper'
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  ScrollView,
-  View
-} from 'react-native';
+import React, { Component, Proptypes } from 'react'
+import { StyleSheet, Text, ListView, View } from 'react-native'
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
 
 export default class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      blue: 0,
-      peru: 0,
-      red: 0,
-      purple: 0
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+      data: []
     }
+  }
+  componentWillMount() {
+    const data = [
+      { tintColor: 'blue', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: ''},
+      { tintColor: 'peru', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
+      { tintColor: '#cc3232', value: 50, minimumValue: -100, maximumValue: 100, initialValue: 50, stepValue: 25, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
+      { tintColor: 'purple', value: 0, minimumValue: 0, maximumValue: 35, initialValue: 0, stepValue: 5, tintOnIncrementImage: false, tintOnDecrementImage: false, incrementImage: 'https://facebook.github.io/react/img/logo_og.png', decrementImage: 'https://facebook.github.io/react/img/logo_og.png' },
+    ]
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(data),
+      data: data
+    })
+  }
+  valueChanged(value: number, rowID: number) {
+    var data = this.state.data
+    data[rowID].value = value.toFixed(2)
+    this.setState({
+      dataSource: ds.cloneWithRows(data),
+      data: data
+    })
+  }
+  renderRow(rowData: object, sectionID: number, rowID: number) {
+    return (
+      <View style={styles.row}>
+        <SimpleStepper
+          tintColor={rowData.tintColor}
+          valueChanged={(value) => this.valueChanged(value, rowID)}
+          tintOnIncrementImage={rowData.tintOnIncrementImage}
+          tintOnDecrementImage={rowData.tintOnDecrementImage}
+          minimumValue={rowData.minimumValue}
+          maximumValue={rowData.maximumValue}
+          initialValue={rowData.initialValue}
+          stepValue={rowData.stepValue} />
+          <View style={styles.column}>
+            <Text style={styles.text}>{'min: '}{rowData.minimumValue}</Text>
+            <Text style={styles.text}>{'max: '}{rowData.maximumValue}</Text>
+            <Text style={styles.text}>{'initial: '}{rowData.initialValue}</Text>
+          </View>
+          <Text style={[styles.text, {color: rowData.tintColor, fontSize: 30, padding: 4, position: 'absolute', right: 8}]}>{rowData.value}</Text>
+      </View>
+    )
   }
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={[styles.text, {fontSize: 22, marginTop: 22}]}>{'Simple Stepper'}</Text>
-        <View style={{flex: 1, alignItems: 'center'}}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <SimpleStepper valueChanged={(value) => this.valueChangedBlue(value)} />
-          <Text style={[styles.text, {fontSize: 32, color: 'blue', padding: 4}]}>{this.state.blue}</Text>
-          <Text style={styles.text}>{' min 0, max 10,\n initialValue is 0\n stepValue is 1'}</Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center', margin: 8}}>
-          <SimpleStepper valueChanged={(value) => this.valueChangedPeru(value)} tintColor={'peru'} maximumValue={15} initialValue={.99} stepValue={.99}/>
-          <Text style={[styles.text, {fontSize: 32, color: 'peru'}]}>{this.state.peru}</Text>
-          <Text style={styles.text}>{'min is 0, max is 15,\n initialValue is .99\n stepValue is .99'} </Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center', margin: 8}}>
-          <SimpleStepper valueChanged={(value) => this.valueChangedRed(value)} tintColor={'#cc3232'} minimumValue={-100} maximumValue={100} initialValue={50} stepValue={25} />
-          <Text style={[styles.text, {fontSize: 32, color: '#cc3232'}]}>{this.state.red}</Text>
-          <Text style={styles.text}>{'min is -100, max is 100,\n initialValue is 50\n stepValue is 25'} </Text>
-        </View>
-        <View style={{flexDirection: 'row', alignItems: 'center', margin: 8}}>
-          <SimpleStepper
-            tintColor={'purple'}
-            valueChanged={(value) => this.valueChangedPurple(value)}
-            tintOnIncrementImage={false}
-            tintOnDecrementImage={false}
-            incrementImage={'https://facebook.github.io/react/img/logo_og.png'}
-            decrementImage={'https://facebook.github.io/react/img/logo_og.png'}
-           />
-           <Text style={[styles.text, {fontSize: 32, color: 'purple'}]}>{this.state.purple}</Text>
-           <Text style={styles.text}>{'min 0, max 10,\n initialValue is 0\n stepValue is 1'}</Text>
-          </View>
-        </View>
-      </ScrollView>
-    );
-  }
-  valueChangedBlue(value) {
-    this.setState({
-      blue: value
-    })
-  }
-  valueChangedPeru(value) {
-    this.setState({
-      peru: ' $' + value.toFixed(2)
-    })
-  }
-  valueChangedRed(value) {
-    this.setState({
-      red: value
-    })
-  }
-  valueChangedPurple(value) {
-    this.setState({
-      purple: value
-    })
+      <ListView
+        contentContainerStyle={styles.container}
+        initialListSize={this.state.data.length}
+        dataSource={this.state.dataSource}
+        renderRow={(rowData, sectionID, rowID) => this.renderRow(rowData, sectionID, rowID)}
+        renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />} />
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5"
+    backgroundColor: 'white',
+    marginTop: 22
+  },
+  row: {
+    flexDirection: 'row',
+    padding: 8,
+    alignItems: 'center'
+  },
+  column: {
+    flexDirection: 'column',
+    paddingLeft: 8
   },
   text: {
-    fontSize: 14,
-    textAlign: 'center',
+    fontSize: 16,
   },
+  separator: {
+    height: 1,
+    backgroundColor: 'lightgray'
+  }
 });

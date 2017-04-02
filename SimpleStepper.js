@@ -119,42 +119,56 @@ export default class SimpleStepper extends Component {
     }
     return null
   }
-  imageSrc(src) {
+  imageIncrementSrc(src) {
+    if (src.length == 0) {
+      return  require('./assets/increment.png')
+    }
     if (typeof src == 'string') {
       return {'uri': src}
     }
     return src
   }
-  imageStyle(src) {
+  imageDecrementSrc(src) {
+    if (src.length == 0) {
+      return  require('./assets/decrement.png')
+    }
     if (typeof src == 'string') {
-      return {width: this.props.imageWidth, height: this.props.imageHeight}
+      return {'uri': src}
+    }
+    return src
+  }
+  imageStyle(src, width, height) {
+    if (typeof src == 'string' && src.length > 0) {
+      return {width: width, height: height}
     }
     return null
   }
   render() {
-    var tintIncrementStyle = this.tintStyle(this.props.tintOnIncrementImage)
-    var tintDecrementStyle = this.tintStyle(this.props.tintOnDecrementImage)
-    var decrementImageSrc = this.imageSrc(this.props.decrementImage)
-    var incrementImageSrc = this.imageSrc(this.props.incrementImage)
-    var incrementStyle = this.imageStyle(this.props.incrementImage)
-    var decrementStyle = this.imageStyle(this.props.decrementImage)
+    const { imageWidth, imageHeight, tintOnIncrementImage, tintOnDecrementImage, incrementImage, decrementImage, padding, tintColor, backgroundColor, activeOpacity } = this.props
+    var tintIncrementStyle = this.tintStyle(tintOnIncrementImage)
+    var tintDecrementStyle = this.tintStyle(tintOnDecrementImage)
+    var decrementImageSrc = this.imageDecrementSrc(decrementImage)
+    var incrementImageSrc = this.imageIncrementSrc(incrementImage)
+    var incrementStyle = this.imageStyle(incrementImage, imageWidth, imageHeight)
+    var decrementStyle = this.imageStyle(decrementImage, imageWidth, imageHeight)
+    const { decrementOpacity, incrementOpacity, hasReachedMin, hasReachedMax } = this.state
     return (
-      <View style={[styles.container, {backgroundColor: this.props.backgroundColor, borderColor: this.props.tintColor}]}>
+      <View style={[styles.container, {backgroundColor: backgroundColor, borderColor: tintColor}]}>
       <TouchableOpacity
         ref={(ref) => this.decrementButton = ref}
-        activeOpacity={this.props.activeOpacity}
-        style={[styles.leftButton, {borderColor: this.props.tintColor, padding: this.props.padding}]}
+        activeOpacity={activeOpacity}
+        style={[styles.leftButton, {borderColor: tintColor, padding: padding}]}
         onPress={this.decrementAction}
-        disabled={this.state.hasReachedMin}>
-        <Image style={[decrementStyle, tintDecrementStyle, {opacity: this.state.decrementOpacity}]} source={decrementImageSrc} />
+        disabled={hasReachedMin}>
+        <Image style={[decrementStyle, tintDecrementStyle, {opacity: decrementOpacity}]} source={decrementImageSrc} />
       </TouchableOpacity>
       <TouchableOpacity
         ref={(ref) => this.incrementButton = ref}
-        activeOpacity={this.props.activeOpacity}
-        style={[styles.rightButton, {borderColor: this.props.tintColor, padding: this.props.padding}]}
+        activeOpacity={activeOpacity}
+        style={[styles.rightButton, {borderColor: tintColor, padding: padding}]}
         onPress={this.incrementAction}
-        disabled={this.state.hasReachedMax}>
-        <Image style={[incrementStyle, tintIncrementStyle, {opacity: this.state.incrementOpacity}]} source={incrementImageSrc}  />
+        disabled={hasReachedMax}>
+        <Image style={[incrementStyle, tintIncrementStyle, {opacity: incrementOpacity}]} source={incrementImageSrc}  />
       </TouchableOpacity>
       </View>
     )

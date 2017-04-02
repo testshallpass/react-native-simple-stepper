@@ -13,10 +13,10 @@ export default class Main extends Component {
   }
   componentWillMount() {
     const data = [
-      { tintColor: 'blue', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: ''},
-      { tintColor: 'peru', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
+      { tintColor: '#358CDC', value: 0, minimumValue: 0, maximumValue: 15, initialValue: 1, stepValue: 1, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: ''},
+      { tintColor: '#32A54A', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
       { tintColor: '#cc3232', value: 50, minimumValue: -100, maximumValue: 100, initialValue: 50, stepValue: 25, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
-      { tintColor: 'purple', value: 0, minimumValue: 0, maximumValue: 35, initialValue: 0, stepValue: 5, tintOnIncrementImage: false, tintOnDecrementImage: false, incrementImage: 'https://facebook.github.io/react/img/logo_og.png', decrementImage: 'https://facebook.github.io/react/img/logo_og.png' },
+      { tintColor: '#4F3D9E', value: 0, minimumValue: -70, maximumValue: 70, initialValue: 30, stepValue: 10, tintOnIncrementImage: false, tintOnDecrementImage: false, incrementImage: 'https://facebook.github.io/react/img/logo_og.png', decrementImage: 'https://facebook.github.io/react/img/logo_og.png' },
     ]
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data),
@@ -25,7 +25,7 @@ export default class Main extends Component {
   }
   valueChanged(value: number, rowID: number) {
     var data = this.state.data
-    data[rowID].value = value.toFixed(2)
+    data[rowID].value = Math.round(value * 100) / 100
     this.setState({
       dataSource: ds.cloneWithRows(data),
       data: data
@@ -39,6 +39,8 @@ export default class Main extends Component {
           valueChanged={(value) => this.valueChanged(value, rowID)}
           tintOnIncrementImage={rowData.tintOnIncrementImage}
           tintOnDecrementImage={rowData.tintOnDecrementImage}
+          incrementImage={rowData.incrementImage}
+          decrementImage={rowData.decrementImage}
           minimumValue={rowData.minimumValue}
           maximumValue={rowData.maximumValue}
           initialValue={rowData.initialValue}
@@ -47,6 +49,7 @@ export default class Main extends Component {
             <Text style={styles.text}>{'min: '}{rowData.minimumValue}</Text>
             <Text style={styles.text}>{'max: '}{rowData.maximumValue}</Text>
             <Text style={styles.text}>{'initial: '}{rowData.initialValue}</Text>
+            <Text style={styles.text}>{'step: '}{rowData.stepValue}</Text>
           </View>
           <Text style={[styles.text, {color: rowData.tintColor, fontSize: 30, padding: 4, position: 'absolute', right: 8}]}>{rowData.value}</Text>
       </View>
@@ -67,8 +70,7 @@ export default class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    marginTop: 22
+    backgroundColor: '#E9EEEF'
   },
   row: {
     flexDirection: 'row',
@@ -81,9 +83,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    color: '#222222'
   },
   separator: {
     height: 1,
-    backgroundColor: 'lightgray'
+    backgroundColor: '#8B9B9C'
   }
 });

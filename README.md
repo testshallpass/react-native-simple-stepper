@@ -34,8 +34,8 @@ valueChanged(value) {
 
 ### Props
 
-| Name | Type | Description | Default
-| ------------ | ------------- | ------------ |------------ |------------ |
+| Name | Type | Description | Default |
+| --- | :---: | --- | --- |
 | ```initialValue``` | Number  | initial value | 0
 | ```minimumValue``` | Number  | minimum value | 0
 | ```maximumValue``` | Number  | maximum value | 10

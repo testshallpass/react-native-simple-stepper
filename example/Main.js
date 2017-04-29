@@ -13,6 +13,7 @@ export default class Main extends Component {
   }
   componentWillMount() {
     const data = [
+      { tintColor: '#358CDC', value: 0, minimumValue: -100, maximumValue: 1000, initialValue: .05, stepValue: 1, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: ''},
       { tintColor: '#32A54A', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
       { tintColor: '#cc3232', value: 50, minimumValue: -100, maximumValue: 100, initialValue: 50, stepValue: 25, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
       { tintColor: '#4F3D9E', value: 0, minimumValue: -70, maximumValue: 70, initialValue: 30, stepValue: 10, tintOnIncrementImage: false, tintOnDecrementImage: false, incrementImage: 'https://facebook.github.io/react/img/logo_og.png', decrementImage: 'https://facebook.github.io/react/img/logo_og.png' },

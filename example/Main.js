@@ -13,7 +13,6 @@ export default class Main extends Component {
   }
   componentWillMount() {
     const data = [
-      { tintColor: '#358CDC', value: 0, minimumValue: 0, maximumValue: 15, initialValue: 1, stepValue: 1, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: ''},
       { tintColor: '#32A54A', value: .99, minimumValue: 0, maximumValue: 15, initialValue: .99, stepValue: .99, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
       { tintColor: '#cc3232', value: 50, minimumValue: -100, maximumValue: 100, initialValue: 50, stepValue: 25, tintOnIncrementImage: true, tintOnDecrementImage: true, incrementImage: '', decrementImage: '' },
       { tintColor: '#4F3D9E', value: 0, minimumValue: -70, maximumValue: 70, initialValue: 30, stepValue: 10, tintOnIncrementImage: false, tintOnDecrementImage: false, incrementImage: 'https://facebook.github.io/react/img/logo_og.png', decrementImage: 'https://facebook.github.io/react/img/logo_og.png' },
@@ -23,15 +22,15 @@ export default class Main extends Component {
       data: data
     })
   }
-  valueChanged(value: number, rowID: number) {
+  valueChanged(value, rowID) {
     var data = this.state.data
-    data[rowID].value = Math.round(value * 100) / 100
+    data[rowID].value = value.toFixed(2)
     this.setState({
       dataSource: ds.cloneWithRows(data),
       data: data
     })
   }
-  renderRow(rowData: object, sectionID: number, rowID: number) {
+  renderRow(rowData, sectionID, rowID) {
     return (
       <View style={styles.row}>
         <SimpleStepper

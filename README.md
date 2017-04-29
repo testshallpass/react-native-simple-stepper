@@ -23,6 +23,11 @@ render() {
   )
 }
 valueChanged(value) {
+  // if needed set the value to a certain decimal point for display elsewhere.
+  const displayValue = value.toFixed(2)
+  this.setState({
+     displayValue: displayValue
+  })
   // ...
 }
 //...

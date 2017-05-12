@@ -61,6 +61,12 @@ export default class SimpleStepper extends Component {
   componentWillMount() {
     this.validateInitialValue(this.props.initialValue)
   }
+  componentWillReceiveProps(nextProps) {
+    const {initialValue, stepValue} = this.props
+    if (nextProps.initialValue !== initialValue || nextProps.stepValue !== stepValue) {  
+      this.validateInitialValue(nextProps.initialValue)
+    }
+  }
   decrementAction() {
     var value = this.state.value
     var stepValue = this.props.stepValue

@@ -6,9 +6,9 @@
 [![Build Status](https://travis-ci.org/testshallpass/react-native-simple-stepper.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-simple-stepper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
-![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/stepper.png)
+![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/red.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/blue.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/green.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/custom.png)
 
-A super simple react-native implementation of the classic UIStepper from iOS. Check out the props below for customization.
+A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS.
 
 ### Installation
 ```npm i react-native-simple-stepper --save```
@@ -23,7 +23,7 @@ render() {
   )
 }
 valueChanged(value) {
-  // if needed set the value to a certain decimal point for display elsewhere.
+  // If you want to set the value to a certain decimal point you can like so:
   const displayValue = value.toFixed(2)
   this.setState({
      displayValue: displayValue

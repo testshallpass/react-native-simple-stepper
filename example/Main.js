@@ -81,19 +81,18 @@ export default class Main extends Component {
       data: data
     });
   }
-  changeInitialValue(rowID, rowData) {
-    var data = this.state.data;
-    data[rowID].initialValue = Math.floor(Math.random() * rowData.maximumValue + 1);
-    this.refreshData(data)
+  getRandomNumber(min, max) {
+    const random = Math.floor(Math.random() * max + min);
+    return random
   }
-  changeStepValue(rowID, rowData) {
+  updateStepperForValue(value, rowID, rowData) {
     var data = this.state.data;
-    data[rowID].stepValue = Math.floor(Math.random() * rowData.maximumValue + 1);
-    this.refreshData(data)
+    data[rowID][value] = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
+    this.refreshData(data)    
   }
   changeMinValue(rowID, rowData) {
     var data = this.state.data;
-    const newMinValue =  Math.floor(Math.random() * rowData.maximumValue + 1);
+    const newMinValue = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
     if (newMinValue < rowData.maximumValue) {
       data[rowID].minimumValue = newMinValue
       this.refreshData(data)
@@ -101,8 +100,7 @@ export default class Main extends Component {
   }
   changeMaxValue(rowID, rowData) {
     var data = this.state.data;
-    const newMaxValue = Math.floor(Math.random() * rowData.maximumValue + 1);
-    console.log(newMaxValue);
+    const newMaxValue = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
     if (newMaxValue > rowData.minimumValue) {
       data[rowID].maximumValue = newMaxValue
       this.refreshData(data)     
@@ -169,12 +167,12 @@ export default class Main extends Component {
   renderActions(rowID, rowData) {
     return (
       <ScrollView style={{flexDirection: 'row'}} horizontal={true}>
-        <TouchableOpacity onPress={() => this.changeInitialValue(rowID, rowData)}>
+        <TouchableOpacity onPress={() => this.updateStepperForValue('initialValue', rowID, rowData)}>
           <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
             {"Randomize initialValue"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.changeStepValue(rowID, rowData)}>
+        <TouchableOpacity onPress={() => this.updateStepperForValue('stepValue', rowID, rowData)}>
           <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
             {"Randomize stepValue"}
           </Text>

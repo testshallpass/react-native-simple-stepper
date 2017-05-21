@@ -48,23 +48,24 @@ export default class SimpleStepper extends Component {
       decrementOpacity: 1,
       incrementOpacity: 1,
       hasReachedMin: false,
-      hasReachedMax: false
+      hasReachedMax: false,
+      stepValue: props.stepValue
     };
   }
   componentWillMount() {
-    this.validateValue(this.props.initialValue, this.props.minimumValue, this.props.maximumValue, this.props.disabled);
+    this.validateValue(this.props.initialValue, this.props.minimumValue, this.props.maximumValue, this.props.disabled, this.props.stepValue);
   }
   componentWillReceiveProps(nextProps) {
     const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
-    if (nextProps.initialValue !== initialValue) {
-      this.validateValue(nextProps.initialValue, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled);
+    if (nextProps.initialValue !== initialValue && nextProps.initialValue > minimumValue) {
+      this.validateValue(nextProps.initialValue, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue);
     } else if (nextProps.disabled !== disabled || nextProps.stepValue !== stepValue) {
-      this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled);
+      this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue);
     } else if (nextProps.minimumValue !== minimumValue || nextProps.maximumValue !== maximumValue) {
       const isValidNextMin = (nextProps.minimumValue < maximumValue)
       const isValidNextMax = (nextProps.maximumValue > minimumValue)
       if (isValidNextMin && isValidNextMax) {
-        this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled);
+        this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue);
       } else {
         if (isValidNextMin == false && isValidNextMax == false) {
           console.warn('Warning: Simple Stepper update failed because nextProps min value(' + nextProps.minimumValue + ') is higher than current max value('+ maximumValue + ').');
@@ -79,17 +80,17 @@ export default class SimpleStepper extends Component {
   }
   decrementAction = () => {
     var value = this.state.value;
-    var stepValue = this.props.stepValue;
+    var stepValue = this.state.stepValue;
     value -= stepValue;
-    this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled);
+    this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue);
   }
   incrementAction = () => {
     var value = this.state.value;
-    var stepValue = this.props.stepValue;
+    var stepValue = this.state.stepValue;
     value += stepValue;
-    this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled);
+    this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue);
   }
-  validateValue = (value, min, max, disabled) => {
+  validateValue = (value, min, max, disabled, step) => {
     const hasReachedMax = value >= max;
     const hasReachedMin = value <= min;
     if (value >= max) {
@@ -99,6 +100,7 @@ export default class SimpleStepper extends Component {
     }
     this.setState({
       value: value,
+      stepValue: step,
       hasReachedMin: hasReachedMin || disabled,
       hasReachedMax: hasReachedMax || disabled,
       decrementOpacity: hasReachedMin || disabled

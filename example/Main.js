@@ -158,7 +158,7 @@ export default class Main extends Component {
   }
   renderActions(key, item) {
     return (
-      <ScrollView style={{flexDirection: 'row'}} horizontal={true}>
+      <ScrollView horizontal={true}>
         <TouchableOpacity onPress={() => this.updateStepperForValue('initialValue', item)}>
           <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
             {"Randomize initialValue"}

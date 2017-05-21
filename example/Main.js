@@ -3,27 +3,18 @@ import React, { Component, Proptypes } from "react";
 import {
   StyleSheet,
   Text,
-  ListView,
+  FlatList,
   TouchableOpacity,
   ScrollView,
   View
 } from "react-native";
-var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-      }),
-      data: [],
-      disabled: true
-    };
-  }
-  componentWillMount() {
     const data = [
       {
+        key: 0,
         tintColor: "#358CDC",
         value: 0,
         minimumValue: -1000,
@@ -37,6 +28,7 @@ export default class Main extends Component {
         disabled: false
       },
       {
+        key: 1,
         tintColor: "#32A54A",
         value: 0.99,
         minimumValue: 0,
@@ -50,6 +42,7 @@ export default class Main extends Component {
         disabled: false
       },
       {
+        key: 2,
         tintColor: "#cc3232",
         value: 50,
         minimumValue: -100,
@@ -63,6 +56,7 @@ export default class Main extends Component {
         disabled: false
       },
       {
+        key: 3,
         tintColor: "#4F3D9E",
         value: 0,
         minimumValue: -70,
@@ -76,80 +70,78 @@ export default class Main extends Component {
         disabled: false
       }
     ];
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data),
+    this.state = {
       data: data
-    });
+    };
   }
   getRandomNumber(min, max) {
     const random = Math.floor(Math.random() * max + min);
     return random
   }
-  updateStepperForValue(value, rowID, rowData) {
-    var data = this.state.data;
-    data[rowID][value] = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
+  updateStepperForValue(value, item) {
+    var data = this.state.data.slice();
+    data[item.key][value] = this.getRandomNumber(item.minimumValue, item.maximumValue)
     this.refreshData(data)    
   }
-  changeMinValue(rowID, rowData) {
-    var data = this.state.data;
-    const newMinValue = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
-    if (newMinValue < rowData.maximumValue) {
-      data[rowID].minimumValue = newMinValue
+  changeMinValue(item) {
+    var data = this.state.data.slice();
+    const newMinValue = this.getRandomNumber(item.minimumValue, item.maximumValue)
+    if (newMinValue < item.maximumValue) {
+      data[item.key].minimumValue = newMinValue
       this.refreshData(data)
     }
   }
-  changeMaxValue(rowID, rowData) {
-    var data = this.state.data;
-    const newMaxValue = this.getRandomNumber(rowData.minimumValue, rowData.maximumValue)
-    if (newMaxValue > rowData.minimumValue) {
-      data[rowID].maximumValue = newMaxValue
+  changeMaxValue(item) {
+    var data = this.state.data.slice();
+    const newMaxValue = this.getRandomNumber(item.minimumValue, item.maximumValue)
+    if (newMaxValue > item.minimumValue) {
+      data[item.key].maximumValue = newMaxValue
       this.refreshData(data)     
     }
   }
-  toggleStepper(rowID, rowData) {
-    var data = this.state.data;
-    data[rowID].disabled = !data[rowID].disabled
+  toggleStepper(item) {
+    var data = this.state.data.slice();
+    data[item.key].disabled = !data[item.key].disabled
     this.refreshData(data)
   }
-  valueChanged(value, rowID) {
-    var data = this.state.data;
-    data[rowID].value = value.toFixed(2);
+  valueChanged(value, key) {
+    var data = this.state.data.slice();
+    data[key].value = value.toFixed(2);
     this.refreshData(data)
   }
-  refreshData(data) {
+  refreshData = (data) => {
     this.setState({
-      dataSource: ds.cloneWithRows(data),
       data: data
     });   
   }
-  renderRow(rowData, sectionID, rowID) {
+  renderItem = ({ item, index }) => {
     return (
-      <View>
-      <View style={styles.row}>
+      <View style={styles.separator}>
+        <View style={styles.row}>
         <SimpleStepper
-          tintColor={rowData.tintColor}
-          valueChanged={value => this.valueChanged(value, rowID)}
-          tintOnIncrementImage={rowData.tintOnIncrementImage}
-          tintOnDecrementImage={rowData.tintOnDecrementImage}
-          incrementImage={rowData.incrementImage}
-          decrementImage={rowData.decrementImage}
-          minimumValue={rowData.minimumValue}
-          maximumValue={rowData.maximumValue}
-          initialValue={rowData.initialValue}
-          stepValue={rowData.stepValue}
-          disabled={rowData.disabled}
+          tintColor={item.tintColor}
+          valueChanged={(value) => this.valueChanged(value, item.key)}
+          tintOnIncrementImage={item.tintOnIncrementImage}
+          tintOnDecrementImage={item.tintOnDecrementImage}
+          incrementImage={item.incrementImage}
+          decrementImage={item.decrementImage}
+          minimumValue={item.minimumValue}
+          maximumValue={item.maximumValue}
+          initialValue={item.initialValue}
+          stepValue={item.stepValue}
+          disabled={item.disabled}
         />
         <View style={styles.column}>
-          <Text style={styles.text}>{"min: "}{rowData.minimumValue}</Text>
-          <Text style={styles.text}>{"max: "}{rowData.maximumValue}</Text>
-          <Text style={styles.text}>{"initial: "}{rowData.initialValue}</Text>
-          <Text style={styles.text}>{"step: "}{rowData.stepValue}</Text>
+          <Text style={styles.text}>{"min: "}{item.minimumValue}</Text>
+          <Text style={styles.text}>{"max: "}{item.maximumValue}</Text>
+          <Text style={styles.text}>{"initial: "}{item.initialValue}</Text>
+          <Text style={styles.text}>{"step: "}{item.stepValue}</Text>
         </View>
         <Text
           style={[
             styles.text,
             {
-              color: rowData.tintColor,
+              color: item.tintColor,
               fontSize: 30,
               padding: 8,
               position: "absolute",
@@ -157,38 +149,38 @@ export default class Main extends Component {
             }
           ]}
         >
-          {rowData.value}
+          {item.value}
         </Text>
       </View>
-        {this.renderActions(rowID, rowData)}
+        {this.renderActions(index, item)}
       </View>
     );
   }
-  renderActions(rowID, rowData) {
+  renderActions(key, item) {
     return (
       <ScrollView style={{flexDirection: 'row'}} horizontal={true}>
-        <TouchableOpacity onPress={() => this.updateStepperForValue('initialValue', rowID, rowData)}>
-          <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
+        <TouchableOpacity onPress={() => this.updateStepperForValue('initialValue', item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
             {"Randomize initialValue"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.updateStepperForValue('stepValue', rowID, rowData)}>
-          <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
+        <TouchableOpacity onPress={() => this.updateStepperForValue('stepValue', item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
             {"Randomize stepValue"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.toggleStepper(rowID, rowData)}>
-          <Text style={[styles.buttonText, {borderColor: rowData.tintColor, alignSelf: 'center'}]}>
-            {(rowData.disabled) ? 'Enable' : 'Disable'}
+        <TouchableOpacity onPress={() => this.toggleStepper(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor, alignSelf: 'center'}]}>
+            {(item.disabled) ? 'Enable' : 'Disable'}
           </Text>
         </TouchableOpacity>
-         <TouchableOpacity onPress={() => this.changeMinValue(rowID, rowData)}>
-          <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
+         <TouchableOpacity onPress={() => this.changeMinValue(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
             {"Randomize minValue"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.changeMaxValue(rowID, rowData)}>
-          <Text style={[styles.buttonText, {borderColor: rowData.tintColor}]}>
+        <TouchableOpacity onPress={() => this.changeMaxValue(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
             {"Randomize maxValue"}
           </Text>
         </TouchableOpacity>               
@@ -197,15 +189,10 @@ export default class Main extends Component {
   }
   render() {
     return (
-      <ListView
-        contentContainerStyle={styles.container}
-        initialListSize={this.state.data.length}
-        dataSource={this.state.dataSource}
-        renderRow={(rowData, sectionID, rowID) =>
-          this.renderRow(rowData, sectionID, rowID)}
-        renderSeparator={(sectionID, rowID) => (
-          <View key={`${sectionID}-${rowID}`} style={styles.separator} />
-        )}
+      <FlatList 
+        style={styles.container}
+        data={this.state.data}
+        renderItem={this.renderItem}
       />
     );
   }
@@ -229,8 +216,8 @@ const styles = StyleSheet.create({
     color: "#222222"
   },
   separator: {
-    height: 1,
-    backgroundColor: "#8B9B9C"
+    borderBottomColor: '#8B9B9C', 
+    borderBottomWidth: 1
   },
   buttonText: {
     fontSize: 12,

@@ -53,3 +53,5 @@ fastlane/Preview.html
 fastlane/screenshots
 
 example/SimpleStepper.js
+jsconfig.json
+example/jsconfig.json

@@ -243,7 +243,7 @@ var styles = StyleSheet.create({
   },
   rightButton: {
     alignItems: "center",
-    borderWidth: 0.5,
+    borderWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: 0,
     borderTopWidth: 0,
     borderRightWidth: 0

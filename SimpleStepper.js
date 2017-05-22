@@ -81,7 +81,7 @@ export default class SimpleStepper extends Component {
   decrementAction = () => {
     var value = this.state.value;
     var stepValue = this.state.stepValue;
-    value -= stepValue;
+    value -= stepValue; 
     this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue);
   }
   incrementAction = () => {
@@ -91,8 +91,15 @@ export default class SimpleStepper extends Component {
     this.validateValue(value, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue);
   }
   validateValue = (value, min, max, disabled, step) => {
-    const hasReachedMax = value >= max;
-    const hasReachedMin = value <= min;
+    if (step == 0) {
+      console.warn('Warning: Simple Stepper step value is zero (0).');
+    }
+    var hasReachedMax = value >= max;
+    var hasReachedMin = value <= min;
+    if (step < 0) { // step value is negative so swap max and min conditions.
+      hasReachedMax = value <= min;
+      hasReachedMin = value >= max;
+    }
     if (value >= max) {
       value = max;
     } else if (value <= min) {

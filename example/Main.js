@@ -85,7 +85,7 @@ export default class Main extends Component {
   }
   changeMinValue(item) {
     var data = this.state.data.slice();
-    const newMinValue = this.getRandomNumber(item.minimumValue, item.maximumValue)
+    const newMinValue = this.getRandomNumber(-10000, item.maximumValue)
     if (newMinValue < item.maximumValue) {
       data[item.key].minimumValue = newMinValue
       this.refreshData(data)
@@ -93,7 +93,7 @@ export default class Main extends Component {
   }
   changeMaxValue(item) {
     var data = this.state.data.slice();
-    const newMaxValue = this.getRandomNumber(item.minimumValue, item.maximumValue)
+    const newMaxValue = this.getRandomNumber(item.minimumValue, 10000)
     if (newMaxValue > item.minimumValue) {
       data[item.key].maximumValue = newMaxValue
       this.refreshData(data)     
@@ -200,6 +200,7 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 22,
     backgroundColor: "white"
   },
   row: {

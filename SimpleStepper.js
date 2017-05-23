@@ -57,7 +57,7 @@ export default class SimpleStepper extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
-    if (nextProps.initialValue !== initialValue && nextProps.initialValue > minimumValue) {
+    if (nextProps.initialValue !== initialValue) {
       this.validateValue(nextProps.initialValue, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue);
     } else if (nextProps.disabled !== disabled || nextProps.stepValue !== stepValue) {
       this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue);
@@ -96,7 +96,7 @@ export default class SimpleStepper extends Component {
     }
     var hasReachedMax = value >= max;
     var hasReachedMin = value <= min;
-    if (step < 0) { // step value is negative so swap max and min conditions.
+    if (step < 0) { // step value is negative so swap the max and min conditions.
       hasReachedMax = value <= min;
       hasReachedMin = value >= max;
     }

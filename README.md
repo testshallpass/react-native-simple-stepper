@@ -1,4 +1,4 @@
-## react-native-simple-stepper
+# react-native-simple-stepper
 
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
@@ -10,10 +10,10 @@
 
 A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS.
 
-### Installation
+## Installation
 ```npm i react-native-simple-stepper --save```
 
-### Usage
+## Usage
 ```javascript
 import SimpleStepper from 'react-native-simple-stepper'
 //...
@@ -32,13 +32,10 @@ valueChanged(value) {
 }
 //...
 ```
-
-### Demo
-
+## Demo
 ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/demo.gif)
 
-### Props
-
+## Props
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
 | ```initialValue``` | Number  | initial value | 0
@@ -57,3 +54,5 @@ valueChanged(value) {
 | ```imageWidth``` | Number  | network image width | 36
 | ```activeOpacity``` | Number  | touch opacity | 0.4
 | ```disabledOpacity``` | Number  | when step button is disabled | 0.5
+| ```disabled``` | Boolean  | stepper disable state | false
+

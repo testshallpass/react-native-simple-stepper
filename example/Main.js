@@ -1,40 +1,34 @@
-import SimpleStepper from "react-native-simple-stepper";
+import SimpleStepper from "./SimpleStepper";
 import React, { Component, Proptypes } from "react";
 import {
   StyleSheet,
   Text,
-  ListView,
+  FlatList,
   TouchableOpacity,
-  Alert,
+  ScrollView,
   View
 } from "react-native";
-var ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
 export default class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-      }),
-      data: []
-    };
-  }
-  componentWillMount() {
     const data = [
       {
+        key: 0,
         tintColor: "#358CDC",
         value: 0,
-        minimumValue: -100,
+        minimumValue: -1000,
         maximumValue: 1000,
         initialValue: 0.05,
         stepValue: 1,
         tintOnIncrementImage: true,
         tintOnDecrementImage: true,
-        incrementImage: "",
-        decrementImage: ""
+        incrementImage: undefined,
+        decrementImage: undefined,
+        disabled: false
       },
       {
+        key: 1,
         tintColor: "#32A54A",
         value: 0.99,
         minimumValue: 0,
@@ -43,10 +37,12 @@ export default class Main extends Component {
         stepValue: 0.99,
         tintOnIncrementImage: true,
         tintOnDecrementImage: true,
-        incrementImage: "",
-        decrementImage: ""
+        incrementImage: undefined,
+        decrementImage: undefined,
+        disabled: false
       },
       {
+        key: 2,
         tintColor: "#cc3232",
         value: 50,
         minimumValue: -100,
@@ -55,10 +51,12 @@ export default class Main extends Component {
         stepValue: 25,
         tintOnIncrementImage: true,
         tintOnDecrementImage: true,
-        incrementImage: "",
-        decrementImage: ""
+        incrementImage: undefined,
+        decrementImage: undefined,
+        disabled: false
       },
       {
+        key: 3,
         tintColor: "#4F3D9E",
         value: 0,
         minimumValue: -70,
@@ -68,124 +66,133 @@ export default class Main extends Component {
         tintOnIncrementImage: false,
         tintOnDecrementImage: false,
         incrementImage: "https://facebook.github.io/react/img/logo_og.png",
-        decrementImage: "https://facebook.github.io/react/img/logo_og.png"
+        decrementImage: "https://facebook.github.io/react/img/logo_og.png",
+        disabled: false
       }
     ];
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data),
+    this.state = {
       data: data
-    });
+    };
   }
-  changeInitialValue() {
-    var data = this.state.data;
-    data[0].initialValue = 1000;
+  getRandomNumber(min, max) {
+    const random = Math.floor(Math.random() * max + min);
+    return random
+  }
+  updateStepperForValue(value, item) {
+    var data = this.state.data.slice();
+    data[item.key][value] = this.getRandomNumber(item.minimumValue, item.maximumValue)
+    this.refreshData(data)    
+  }
+  changeMinValue(item) {
+    var data = this.state.data.slice();
+    const newMinValue = this.getRandomNumber(-10000, item.maximumValue)
+    if (newMinValue < item.maximumValue) {
+      data[item.key].minimumValue = newMinValue
+      this.refreshData(data)
+    }
+  }
+  changeMaxValue(item) {
+    var data = this.state.data.slice();
+    const newMaxValue = this.getRandomNumber(item.minimumValue, 10000)
+    if (newMaxValue > item.minimumValue) {
+      data[item.key].maximumValue = newMaxValue
+      this.refreshData(data)     
+    }
+  }
+  toggleStepper(item) {
+    var data = this.state.data.slice();
+    data[item.key].disabled = !data[item.key].disabled
+    this.refreshData(data)
+  }
+  valueChanged(value, key) {
+    var data = this.state.data.slice();
+    data[key].value = value.toFixed(2);
+    this.refreshData(data)
+  }
+  refreshData = (data) => {
     this.setState({
-      dataSource: ds.cloneWithRows(data),
       data: data
-    });
+    });   
   }
-  changeStepValue() {
-    var data = this.state.data;
-    data[0].stepValue = 100;
-    this.setState({
-      dataSource: ds.cloneWithRows(data),
-      data: data
-    });
-  }
-  valueChanged(value, rowID) {
-    var data = this.state.data;
-    data[rowID].value = value.toFixed(2);
-    this.setState({
-      dataSource: ds.cloneWithRows(data),
-      data: data
-    });
-  }
-  renderRow(rowData, sectionID, rowID) {
+  renderItem = ({ item, index }) => {
     return (
-      <View style={styles.row}>
+      <View style={styles.separator}>
+        <View style={styles.row}>
         <SimpleStepper
-          tintColor={rowData.tintColor}
-          valueChanged={value => this.valueChanged(value, rowID)}
-          tintOnIncrementImage={rowData.tintOnIncrementImage}
-          tintOnDecrementImage={rowData.tintOnDecrementImage}
-          incrementImage={rowData.incrementImage}
-          decrementImage={rowData.decrementImage}
-          minimumValue={rowData.minimumValue}
-          maximumValue={rowData.maximumValue}
-          initialValue={rowData.initialValue}
-          stepValue={rowData.stepValue}
+          tintColor={item.tintColor}
+          valueChanged={(value) => this.valueChanged(value, item.key)}
+          tintOnIncrementImage={item.tintOnIncrementImage}
+          tintOnDecrementImage={item.tintOnDecrementImage}
+          incrementImage={item.incrementImage}
+          decrementImage={item.decrementImage}
+          minimumValue={item.minimumValue}
+          maximumValue={item.maximumValue}
+          initialValue={item.initialValue}
+          stepValue={item.stepValue}
+          disabled={item.disabled}
         />
         <View style={styles.column}>
-          <Text style={styles.text}>{"min: "}{rowData.minimumValue}</Text>
-          <Text style={styles.text}>{"max: "}{rowData.maximumValue}</Text>
-          <Text style={styles.text}>{"initial: "}{rowData.initialValue}</Text>
-          <Text style={styles.text}>{"step: "}{rowData.stepValue}</Text>
+          <Text style={styles.text}>{"min: "}{item.minimumValue}</Text>
+          <Text style={styles.text}>{"max: "}{item.maximumValue}</Text>
+          <Text style={styles.text}>{"initial: "}{item.initialValue}</Text>
+          <Text style={styles.text}>{"step: "}{item.stepValue}</Text>
         </View>
         <Text
           style={[
             styles.text,
             {
-              color: rowData.tintColor,
+              color: item.tintColor,
               fontSize: 30,
-              padding: 4,
+              padding: 8,
               position: "absolute",
-              right: 8
+              right: 0
             }
           ]}
         >
-          {rowData.value}
+          {item.value}
         </Text>
+      </View>
+        {this.renderActions(index, item)}
       </View>
     );
   }
-  renderFooter() {
+  renderActions(key, item) {
     return (
-      <View>
-        <TouchableOpacity onPress={() => this.changeInitialValue()}>
-          <Text
-            style={{
-              fontSize: 18,
-              alignSelf: "center",
-              margin: 8,
-              padding: 12,
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: "black"
-            }}
-          >
-            {"Change Initial Value"}
+      <ScrollView horizontal={true}>
+        <TouchableOpacity onPress={() => this.updateStepperForValue('initialValue', item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {"Randomize initialValue"}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.changeStepValue()}>
-          <Text
-            style={{
-              fontSize: 18,
-              alignSelf: "center",
-              margin: 8,
-              padding: 12,
-              borderWidth: 1,
-              borderRadius: 5,
-              borderColor: "black"
-            }}
-          >
-            {"Change Step Value"}
+        <TouchableOpacity onPress={() => this.updateStepperForValue('stepValue', item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {"Randomize stepValue"}
           </Text>
         </TouchableOpacity>
-      </View>
+        <TouchableOpacity onPress={() => this.toggleStepper(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor, alignSelf: 'center'}]}>
+            {(item.disabled) ? 'Enable' : 'Disable'}
+          </Text>
+        </TouchableOpacity>
+         <TouchableOpacity onPress={() => this.changeMinValue(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {"Randomize minValue"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.changeMaxValue(item)}>
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {"Randomize maxValue"}
+          </Text>
+        </TouchableOpacity>               
+      </ScrollView>
     );
   }
   render() {
     return (
-      <ListView
-        contentContainerStyle={styles.container}
-        initialListSize={this.state.data.length}
-        dataSource={this.state.dataSource}
-        renderRow={(rowData, sectionID, rowID) =>
-          this.renderRow(rowData, sectionID, rowID)}
-        renderSeparator={(sectionID, rowID) => (
-          <View key={`${sectionID}-${rowID}`} style={styles.separator} />
-        )}
-        renderFooter={() => this.renderFooter()}
+      <FlatList 
+        style={styles.container}
+        data={this.state.data}
+        renderItem={this.renderItem}
       />
     );
   }
@@ -193,7 +200,7 @@ export default class Main extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: 22,
     backgroundColor: "white"
   },
   row: {
@@ -210,7 +217,15 @@ const styles = StyleSheet.create({
     color: "#222222"
   },
   separator: {
-    height: 1,
-    backgroundColor: "#8B9B9C"
+    borderBottomColor: '#8B9B9C', 
+    borderBottomWidth: 1
+  },
+  buttonText: {
+    fontSize: 12,
+    margin: 4,
+    padding: 8,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "black"
   }
 });

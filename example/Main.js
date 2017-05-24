@@ -1,4 +1,4 @@
-import SimpleStepper from "./SimpleStepper";
+import SimpleStepper from "react-native-simple-stepper";
 import React, { Component, Proptypes } from "react";
 import {
   StyleSheet,

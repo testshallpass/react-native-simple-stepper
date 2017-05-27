@@ -127,26 +127,21 @@ export default class SimpleStepper extends Component {
     }
     return null;
   }
-  imageIncrementSrc(src) {
-    if (src.length == 0) {
-      return require("./assets/increment.png");
+  imageSrc(src, type) {
+    if (src != null && src != undefined && src.length == 0) {
+      if (type == 'decrement') {
+        return require("./assets/decrement.png")
+      } else if (type == 'increment') {
+        return require("./assets/increment.png")
+      }
     }
-    if (typeof src == "string") {
-      return { uri: src };
-    }
-    return src;
-  }
-  imageDecrementSrc(src) {
-    if (src.length == 0) {
-      return require("./assets/decrement.png");
-    }
-    if (typeof src == "string") {
+    if (typeof src == "string" && src.length > 0) {
       return { uri: src };
     }
     return src;
   }
   imageStyle(src, width, height) {
-    if (typeof src == "string" && src.length > 0) {
+    if (src != null && src != undefined && typeof src == "string" && src.length > 0) {
       return { width: width, height: height };
     }
     return null;
@@ -167,8 +162,8 @@ export default class SimpleStepper extends Component {
     } = this.props;
     var tintIncrementStyle = this.tintStyle(tintOnIncrementImage);
     var tintDecrementStyle = this.tintStyle(tintOnDecrementImage);
-    var decrementImageSrc = this.imageDecrementSrc(decrementImage);
-    var incrementImageSrc = this.imageIncrementSrc(incrementImage);
+    var decrementImageSrc = this.imageSrc(decrementImage, 'decrement');
+    var incrementImageSrc = this.imageSrc(incrementImage, 'increment');
     var incrementStyle = this.imageStyle(
       incrementImage,
       imageWidth,

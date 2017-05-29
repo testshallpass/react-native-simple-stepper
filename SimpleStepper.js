@@ -20,7 +20,9 @@ export default class SimpleStepper extends Component {
     disabledOpacity: PropTypes.number,
     incrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     decrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    renderDecrement: PropTypes.func,
+    renderIncrement: PropTypes.func
   };
   static defaultProps = {
     initialValue: 0,
@@ -39,7 +41,9 @@ export default class SimpleStepper extends Component {
     imageWidth: 36,
     activeOpacity: 0.4,
     disabledOpacity: 0.5,
-    disabled: false
+    disabled: false,
+    renderDecrement: null,
+    renderIncrement: null
   };
   constructor(props) {
     super(props);
@@ -221,6 +225,27 @@ export default class SimpleStepper extends Component {
     }
     return null;
   }
+  renderImage(renderProp, style, tintStyle, opacity, src) {
+    if (typeof renderProp == "function") {
+      const data = {
+        "style": style,
+        "tintStyle": tintStyle,
+        "opacity": opacity,
+        "source": src
+      }
+      return renderProp(data)
+    }
+    return (
+      <Image
+        style={[
+          style,
+          tintStyle,
+          { opacity: opacity }
+        ]}
+        source={src}
+       />
+    )
+  }
   render() {
     const {
       imageWidth,
@@ -233,18 +258,20 @@ export default class SimpleStepper extends Component {
       tintColor,
       backgroundColor,
       activeOpacity,
-      disabled
+      disabled,
+      renderDecrement,
+      renderIncrement,
     } = this.props;
-    var tintIncrementStyle = this.tintStyle(tintOnIncrementImage);
-    var tintDecrementStyle = this.tintStyle(tintOnDecrementImage);
-    var decrementImageSrc = this.imageSrc(decrementImage, "decrement");
-    var incrementImageSrc = this.imageSrc(incrementImage, "increment");
-    var incrementStyle = this.imageStyle(
+    const tintIncrementStyle = this.tintStyle(tintOnIncrementImage);
+    const tintDecrementStyle = this.tintStyle(tintOnDecrementImage);
+    const decrementImageSrc = this.imageSrc(decrementImage, "decrement");
+    const incrementImageSrc = this.imageSrc(incrementImage, "increment");
+    const incrementStyle = this.imageStyle(
       incrementImage,
       imageWidth,
       imageHeight
     );
-    var decrementStyle = this.imageStyle(
+    const decrementStyle = this.imageStyle(
       decrementImage,
       imageWidth,
       imageHeight
@@ -272,14 +299,9 @@ export default class SimpleStepper extends Component {
           onPress={this.decrementAction}
           disabled={hasReachedMin || disabled}
         >
-          <Image
-            style={[
-              decrementStyle,
-              tintDecrementStyle,
-              { opacity: decrementOpacity }
-            ]}
-            source={decrementImageSrc}
-          />
+        <View> 
+          {this.renderImage(renderDecrement, decrementStyle, tintDecrementStyle, decrementOpacity, decrementImageSrc)}
+        </View>
         </TouchableOpacity>
         <TouchableOpacity
           ref={ref => this.incrementButton = ref}
@@ -291,14 +313,9 @@ export default class SimpleStepper extends Component {
           onPress={this.incrementAction}
           disabled={hasReachedMax || disabled}
         >
-          <Image
-            style={[
-              incrementStyle,
-              tintIncrementStyle,
-              { opacity: incrementOpacity }
-            ]}
-            source={incrementImageSrc}
-          />
+        <View> 
+          {this.renderImage(renderIncrement, incrementStyle, tintIncrementStyle, incrementOpacity, incrementImageSrc)}
+        </View>        
         </TouchableOpacity>
       </View>
     );

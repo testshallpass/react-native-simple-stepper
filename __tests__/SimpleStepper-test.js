@@ -1,4 +1,4 @@
-import 'react-native';
+import {Image} from 'react-native';
 import React from 'react';
 import SimpleStepper from '../SimpleStepper';
 import renderer from 'react-test-renderer';
@@ -44,7 +44,7 @@ test('tintColor to be blue', () => {
 test('tintColor to be null', () => {
   const wrapper = shallow(<SimpleStepper />)
   const tintStyle = wrapper.instance().tintStyle(false)
-  expect(tintStyle).toEqual(null)
+  expect(tintStyle).toBeNull()
 });
 test('increment type imageSrc to be uri object', () => {
   const wrapper = shallow(<SimpleStepper />)
@@ -59,7 +59,7 @@ test('increment type imageSrc to be local asset number', () => {
 test('increment type imageSrc to be null', () => {
   const wrapper = shallow(<SimpleStepper />)
   const imageSrc = wrapper.instance().imageSrc(null, 'increment')
-  expect(imageSrc).toEqual(null)
+  expect(imageSrc).toBeNull()
 });
 test('decrement type imageSrc to be local asset number', () => {
   const wrapper = shallow(<SimpleStepper />)
@@ -69,7 +69,7 @@ test('decrement type imageSrc to be local asset number', () => {
 test('decrement type imageSrc to be undefined', () => {
   const wrapper = shallow(<SimpleStepper />)
   const imageSrc = wrapper.instance().imageSrc(undefined, 'decrement')
-  expect(imageSrc).toEqual(undefined)
+  expect(imageSrc).toBeUndefined()
 });
 test('unknown type imageSrc to be empty string', () => {
   const wrapper = shallow(<SimpleStepper />)
@@ -79,10 +79,20 @@ test('unknown type imageSrc to be empty string', () => {
 test('imageStyle to be null', () => {
   const wrapper = shallow(<SimpleStepper />)
   const imageStyle = wrapper.instance().imageStyle(null, 36, 36)
-  expect(imageStyle).toEqual(null)
+  expect(imageStyle).toBeNull()
 });
 test('imageStyle to be style object', () => {
   const wrapper = shallow(<SimpleStepper />)
   const imageStyle = wrapper.instance().imageStyle('https://facebook.github.io/react/img/logo_og.png', 69, 69)
   expect(imageStyle).toEqual({width: 69, height: 69})
+});
+test('renderImage to be Image', () => {
+  const wrapper = shallow(<SimpleStepper />)
+  const renderImage = wrapper.instance().renderImage('eeeee', {}, {}, 1, 1)
+  expect(renderImage).toEqual(<Image source={1} style={[{}, {}, {opacity: 1}]} />)
+});
+test('renderImage to be Mock Function', () => {
+  const wrapper = shallow(<SimpleStepper />)
+  const renderImage = wrapper.instance().renderImage(jest.fn, {}, {}, 1, 1)
+  expect(jest.isMockFunction(renderImage)).toEqual(true)
 });

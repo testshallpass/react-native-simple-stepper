@@ -226,7 +226,7 @@ export default class SimpleStepper extends Component {
     return null;
   }
   renderImage(renderProp, style, tintStyle, opacity, src) {
-    if (renderProp != null) {
+    if (typeof renderProp == "function") {
       const data = {
         "style": style,
         "tintStyle": tintStyle,

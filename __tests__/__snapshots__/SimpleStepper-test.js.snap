@@ -40,19 +40,21 @@ exports[`test renders correctly 1`] = `
     }
     testID={undefined}
     tvParallaxProperties={undefined}>
-    <Image
-      source={1}
-      style={
-        Array [
-          null,
-          Object {
-            "tintColor": "blue",
-          },
-          Object {
-            "opacity": 0.5,
-          },
-        ]
-      } />
+    <View>
+      <Image
+        source={1}
+        style={
+          Array [
+            null,
+            Object {
+              "tintColor": "blue",
+            },
+            Object {
+              "opacity": 0.5,
+            },
+          ]
+        } />
+    </View>
   </View>
   <View
     accessibilityComponentType={undefined}
@@ -82,19 +84,21 @@ exports[`test renders correctly 1`] = `
     }
     testID={undefined}
     tvParallaxProperties={undefined}>
-    <Image
-      source={1}
-      style={
-        Array [
-          null,
-          Object {
-            "tintColor": "blue",
-          },
-          Object {
-            "opacity": 1,
-          },
-        ]
-      } />
+    <View>
+      <Image
+        source={1}
+        style={
+          Array [
+            null,
+            Object {
+              "tintColor": "blue",
+            },
+            Object {
+              "opacity": 1,
+            },
+          ]
+        } />
+    </View>
   </View>
 </View>
 `;

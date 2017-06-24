@@ -17,17 +17,17 @@ export default class Main extends Component {
         key: 0,
         tintColor: "#358CDC",
         value: 0,
-        minimumValue: -1000,
-        maximumValue: 1000,
-        initialValue: 0.05,
+        minimumValue: 0,
+        maximumValue: 10,
+        initialValue: 1,
         stepValue: 1,
         tintOnIncrementImage: true,
         tintOnDecrementImage: true,
         incrementImage: undefined,
         decrementImage: undefined,
         disabled: false,
-        renderIncrement: data => this.renderIncrement(data),
-        renderDecrement: data => this.renderDecrement(data)
+        renderIncrement: null,
+        renderDecrement: null
       },
       {
         key: 1,
@@ -154,6 +154,7 @@ export default class Main extends Component {
             disabled={item.disabled}
             renderIncrement={item.renderIncrement}
             renderDecrement={item.renderDecrement}
+            wraps={true}
           />
           <View style={styles.column}>
             <Text style={styles.text}>{"min: "}{item.minimumValue}</Text>

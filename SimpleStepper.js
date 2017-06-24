@@ -22,7 +22,8 @@ export default class SimpleStepper extends Component {
     decrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     disabled: PropTypes.bool,
     renderDecrement: PropTypes.func,
-    renderIncrement: PropTypes.func
+    renderIncrement: PropTypes.func,
+    wraps: PropTypes.bool,
   };
   static defaultProps = {
     initialValue: 0,
@@ -43,7 +44,8 @@ export default class SimpleStepper extends Component {
     disabledOpacity: 0.5,
     disabled: false,
     renderDecrement: null,
-    renderIncrement: null
+    renderIncrement: null,
+    wraps: false,
   };
   constructor(props) {
     super(props);
@@ -71,7 +73,8 @@ export default class SimpleStepper extends Component {
       stepValue,
       minimumValue,
       maximumValue,
-      disabled
+      disabled,
+      wraps
     } = this.props;
     if (nextProps.initialValue !== initialValue) {
       this.validateValue(
@@ -79,7 +82,8 @@ export default class SimpleStepper extends Component {
         nextProps.minimumValue,
         nextProps.maximumValue,
         nextProps.disabled,
-        nextProps.stepValue
+        nextProps.stepValue,
+        nextProps.wraps,
       );
     } else if (
       nextProps.disabled !== disabled || nextProps.stepValue !== stepValue
@@ -89,7 +93,8 @@ export default class SimpleStepper extends Component {
         nextProps.minimumValue,
         nextProps.maximumValue,
         nextProps.disabled,
-        nextProps.stepValue
+        nextProps.stepValue,
+        nextProps.wraps,
       );
     } else if (
       nextProps.minimumValue !== minimumValue ||
@@ -103,7 +108,8 @@ export default class SimpleStepper extends Component {
           nextProps.minimumValue,
           nextProps.maximumValue,
           nextProps.disabled,
-          nextProps.stepValue
+          nextProps.stepValue,
+          nextProps.wraps,
         );
       } else {
         if (isValidNextMin == false && isValidNextMax == false) {
@@ -150,7 +156,8 @@ export default class SimpleStepper extends Component {
       this.props.minimumValue,
       this.props.maximumValue,
       this.props.disabled,
-      stepValue
+      stepValue,
+      this.props.wraps
     );
   };
   incrementAction = () => {
@@ -162,24 +169,30 @@ export default class SimpleStepper extends Component {
       this.props.minimumValue,
       this.props.maximumValue,
       this.props.disabled,
-      stepValue
+      stepValue,
+      this.props.wraps
     );
   };
-  validateValue = (value, min, max, disabled, step) => {
+  validateValue = (value, min, max, disabled, step, wraps) => {
     if (step == 0) {
       console.warn("Warning: Simple Stepper step value is zero (0).");
     }
-    var hasReachedMax = value >= max;
-    var hasReachedMin = value <= min;
+    var hasReachedMax = (wraps) ? false : value >= max;
+    var hasReachedMin = (wraps) ? false : value <= min;
     if (step < 0) {
       // step value is negative so swap the max and min conditions.
-      hasReachedMax = value <= min;
-      hasReachedMin = value >= max;
+      // FIXME: min and max values when step is negative and wraps is true.
+      hasReachedMax = (wraps) ? false : value <= min;
+      hasReachedMin = (wraps) ? false : value >= max;
     }
-    if (value >= max) {
-      value = max;
-    } else if (value <= min) {
-      value = min;
+    if (value > max) {
+      value = (wraps) ? min : max;
+    } else if (value == max) {
+      value = max
+    } else if (value < min) {
+      value = (wraps) ? max : min
+    } else if (value == min) {
+      value = min
     }
     this.setState({
       value: value,

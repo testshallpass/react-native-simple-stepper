@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from "react";
-import { StyleSheet, Text, TouchableOpacity, Image, View } from "react-native";
+import React, {Component, PropTypes} from 'react';
+import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 
 export default class SimpleStepper extends Component {
   static propTypes = {
@@ -30,11 +30,11 @@ export default class SimpleStepper extends Component {
     minimumValue: 0,
     maximumValue: 10,
     stepValue: 1,
-    backgroundColor: "transparent",
-    tintColor: "blue",
+    backgroundColor: 'transparent',
+    tintColor: 'blue',
     valueChanged: null,
-    decrementImage: require("./assets/decrement.png"),
-    incrementImage: require("./assets/increment.png"),
+    decrementImage: require('./assets/decrement.png'),
+    incrementImage: require('./assets/increment.png'),
     tintOnIncrementImage: true,
     tintOnDecrementImage: true,
     padding: 4,
@@ -55,7 +55,7 @@ export default class SimpleStepper extends Component {
       incrementOpacity: 1,
       hasReachedMin: false,
       hasReachedMax: false,
-      stepValue: props.stepValue
+      stepValue: props.stepValue,
     };
   }
   componentWillMount() {
@@ -64,7 +64,8 @@ export default class SimpleStepper extends Component {
       this.props.minimumValue,
       this.props.maximumValue,
       this.props.disabled,
-      this.props.stepValue
+      this.props.stepValue,
+      this.props.wraps,
     );
   }
   componentWillReceiveProps(nextProps) {
@@ -74,7 +75,7 @@ export default class SimpleStepper extends Component {
       minimumValue,
       maximumValue,
       disabled,
-      wraps
+      wraps,
     } = this.props;
     if (nextProps.initialValue !== initialValue) {
       this.validateValue(
@@ -114,34 +115,34 @@ export default class SimpleStepper extends Component {
       } else {
         if (isValidNextMin == false && isValidNextMax == false) {
           console.warn(
-            "Warning: Simple Stepper update failed because nextProps min value(" +
+            'Warning: Simple Stepper update failed because nextProps min value(' +
               nextProps.minimumValue +
-              ") is higher than current max value(" +
+              ') is higher than current max value(' +
               maximumValue +
-              ")."
+              ').',
           );
           console.warn(
-            "Warning: Simple Stepper update failed because nextProps max value(" +
+            'Warning: Simple Stepper update failed because nextProps max value(' +
               nextProps.maximumValue +
-              ") is lower than current min value(" +
+              ') is lower than current min value(' +
               minimumValue +
-              ")."
+              ').',
           );
         } else if (isValidNextMin == false) {
           console.warn(
-            "Warning: Simple Stepper update failed because nextProps min value(" +
+            'Warning: Simple Stepper update failed because nextProps min value(' +
               nextProps.minimumValue +
-              ") is higher than current max value(" +
+              ') is higher than current max value(' +
               maximumValue +
-              ")."
+              ').',
           );
         } else if (isValidNextMax == false) {
           console.warn(
-            "Warning: Simple Stepper update failed because nextProps max value(" +
+            'Warning: Simple Stepper update failed because nextProps max value(' +
               nextProps.maximumValue +
-              ") is lower than current min value(" +
+              ') is lower than current min value(' +
               minimumValue +
-              ")."
+              ').',
           );
         }
       }
@@ -157,7 +158,7 @@ export default class SimpleStepper extends Component {
       this.props.maximumValue,
       this.props.disabled,
       stepValue,
-      this.props.wraps
+      this.props.wraps,
     );
   };
   incrementAction = () => {
@@ -170,29 +171,28 @@ export default class SimpleStepper extends Component {
       this.props.maximumValue,
       this.props.disabled,
       stepValue,
-      this.props.wraps
+      this.props.wraps,
     );
   };
   validateValue = (value, min, max, disabled, step, wraps) => {
     if (step == 0) {
-      console.warn("Warning: Simple Stepper step value is zero (0).");
+      console.warn('Warning: Simple Stepper step value is zero (0).');
     }
-    var hasReachedMax = (wraps) ? false : value >= max;
-    var hasReachedMin = (wraps) ? false : value <= min;
+    var hasReachedMax = wraps ? false : value >= max;
+    var hasReachedMin = wraps ? false : value <= min;
     if (step < 0) {
       // step value is negative so swap the max and min conditions.
-      // FIXME: min and max values when step is negative and wraps is true.
-      hasReachedMax = (wraps) ? false : value <= min;
-      hasReachedMin = (wraps) ? false : value >= max;
+      hasReachedMax = wraps ? false : value <= min;
+      hasReachedMin = wraps ? false : value >= max;
     }
     if (value > max) {
-      value = (wraps) ? min : max;
+      value = wraps ? min : max;
     } else if (value == max) {
-      value = max
+      value = max;
     } else if (value < min) {
-      value = (wraps) ? max : min
+      value = wraps ? max : min;
     } else if (value == min) {
-      value = min
+      value = min;
     }
     this.setState({
       value: value,
@@ -204,7 +204,7 @@ export default class SimpleStepper extends Component {
         : 1,
       incrementOpacity: hasReachedMax || disabled
         ? this.props.disabledOpacity
-        : 1
+        : 1,
     });
     if (this.props.valueChanged) {
       this.props.valueChanged(value);
@@ -212,52 +212,45 @@ export default class SimpleStepper extends Component {
   };
   tintStyle(status) {
     if (status) {
-      return { tintColor: this.props.tintColor };
+      return {tintColor: this.props.tintColor};
     }
     return null;
   }
   imageSrc(src, type) {
-    if (typeof src == "string") {
+    if (typeof src == 'string') {
       if (src.length == 0) {
-        if (type == "decrement") {
-          return require("./assets/decrement.png");
-        } else if (type == "increment") {
-          return require("./assets/increment.png");
+        if (type == 'decrement') {
+          return require('./assets/decrement.png');
+        } else if (type == 'increment') {
+          return require('./assets/increment.png');
         }
       } else if (src.length > 0) {
-        return { uri: src };
+        return {uri: src};
       }
     }
     return src;
   }
   imageStyle(src, width, height) {
-    if (typeof src == "string") {
+    if (typeof src == 'string') {
       if (src.length > 0) {
-        return { width: width, height: height };
+        return {width: width, height: height};
       }
     }
     return null;
   }
   renderImage(renderProp, style, tintStyle, opacity, src) {
-    if (typeof renderProp == "function") {
+    if (typeof renderProp == 'function') {
       const data = {
-        "style": style,
-        "tintStyle": tintStyle,
-        "opacity": opacity,
-        "source": src
-      }
-      return renderProp(data)
+        style: style,
+        tintStyle: tintStyle,
+        opacity: opacity,
+        source: src,
+      };
+      return renderProp(data);
     }
     return (
-      <Image
-        style={[
-          style,
-          tintStyle,
-          { opacity: opacity }
-        ]}
-        source={src}
-       />
-    )
+      <Image style={[style, tintStyle, {opacity: opacity}]} source={src} />
+    );
   }
   render() {
     const {
@@ -277,29 +270,29 @@ export default class SimpleStepper extends Component {
     } = this.props;
     const tintIncrementStyle = this.tintStyle(tintOnIncrementImage);
     const tintDecrementStyle = this.tintStyle(tintOnDecrementImage);
-    const decrementImageSrc = this.imageSrc(decrementImage, "decrement");
-    const incrementImageSrc = this.imageSrc(incrementImage, "increment");
+    const decrementImageSrc = this.imageSrc(decrementImage, 'decrement');
+    const incrementImageSrc = this.imageSrc(incrementImage, 'increment');
     const incrementStyle = this.imageStyle(
       incrementImage,
       imageWidth,
-      imageHeight
+      imageHeight,
     );
     const decrementStyle = this.imageStyle(
       decrementImage,
       imageWidth,
-      imageHeight
+      imageHeight,
     );
     const {
       decrementOpacity,
       incrementOpacity,
       hasReachedMin,
-      hasReachedMax
+      hasReachedMax,
     } = this.state;
     return (
       <View
         style={[
           styles.container,
-          { backgroundColor: backgroundColor, borderColor: tintColor }
+          {backgroundColor: backgroundColor, borderColor: tintColor},
         ]}
       >
         <TouchableOpacity
@@ -307,28 +300,40 @@ export default class SimpleStepper extends Component {
           activeOpacity={activeOpacity}
           style={[
             styles.leftButton,
-            { borderColor: tintColor, padding: padding }
+            {borderColor: tintColor, padding: padding},
           ]}
           onPress={this.decrementAction}
           disabled={hasReachedMin || disabled}
         >
-        <View> 
-          {this.renderImage(renderDecrement, decrementStyle, tintDecrementStyle, decrementOpacity, decrementImageSrc)}
-        </View>
+          <View>
+            {this.renderImage(
+              renderDecrement,
+              decrementStyle,
+              tintDecrementStyle,
+              decrementOpacity,
+              decrementImageSrc,
+            )}
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           ref={ref => this.incrementButton = ref}
           activeOpacity={activeOpacity}
           style={[
             styles.rightButton,
-            { borderColor: tintColor, padding: padding }
+            {borderColor: tintColor, padding: padding},
           ]}
           onPress={this.incrementAction}
           disabled={hasReachedMax || disabled}
         >
-        <View> 
-          {this.renderImage(renderIncrement, incrementStyle, tintIncrementStyle, incrementOpacity, incrementImageSrc)}
-        </View>        
+          <View>
+            {this.renderImage(
+              renderIncrement,
+              incrementStyle,
+              tintIncrementStyle,
+              incrementOpacity,
+              incrementImageSrc,
+            )}
+          </View>
         </TouchableOpacity>
       </View>
     );
@@ -337,21 +342,21 @@ export default class SimpleStepper extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     borderWidth: 1,
     borderRadius: 3,
-    overflow: "hidden",
-    alignItems: "center"
+    overflow: 'hidden',
+    alignItems: 'center',
   },
   leftButton: {
-    alignItems: "center"
+    alignItems: 'center',
   },
   rightButton: {
-    alignItems: "center",
+    alignItems: 'center',
     borderWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    borderRightWidth: 0
-  }
+    borderRightWidth: 0,
+  },
 });

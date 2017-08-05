@@ -55,6 +55,6 @@ valueChanged(value) {
 | ```activeOpacity``` | Number  | touch opacity | 0.4
 | ```disabledOpacity``` | Number  | when step button is disabled | 0.5
 | ```disabled``` | Boolean  | stepper disable state | false
+| ```wraps``` | Boolean  | whether or not it wraps. [more info](https://developer.apple.com/documentation/uikit/uistepper/1624068-wraps) | false
 | ```renderIncrement``` | Function  | render increment component(s) | null
 | ```renderDecrement``` | Function  | render decrement component(s) | null
-

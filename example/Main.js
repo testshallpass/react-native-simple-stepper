@@ -1,13 +1,13 @@
-import SimpleStepper from "react-native-simple-stepper";
-import React, { Component, Proptypes } from "react";
+import React, {Component} from 'react';
 import {
   StyleSheet,
   Text,
   FlatList,
   TouchableOpacity,
   ScrollView,
-  View
-} from "react-native";
+  View,
+} from 'react-native';
+import SimpleStepper from 'react-native-simple-stepper';
 
 export default class Main extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class Main extends Component {
     const data = [
       {
         key: 0,
-        tintColor: "#358CDC",
+        tintColor: '#358CDC',
         value: 0,
         minimumValue: 0,
         maximumValue: 10,
@@ -27,11 +27,12 @@ export default class Main extends Component {
         decrementImage: undefined,
         disabled: false,
         renderIncrement: null,
-        renderDecrement: null
+        renderDecrement: null,
+        wraps: true,
       },
       {
         key: 1,
-        tintColor: "#32A54A",
+        tintColor: '#32A54A',
         value: 0.99,
         minimumValue: 0,
         maximumValue: 15,
@@ -43,11 +44,12 @@ export default class Main extends Component {
         decrementImage: undefined,
         disabled: false,
         renderIncrement: null,
-        renderDecrement: null
+        renderDecrement: null,
+        wraps: false,
       },
       {
         key: 2,
-        tintColor: "#cc3232",
+        tintColor: '#cc3232',
         value: 50,
         minimumValue: -100,
         maximumValue: 100,
@@ -59,11 +61,12 @@ export default class Main extends Component {
         decrementImage: undefined,
         disabled: false,
         renderIncrement: null,
-        renderDecrement: null
+        renderDecrement: null,
+        wraps: true,
       },
       {
         key: 3,
-        tintColor: "#4F3D9E",
+        tintColor: '#4F3D9E',
         value: 0,
         minimumValue: -70,
         maximumValue: 70,
@@ -71,15 +74,16 @@ export default class Main extends Component {
         stepValue: 10,
         tintOnIncrementImage: false,
         tintOnDecrementImage: false,
-        incrementImage: "https://facebook.github.io/react/img/logo_og.png",
-        decrementImage: "https://facebook.github.io/react/img/logo_og.png",
+        incrementImage: 'https://facebook.github.io/react/img/logo_og.png',
+        decrementImage: 'https://facebook.github.io/react/img/logo_og.png',
         disabled: false,
         renderIncrement: null,
-        renderDecrement: null
-      }
+        renderDecrement: null,
+        wraps: false,
+      },
     ];
     this.state = {
-      data: data
+      data: data,
     };
   }
   getRandomNumber(min, max) {
@@ -90,7 +94,7 @@ export default class Main extends Component {
     var data = this.state.data.slice();
     data[item.key][value] = this.getRandomNumber(
       item.minimumValue,
-      item.maximumValue
+      item.maximumValue,
     );
     this.refreshData(data);
   }
@@ -122,21 +126,21 @@ export default class Main extends Component {
   }
   refreshData = data => {
     this.setState({
-      data: data
+      data: data,
     });
   };
   renderIncrement(data) {
     return (
-      <View style={{ flexDirection: "row" }}>
-        <Text>{"plus"}</Text>
-        <Text>{" one"}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <Text>{'plus'}</Text>
+        <Text>{' one'}</Text>
       </View>
     );
   }
   renderDecrement(data) {
-    return <Text>{"minus"}</Text>;
+    return <Text>{'minus'}</Text>;
   }
-  renderItem = ({ item, index }) => {
+  renderItem = ({item, index}) => {
     return (
       <View style={styles.separator}>
         <View style={styles.row}>
@@ -154,13 +158,22 @@ export default class Main extends Component {
             disabled={item.disabled}
             renderIncrement={item.renderIncrement}
             renderDecrement={item.renderDecrement}
-            wraps={true}
+            wraps={item.wraps}
           />
           <View style={styles.column}>
-            <Text style={styles.text}>{"min: "}{item.minimumValue}</Text>
-            <Text style={styles.text}>{"max: "}{item.maximumValue}</Text>
-            <Text style={styles.text}>{"initial: "}{item.initialValue}</Text>
-            <Text style={styles.text}>{"step: "}{item.stepValue}</Text>
+            <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>
+            <Text style={styles.text}>{'min: '}{item.minimumValue}</Text>
+            <Text style={styles.text}>{'max: '}{item.maximumValue}</Text>
+            <Text style={styles.text}>{'step: '}{item.stepValue}</Text>
+            {item.wraps &&
+              <Text
+                style={[
+                  styles.text,
+                  {color: item.tintColor, fontWeight: 'bold'},
+                ]}
+              >
+                {'wraps'}
+              </Text>}
           </View>
           <Text
             style={[
@@ -169,9 +182,9 @@ export default class Main extends Component {
                 color: item.tintColor,
                 fontSize: 30,
                 padding: 8,
-                position: "absolute",
-                right: 0
-              }
+                position: 'absolute',
+                right: 0,
+              },
             ]}
           >
             {item.value}
@@ -185,37 +198,37 @@ export default class Main extends Component {
     return (
       <ScrollView horizontal={true}>
         <TouchableOpacity
-          onPress={() => this.updateStepperForValue("initialValue", item)}
+          onPress={() => this.updateStepperForValue('initialValue', item)}
         >
-          <Text style={[styles.buttonText, { borderColor: item.tintColor }]}>
-            {"Randomize initialValue"}
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {'Randomize initialValue'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => this.updateStepperForValue("stepValue", item)}
+          onPress={() => this.updateStepperForValue('stepValue', item)}
         >
-          <Text style={[styles.buttonText, { borderColor: item.tintColor }]}>
-            {"Randomize stepValue"}
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {'Randomize stepValue'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.toggleStepper(item)}>
           <Text
             style={[
               styles.buttonText,
-              { borderColor: item.tintColor, alignSelf: "center" }
+              {borderColor: item.tintColor, alignSelf: 'center'},
             ]}
           >
-            {item.disabled ? "Enable" : "Disable"}
+            {item.disabled ? 'Enable' : 'Disable'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.changeMinValue(item)}>
-          <Text style={[styles.buttonText, { borderColor: item.tintColor }]}>
-            {"Randomize minValue"}
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {'Randomize minValue'}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => this.changeMaxValue(item)}>
-          <Text style={[styles.buttonText, { borderColor: item.tintColor }]}>
-            {"Randomize maxValue"}
+          <Text style={[styles.buttonText, {borderColor: item.tintColor}]}>
+            {'Randomize maxValue'}
           </Text>
         </TouchableOpacity>
       </ScrollView>
@@ -227,6 +240,7 @@ export default class Main extends Component {
         style={styles.container}
         data={this.state.data}
         renderItem={this.renderItem}
+        keyExtractor={item => item.key}
       />
     );
   }
@@ -235,24 +249,24 @@ export default class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     marginTop: 22,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
     padding: 8,
-    alignItems: "center"
+    alignItems: 'center',
   },
   column: {
-    flexDirection: "column",
-    paddingLeft: 8
+    flexDirection: 'column',
+    paddingLeft: 8,
   },
   text: {
     fontSize: 16,
-    color: "#222222"
+    color: '#222222',
   },
   separator: {
-    borderBottomColor: "#8B9B9C",
-    borderBottomWidth: 1
+    borderBottomColor: '#8B9B9C',
+    borderBottomWidth: 1,
   },
   buttonText: {
     fontSize: 12,
@@ -260,6 +274,6 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: "black"
-  }
+    borderColor: 'black',
+  },
 });

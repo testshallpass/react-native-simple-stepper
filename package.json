@@ -44,5 +44,8 @@
     "react-dom": "^15.5.4",
     "react-native": "^0.41.2",
     "react-test-renderer": "^15.4.2"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
   }
 }

@@ -9,6 +9,7 @@ export default class SimpleStepper extends Component {
     stepValue: PropTypes.number,
     backgroundColor: PropTypes.string,
     tintColor: PropTypes.string,
+    iconColor: PropTypes.string,
     underlayColor: PropTypes.string,
     padding: PropTypes.number,
     valueChanged: PropTypes.func,
@@ -32,6 +33,7 @@ export default class SimpleStepper extends Component {
     stepValue: 1,
     backgroundColor: 'transparent',
     tintColor: 'blue',
+    iconColor: 'blue',
     valueChanged: null,
     decrementImage: require('./assets/decrement.png'),
     incrementImage: require('./assets/increment.png'),
@@ -212,7 +214,7 @@ export default class SimpleStepper extends Component {
   };
   tintStyle(status) {
     if (status) {
-      return {tintColor: this.props.tintColor};
+      return {tintColor: this.props.iconColor || this.props.tintColor};
     }
     return null;
   }

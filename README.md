@@ -44,6 +44,7 @@ valueChanged(value) {
 | ```stepValue``` | Number  | step value (i.e. increment by 10) | 1
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
+| ```iconColor``` | String  | color for image if not specified defaults to tintColor | tintColor
 | ```padding``` | Number | stepper padding | 4
 | ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
 | ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')

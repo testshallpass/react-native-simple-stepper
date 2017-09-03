@@ -51,7 +51,7 @@ export default class SimpleStepper extends Component {
     renderIncrement: null,
     onIncrement: null,
     onDecrement: null,
-    wraps: false,
+    wraps: false
   };
   constructor(props) {
     super(props);

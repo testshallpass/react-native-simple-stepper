@@ -59,3 +59,5 @@ valueChanged(value) {
 | ```wraps``` | Boolean  | whether or not it wraps. [more info](https://developer.apple.com/documentation/uikit/uistepper/1624068-wraps) | false
 | ```renderIncrement``` | Function  | render increment component(s) | null
 | ```renderDecrement``` | Function  | render decrement component(s) | null
+| ```onIncrement``` | Function  | called when the value of the stepper increases. Passes the new value as a paramter | null
+| ```onDecrement``` | Function  | called when the value of the stepper decreses. Passes the new value as a paramter  | null

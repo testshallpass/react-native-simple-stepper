@@ -24,6 +24,8 @@ export default class SimpleStepper extends Component {
     disabled: PropTypes.bool,
     renderDecrement: PropTypes.func,
     renderIncrement: PropTypes.func,
+    onIncrement: PropTypes.func,
+    onDecrement: PropTypes.func,
     wraps: PropTypes.bool,
   };
   static defaultProps = {
@@ -47,6 +49,8 @@ export default class SimpleStepper extends Component {
     disabled: false,
     renderDecrement: null,
     renderIncrement: null,
+    onIncrement: null,
+    onDecrement: null,
     wraps: false,
   };
   constructor(props) {
@@ -162,6 +166,8 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+
+    if (this.props.onDecrement) this.props.onDecrement(value);
   };
   incrementAction = () => {
     var value = this.state.value;
@@ -175,6 +181,8 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+
+    if (this.props.onIncrement) this.props.onIncrement(value);
   };
   validateValue = (value, min, max, disabled, step, wraps) => {
     if (step == 0) {

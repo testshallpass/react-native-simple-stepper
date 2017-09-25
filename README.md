@@ -44,6 +44,7 @@ valueChanged(value) {
 | ```stepValue``` | Number  | step value (i.e. increment by 10) | 1
 | ```backgroundColor``` | String  | background color | transparent
 | ```tintColor``` | String  | color for border, divider and images | blue
+| ```iconColor``` | String  | color for image if not specified defaults to tintColor | tintColor
 | ```padding``` | Number | stepper padding | 4
 | ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
 | ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')
@@ -58,3 +59,5 @@ valueChanged(value) {
 | ```wraps``` | Boolean  | whether or not it wraps. [more info](https://developer.apple.com/documentation/uikit/uistepper/1624068-wraps) | false
 | ```renderIncrement``` | Function  | render increment component(s) | null
 | ```renderDecrement``` | Function  | render decrement component(s) | null
+| ```onIncrement``` | Function  | called when the value of the stepper increases. Passes the new value as a paramter | null
+| ```onDecrement``` | Function  | called when the value of the stepper decreses. Passes the new value as a paramter  | null

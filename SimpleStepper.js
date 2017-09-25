@@ -10,6 +10,7 @@ export default class SimpleStepper extends Component {
     stepValue: PropTypes.number,
     backgroundColor: PropTypes.string,
     tintColor: PropTypes.string,
+    iconColor: PropTypes.string,
     underlayColor: PropTypes.string,
     padding: PropTypes.number,
     valueChanged: PropTypes.func,
@@ -24,6 +25,8 @@ export default class SimpleStepper extends Component {
     disabled: PropTypes.bool,
     renderDecrement: PropTypes.func,
     renderIncrement: PropTypes.func,
+    onIncrement: PropTypes.func,
+    onDecrement: PropTypes.func,
     wraps: PropTypes.bool,
   };
   static defaultProps = {
@@ -33,6 +36,7 @@ export default class SimpleStepper extends Component {
     stepValue: 1,
     backgroundColor: 'transparent',
     tintColor: 'blue',
+    iconColor: 'blue',
     valueChanged: null,
     decrementImage: require('./assets/decrement.png'),
     incrementImage: require('./assets/increment.png'),
@@ -46,7 +50,9 @@ export default class SimpleStepper extends Component {
     disabled: false,
     renderDecrement: null,
     renderIncrement: null,
-    wraps: false,
+    onIncrement: null,
+    onDecrement: null,
+    wraps: false
   };
   constructor(props) {
     super(props);
@@ -161,6 +167,8 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+
+    if (this.props.onDecrement) this.props.onDecrement(value);
   };
   incrementAction = () => {
     var value = this.state.value;
@@ -174,6 +182,8 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+
+    if (this.props.onIncrement) this.props.onIncrement(value);
   };
   validateValue = (value, min, max, disabled, step, wraps) => {
     if (step == 0) {
@@ -213,7 +223,7 @@ export default class SimpleStepper extends Component {
   };
   tintStyle(status) {
     if (status) {
-      return {tintColor: this.props.tintColor};
+      return {tintColor: this.props.iconColor || this.props.tintColor};
     }
     return null;
   }

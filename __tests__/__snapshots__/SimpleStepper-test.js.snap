@@ -1,4 +1,6 @@
-exports[`test renders correctly 1`] = `
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
 <View
   style={
     Array [
@@ -15,31 +17,25 @@ exports[`test renders correctly 1`] = `
         "borderColor": "blue",
       },
     ]
-  }>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    isTVSelectable={true}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.4}
+    disabled={true}
+    focusedOpacity={0.7}
+    onPress={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderColor": "blue",
-        "opacity": 1,
-        "padding": 4,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+        },
+        Object {
+          "borderColor": "blue",
+          "padding": 4,
+        },
+      ]
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}>
+  >
     <View>
       <Image
         source={1}
@@ -53,37 +49,31 @@ exports[`test renders correctly 1`] = `
               "opacity": 0.5,
             },
           ]
-        } />
+        }
+      />
     </View>
-  </View>
-  <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
-    accessible={true}
-    hitSlop={undefined}
-    isTVSelectable={true}
-    onLayout={undefined}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.4}
+    disabled={false}
+    focusedOpacity={0.7}
+    onPress={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "borderBottomWidth": 0,
-        "borderColor": "blue",
-        "borderRightWidth": 0,
-        "borderTopWidth": 0,
-        "borderWidth": 0.5,
-        "opacity": 1,
-        "padding": 4,
-      }
+      Array [
+        Object {
+          "alignItems": "center",
+          "borderBottomWidth": 0,
+          "borderRightWidth": 0,
+          "borderTopWidth": 0,
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": "blue",
+          "padding": 4,
+        },
+      ]
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}>
+  >
     <View>
       <Image
         source={1}
@@ -97,8 +87,9 @@ exports[`test renders correctly 1`] = `
               "opacity": 1,
             },
           ]
-        } />
+        }
+      />
     </View>
-  </View>
+  </TouchableOpacity>
 </View>
 `;

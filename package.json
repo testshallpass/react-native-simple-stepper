@@ -11,7 +11,12 @@
     "test": "jest"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "/example"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
@@ -35,15 +40,16 @@
   },
   "homepage": "https://github.com/testshallpass/react-native-simple-stepper#readme",
   "devDependencies": {
-    "babel-jest": "^18.0.0",
-    "babel-preset-react-native": "^1.9.1",
-    "enzyme": "^2.8.2",
-    "jest": "^18.1.0",
-    "react": "^15.4.2",
-    "react-addons-test-utils": "^15.5.1",
-    "react-dom": "^15.5.4",
-    "react-native": "^0.41.2",
-    "react-test-renderer": "^15.4.2"
+    "babel-jest": "19.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "enzyme": "2.8.2",
+    "enzyme-to-json": "1.5.1",
+    "jest": "19.0.2",
+    "prop-types": "15.5.10",
+    "react": "16.0.0-alpha.6",
+    "react-dom": "15.5.4",
+    "react-native": "0.44.0",
+    "react-test-renderer": "15.5.4"
   },
   "dependencies": {
     "prop-types": "^15.5.10"

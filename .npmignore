@@ -10,3 +10,4 @@ babelrc
 test/
 __tests__/
 jsconfig.json
+coverage/

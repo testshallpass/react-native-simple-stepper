@@ -137,7 +137,7 @@ export default class SimpleStepper extends Component {
               maximumValue +
               ').',
           );
-        } else if (isValidNextMax == false) {
+        } else {
           console.warn(
             'Warning: Simple Stepper update failed because nextProps max value(' +
               nextProps.maximumValue +
@@ -225,7 +225,7 @@ export default class SimpleStepper extends Component {
         } else if (type == 'increment') {
           return require('./assets/increment.png');
         }
-      } else if (src.length > 0) {
+      } else {
         return {uri: src};
       }
     }
@@ -297,7 +297,6 @@ export default class SimpleStepper extends Component {
         ]}
       >
         <TouchableOpacity
-          ref={ref => this.decrementButton = ref}
           activeOpacity={activeOpacity}
           style={[
             styles.leftButton,
@@ -317,7 +316,6 @@ export default class SimpleStepper extends Component {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          ref={ref => this.incrementButton = ref}
           activeOpacity={activeOpacity}
           style={[
             styles.rightButton,

@@ -161,6 +161,9 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+    if (this.props.valueChanged) {
+      this.props.valueChanged(value);
+    }
   };
   incrementAction = () => {
     var value = this.state.value;
@@ -174,6 +177,9 @@ export default class SimpleStepper extends Component {
       stepValue,
       this.props.wraps,
     );
+    if (this.props.valueChanged) {
+      this.props.valueChanged(value);
+    }
   };
   validateValue = (value, min, max, disabled, step, wraps) => {
     if (step == 0) {
@@ -207,9 +213,6 @@ export default class SimpleStepper extends Component {
         ? this.props.disabledOpacity
         : 1,
     });
-    if (this.props.valueChanged) {
-      this.props.valueChanged(value);
-    }
   };
   tintStyle(status) {
     if (status) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, FlatList, SafeAreaView, View } from 'react-native';
-import SimpleStepper from './src/SimpleStepper';
+import SimpleStepper from 'react-native-simple-stepper';
 import { data } from './data';
 
 export default class App extends Component {

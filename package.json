@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "./node_modules/.bin/jest --forceExit --runInBand"
   },
   "jest": {
     "preset": "react-native",
@@ -40,18 +40,17 @@
   },
   "homepage": "https://github.com/testshallpass/react-native-simple-stepper#readme",
   "devDependencies": {
-    "babel-jest": "19.0.0",
-    "babel-preset-react-native": "1.9.1",
-    "enzyme": "2.8.2",
-    "enzyme-to-json": "1.5.1",
-    "jest": "19.0.2",
+    "babel-preset-react-native": "4.0.1",
+    "enzyme": "3.7.0",
+    "enzyme-adapter-react-16": "1.6.0",
+    "enzyme-to-json": "3.3.4",
+    "jest": "23.6.0",
     "prop-types": "15.5.10",
-    "react": "16.0.0-alpha.6",
-    "react-dom": "15.5.4",
-    "react-native": "0.44.0",
-    "react-test-renderer": "15.5.4"
+    "react": "16.3.1",
+    "react-dom": "16.3.1",
+    "react-native": "0.55.4"
   },
   "dependencies": {
-    "prop-types": "^15.5.10"
+    "prop-types": "15.5.10"
   }
 }

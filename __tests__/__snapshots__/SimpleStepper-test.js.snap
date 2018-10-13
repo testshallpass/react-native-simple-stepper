@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<View
+<Component
   style={
     Array [
       Object {
@@ -22,7 +22,6 @@ exports[`renders correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.4}
     disabled={true}
-    focusedOpacity={0.7}
     onPress={[Function]}
     style={
       Array [
@@ -36,9 +35,13 @@ exports[`renders correctly 1`] = `
       ]
     }
   >
-    <View>
+    <Component>
       <Image
-        source={1}
+        source={
+          Object {
+            "testUri": "../../../assets/decrement.png",
+          }
+        }
         style={
           Array [
             null,
@@ -51,12 +54,11 @@ exports[`renders correctly 1`] = `
           ]
         }
       />
-    </View>
+    </Component>
   </TouchableOpacity>
   <TouchableOpacity
     activeOpacity={0.4}
     disabled={false}
-    focusedOpacity={0.7}
     onPress={[Function]}
     style={
       Array [
@@ -74,9 +76,13 @@ exports[`renders correctly 1`] = `
       ]
     }
   >
-    <View>
+    <Component>
       <Image
-        source={1}
+        source={
+          Object {
+            "testUri": "../../../assets/increment.png",
+          }
+        }
         style={
           Array [
             null,
@@ -89,7 +95,7 @@ exports[`renders correctly 1`] = `
           ]
         }
       />
-    </View>
+    </Component>
   </TouchableOpacity>
-</View>
+</Component>
 `;

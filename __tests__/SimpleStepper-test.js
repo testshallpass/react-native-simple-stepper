@@ -1,10 +1,12 @@
 import { Image } from 'react-native';
 import React from 'react';
 import SimpleStepper from '../SimpleStepper';
-import renderer from 'react-test-renderer';
-import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 const reactNativeLogo = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
+import Adapter from 'enzyme-adapter-react-16';
+import { shallow, configure } from 'enzyme';
+
+configure({ adapter: new Adapter() });
 
 test('renders correctly', () => {
   const wrapper = shallow(<SimpleStepper />);
@@ -67,7 +69,7 @@ test('increment type imageSrc to be uri object', () => {
 test('increment type imageSrc to be local asset number', () => {
   const wrapper = shallow(<SimpleStepper />);
   const imageSrc = wrapper.instance().imageSrc('', 'increment');
-  expect(imageSrc).toEqual(1);
+  expect(imageSrc).toEqual({ testUri: '../../../assets/increment.png' });
 });
 test('increment type imageSrc to be null', () => {
   const wrapper = shallow(<SimpleStepper />);
@@ -77,7 +79,7 @@ test('increment type imageSrc to be null', () => {
 test('decrement type imageSrc to be local asset number', () => {
   const wrapper = shallow(<SimpleStepper />);
   const imageSrc = wrapper.instance().imageSrc('', 'decrement');
-  expect(imageSrc).toEqual(1);
+  expect(imageSrc).toEqual({ testUri: '../../../assets/decrement.png' });
 });
 test('decrement type imageSrc to be undefined', () => {
   const wrapper = shallow(<SimpleStepper />);
@@ -89,10 +91,10 @@ test('unknown type imageSrc to be empty string', () => {
   const imageSrc = wrapper.instance().imageSrc('', 'unknown');
   expect(imageSrc).toEqual('');
 });
-test('unknown type imageSrc to be {uri: \' \'}', () => {
+test("unknown type imageSrc to be {uri: ' '}", () => {
   const wrapper = shallow(<SimpleStepper />);
   const imageSrc = wrapper.instance().imageSrc(' ', 'unknown');
-  expect(imageSrc).toEqual({uri: ' '});
+  expect(imageSrc).toEqual({ uri: ' ' });
 });
 test('imageStyle to be with non-empty src string', () => {
   const wrapper = shallow(<SimpleStepper />);

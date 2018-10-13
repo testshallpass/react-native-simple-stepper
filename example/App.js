@@ -23,10 +23,9 @@ export default class App extends Component {
         <View style={styles.content}>
           <Text
             style={[
-              styles.text,
+              styles.value,
               {
                 color: item.tintColor,
-                fontSize: 28,
               },
             ]}
           >
@@ -47,10 +46,10 @@ export default class App extends Component {
             wraps={item.wraps}
           />
           {item.wraps &&
-            <Text style={[styles.text, { color: item.tintColor, fontWeight: 'bold', fontSize: 18 }]}>
+            <Text style={[styles.wraps, { color: item.tintColor }]}>
               {'wraps enabled'}
             </Text>}
-          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+          <View style={styles.row}>
             <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>
             <Text style={styles.text}>{'min: '}{item.minimumValue}</Text>
             <Text style={styles.text}>{'max: '}{item.maximumValue}</Text>
@@ -78,10 +77,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  row: {
+    flexDirection: 'row'
+  },
   text: {
     fontSize: 16,
     color: '#222222',
     margin: 8,
+  },
+  value: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  wraps: {
+    fontWeight: 'bold',
+    fontSize: 18,
   },
   separator: {
     borderBottomColor: '#222222',

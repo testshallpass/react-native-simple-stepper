@@ -50,6 +50,10 @@ export default class App extends Component {
             <Text style={[styles.wraps, { color: item.tintColor }]}>
               {'wraps enabled'}
             </Text>}
+          {!item.wraps &&
+            <Text style={[styles.wraps, { color: item.tintColor }]}>
+              {'wraps disabled'}
+            </Text>}
           <View style={styles.row}>
             <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>
             <Text style={styles.text}>{'min: '}{item.minimumValue}</Text>

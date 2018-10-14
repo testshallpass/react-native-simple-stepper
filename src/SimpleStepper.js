@@ -60,7 +60,6 @@ export default class SimpleStepper extends Component {
       hasReachedMin: false,
       hasReachedMax: false,
     };
-    props.value = props.initialValue;
     this.tintIncrementStyle = this.tintStyle(props.tintOnIncrementImage, props.tintColor);
     this.tintDecrementStyle = this.tintStyle(props.tintOnDecrementImage, props.tintColor);
     this.decrementImageSrc = this.imageSrc(props.decrementImage, 'decrement');

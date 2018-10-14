@@ -22,22 +22,25 @@ A super simple react-native implementation of the [UIStepper](https://developer.
 
 ## Usage
 ```javascript
-import SimpleStepper from 'react-native-simple-stepper'
-//...
-render() {
-  return (
-    <SimpleStepper valueChanged={(value) => this.valueChanged(value)} />
-  )
+import React, { Component } from 'react';
+import SimpleStepper from 'react-native-simple-stepper';
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: 0 };
+  }
+  valueChanged(value) {
+    // Truncate value to 2 decimal places and cast as Number (like the demo).
+    const nextValue = Number(value.toFixed(2));
+    this.setState({ value: nextValue });
+    // ...
+  }
+  render() {
+    const { value } = this.state;
+    return <SimpleStepper value={value} valueChanged={value => this.valueChanged(value)} />;
+  }
 }
-valueChanged(value) {
-  // If you want to set the value to a certain decimal point you can like so:
-  const displayValue = value.toFixed(2)
-  this.setState({
-     displayValue: displayValue
-  })
-  // ...
-}
-//...
 ```
 ## Demo
 ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/demo.gif)
@@ -45,6 +48,7 @@ valueChanged(value) {
 ## Props
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
+| ```value``` | Number  | stepper's value | 0
 | ```initialValue``` | Number  | initial value | 0
 | ```minimumValue``` | Number  | minimum value | 0
 | ```maximumValue``` | Number  | maximum value | 10

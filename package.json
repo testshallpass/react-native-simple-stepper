@@ -1,8 +1,8 @@
 {
   "name": "react-native-simple-stepper",
   "version": "1.18.1",
-  "description": "A super simple react-native implementation of the classic UIStepper from iOS.",
-  "main": "SimpleStepper.js",
+  "description": "A super simple react-native implementation of the UIStepper from iOS.",
+  "main": "index.js",
   "directories": {
     "example": "example"
   },
@@ -13,7 +13,8 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "/example"
+      "/example",
+      "/coverage"
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
@@ -24,6 +25,8 @@
   },
   "keywords": [
     "react-component",
+    "control",
+    "react-native-component",
     "ios",
     "android",
     "react-native",
@@ -31,7 +34,9 @@
     "stepper",
     "simple-stepper",
     "SimpleStepper",
-    "simple stepper"
+    "simple stepper",
+    "simple_stepper",
+    "simple"
   ],
   "author": "Brian Sinnicke",
   "license": "MIT",

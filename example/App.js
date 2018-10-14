@@ -14,7 +14,7 @@ export default class App extends Component {
     let data = this.state.data.slice();
     data[key].value = Number(value.toFixed(2));
     this.setState({
-      data: data,
+      data,
     });
   }
   renderItem = ({ item, index }) => {

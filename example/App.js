@@ -11,8 +11,8 @@ export default class App extends Component {
     };
   }
   valueChanged(value, key) {
-    var data = this.state.data.slice();
-    data[key].value = value.toFixed(2);
+    let data = this.state.data.slice();
+    data[key].value = Number(value.toFixed(2));
     this.setState({
       data: data,
     });
@@ -29,9 +29,10 @@ export default class App extends Component {
               },
             ]}
           >
-            {item.value}
+            {`${item.value}`}
           </Text>
           <SimpleStepper
+            value={item.value}
             tintColor={item.tintColor}
             valueChanged={value => this.valueChanged(value, item.key)}
             tintOnIncrementImage={item.tintOnIncrementImage}
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   text: {
     fontSize: 16,

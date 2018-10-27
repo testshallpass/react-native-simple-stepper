@@ -14,7 +14,7 @@ export default class App extends Component {
     let data = this.state.data.slice();
     data[key].value = Number(value.toFixed(2));
     this.setState({
-      data: data,
+      data,
     });
   }
   renderItem = ({ item, index }) => {
@@ -49,6 +49,10 @@ export default class App extends Component {
           {item.wraps &&
             <Text style={[styles.wraps, { color: item.tintColor }]}>
               {'wraps enabled'}
+            </Text>}
+          {!item.wraps &&
+            <Text style={[styles.wraps, { color: item.tintColor }]}>
+              {'wraps disabled'}
             </Text>}
           <View style={styles.row}>
             <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>

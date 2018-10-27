@@ -2,6 +2,7 @@
 
 exports[`ImageView renders correctly 1`] = `
 <Image
+  resizeMode="contain"
   source={Object {}}
   style={
     Array [

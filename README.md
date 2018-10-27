@@ -23,7 +23,7 @@ A super simple react-native implementation of the [UIStepper](https://developer.
 ## Usage
 ```javascript
 import React, { Component } from 'react';
-import SimpleStepper from 'react-native-simple-stepper';
+import { SimpleStepper } from 'react-native-simple-stepper';
 
 export default class App extends Component {
   constructor(props) {

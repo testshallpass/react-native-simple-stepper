@@ -11,17 +11,21 @@
 
 A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS.
 
-### Table of contents
+## Table of contents
+
 1. [Installation](#installation)
 2. [Demo](#demo)
 3. [Usage](#usage)
 4. [Props](#props)
 
 ## Installation
-```npm i react-native-simple-stepper --save```
+
+```npm i react-native-simple-stepper --save``` OR ```yarn add react-native-simple-stepper```
 
 ## Usage
+
 ```javascript
+
 import React, { Component } from 'react';
 import { SimpleStepper } from 'react-native-simple-stepper';
 
@@ -41,11 +45,15 @@ export default class App extends Component {
     return <SimpleStepper value={value} valueChanged={value => this.valueChanged(value)} />;
   }
 }
+
 ```
+
 ## Demo
+
 ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/demo.gif)
 
 ## Props
+
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
 | ```value``` | Number  | stepper's value | 0

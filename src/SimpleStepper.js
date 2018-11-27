@@ -37,7 +37,7 @@ export default class SimpleStepper extends Component {
     stepValue: 1,
     backgroundColor: 'transparent',
     tintColor: 'blue',
-    valueChanged: null,
+    valueChanged: () => {},
     decrementImage: require('./assets/decrement.png'),
     incrementImage: require('./assets/increment.png'),
     tintOnIncrementImage: true,
@@ -48,8 +48,8 @@ export default class SimpleStepper extends Component {
     activeOpacity: 0.4,
     disabledOpacity: 0.5,
     disabled: false,
-    renderDecrement: null,
-    renderIncrement: null,
+    renderDecrement: undefined,
+    renderIncrement: undefined,
     wraps: false,
   };
   constructor(props) {
@@ -68,72 +68,72 @@ export default class SimpleStepper extends Component {
     this.decrementStyle = this.imageStyle(props.imageWidth, props.imageHeight);
   }
   componentDidMount() {
-    const { initialValue, minimumValue, maximumValue, disabled, stepValue, wraps } = this.props;
-    this.validateValue(initialValue, minimumValue, maximumValue, disabled, stepValue, wraps);
+    this.validateValue(this.props.initialValue, this.props);
   }
   componentWillReceiveProps(nextProps) {
     const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
     if (nextProps.initialValue !== initialValue) {
-      this.validateValue(nextProps.initialValue, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue, nextProps.wraps);
+      this.validateValue(nextProps.initialValue, nextProps, true);
     } else if (nextProps.disabled !== disabled || nextProps.stepValue !== stepValue) {
-      this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue, nextProps.wraps);
+      this.validateValue(nextProps.value, nextProps);
     } else if (nextProps.minimumValue !== minimumValue || nextProps.maximumValue !== maximumValue) {
       const isValidNextMin = nextProps.minimumValue < maximumValue;
       const isValidNextMax = nextProps.maximumValue > minimumValue;
       if (isValidNextMin && isValidNextMax) {
-        this.validateValue(this.state.value, nextProps.minimumValue, nextProps.maximumValue, nextProps.disabled, nextProps.stepValue, nextProps.wraps);
+        this.validateValue(nextProps.value, nextProps);
       }
     }
   }
   decrementAction = () => {
     const { value, stepValue } = this.props;
     const nextValue = value - stepValue;
-    this.validateValue(nextValue, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue, this.props.wraps);
+    this.validateValue(nextValue, this.props, true);
   };
   incrementAction = () => {
     const { value, stepValue } = this.props;
     const nextValue = value + stepValue;
-    this.validateValue(nextValue, this.props.minimumValue, this.props.maximumValue, this.props.disabled, stepValue, this.props.wraps);
+    this.validateValue(nextValue, this.props, true);
   };
-  validateValue = (value, min, max, disabled, step, wraps) => {
+  validateValue = (value, props, changed = false) => {
+    const { minimumValue, maximumValue, disabled, stepValue, wraps, valueChanged, disabledOpacity } = props;
     let hasReachedMax = true;
     let hasReachedMin = true;
     switch (true) {
-      case step >= 0:
-        if (step === 0) {
-          console.warn("Warning: Simple Stepper's step value is set to 0.");
-        }
-        hasReachedMax = value >= max;
-        hasReachedMin = value <= min;
+      case wraps: 
+        hasReachedMin = false;
+        hasReachedMax = false;
         break;
-      case step < 0:
+      case stepValue >= 0:
+        if (stepValue === 0) {
+          console.warn("Warning: Simple Stepper's stepValue is set to 0.");
+        }
+        hasReachedMax = value >= maximumValue;
+        hasReachedMin = value <= minimumValue;
+        break;
+      case stepValue < 0:
         // step value is negative
         // swap the max and min conditions.
-        hasReachedMax = value <= min;
-        hasReachedMin = value >= max;
+        hasReachedMax = value <= minimumValue;
+        hasReachedMin = value >= maximumValue;
         break;
     }
-    if (wraps) {
-      hasReachedMin = false;
-      hasReachedMax = false;
-    }
-    if (value > max) {
-      value = wraps ? min : max;
-    } else if (value == max) {
-      value = max;
-    } else if (value < min) {
-      value = wraps ? max : min;
-    } else if (value == min) {
-      value = min;
+    if (value > maximumValue) {
+      value = wraps ? minimumValue : maximumValue;
+    } else if (value == maximumValue) {
+      value = maximumValue;
+    } else if (value < minimumValue) {
+      value = wraps ? maximumValue : minimumValue;
+    } else if (value == minimumValue) {
+      value = minimumValue;
     }
     this.setState({
       hasReachedMin: hasReachedMin || disabled,
       hasReachedMax: hasReachedMax || disabled,
-      decrementOpacity: hasReachedMin || disabled ? this.props.disabledOpacity : 1,
-      incrementOpacity: hasReachedMax || disabled ? this.props.disabledOpacity : 1,
+      decrementOpacity: hasReachedMin || disabled ? disabledOpacity : 1,
+      incrementOpacity: hasReachedMax || disabled ? disabledOpacity : 1,
     });
-    if (this.props.valueChanged) {
-      this.props.valueChanged(value);
+    if (changed) {
+      valueChanged(value);
     }
   };
   tintStyle(status, tintColor) {

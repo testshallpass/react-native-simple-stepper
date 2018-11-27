@@ -68,7 +68,9 @@ export default class SimpleStepper extends Component {
     this.decrementStyle = this.imageStyle(props.imageWidth, props.imageHeight);
   }
   componentDidMount() {
-    this.validateValue(this.props.initialValue, this.props);
+    const { initialValue, value } = this.props;
+    // compare value and initialValue if different invoke valueChanged.
+    this.validateValue(initialValue, this.props, value !== initialValue);
   }
   componentWillReceiveProps(nextProps) {
     const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;

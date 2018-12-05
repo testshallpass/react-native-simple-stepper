@@ -73,9 +73,9 @@ export default class SimpleStepper extends Component {
     this.validateValue(initialValue, this.props, value !== initialValue);
   }
   componentWillReceiveProps(nextProps) {
-    const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
+    const { value, initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
     if (nextProps.initialValue !== initialValue) {
-      this.validateValue(nextProps.initialValue, nextProps, true);
+      this.validateValue(nextProps.initialValue, nextProps, nextProps.value !== nextProps.initialValue);
     } else if (nextProps.disabled !== disabled || nextProps.stepValue !== stepValue) {
       this.validateValue(nextProps.value, nextProps);
     } else if (nextProps.minimumValue !== minimumValue || nextProps.maximumValue !== maximumValue) {
@@ -84,6 +84,8 @@ export default class SimpleStepper extends Component {
       if (isValidNextMin && isValidNextMax) {
         this.validateValue(nextProps.value, nextProps);
       }
+    } else if (nextProps.value !== value) {
+      this.validateValue(nextProps.value, nextProps);
     }
   }
   decrementAction = () => {
@@ -101,7 +103,7 @@ export default class SimpleStepper extends Component {
     let hasReachedMax = true;
     let hasReachedMin = true;
     switch (true) {
-      case wraps: 
+      case wraps:
         hasReachedMin = false;
         hasReachedMax = false;
         break;

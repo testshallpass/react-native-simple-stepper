@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native';
 export default class Step extends Component {
   static propTypes = {
     activeOpacity: PropTypes.number,
-    style: PropTypes.number,
+    style: PropTypes.object,
     onPress: PropTypes.func,
     tintColor: PropTypes.string,
     padding: PropTypes.number,
@@ -15,7 +15,7 @@ export default class Step extends Component {
 
   static defaultProps = {
     activeOpacity: 1,
-    style: 0,
+    style: {},
     onPress: undefined,
     tintColor: 'blue',
     padding: 0,

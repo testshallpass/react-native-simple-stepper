@@ -58,4 +58,4 @@ jsconfig.json
 
 example/jsconfig.json
 example/src
-/coverage
+coverage

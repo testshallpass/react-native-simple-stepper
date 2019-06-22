@@ -10,7 +10,10 @@ export default class ImageView extends Component {
   };
 
   static defaultProps = {
-    style: {},
+    style: {
+      height: 36,
+      width: 36,
+    },
     source: {},
     opacity: 1,
   };

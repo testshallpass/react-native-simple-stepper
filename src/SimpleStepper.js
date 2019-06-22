@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import Step from './Step';
-import ImageView from './ImageView';
 const STEP = {
   increment: 'increment',
   decrement: 'decrement',
@@ -21,8 +20,10 @@ export default class SimpleStepper extends Component {
     incrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     decrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     disabled: PropTypes.bool,
-    renderDecrement: PropTypes.func,
-    renderIncrement: PropTypes.func,
+    renderDecrementImage: PropTypes.func,
+    renderIncrementImage: PropTypes.func,
+    renderDecrementStep: PropTypes.func,
+    renderIncrementStep: PropTypes.func,
     wraps: PropTypes.bool,
     onMin: PropTypes.func,
     onMax: PropTypes.func,
@@ -50,8 +51,10 @@ export default class SimpleStepper extends Component {
     activeOpacity: 0.4,
     disabledOpacity: 0.5,
     disabled: false,
-    renderDecrement: undefined,
-    renderIncrement: undefined,
+    renderDecrementImage: undefined,
+    renderIncrementImage: undefined,
+    renderDecrementStep: undefined,
+    renderIncrementStep: undefined,
     wraps: false,
     onMin: () => {},
     onMax: () => {},
@@ -102,7 +105,6 @@ export default class SimpleStepper extends Component {
   }
   componentDidMount() {
     const { initialValue, value } = this.props;
-    // compare value and initialValue if different invoke valueChanged.
     this.validateValue(initialValue, this.props, value !== initialValue);
   }
   componentWillReceiveProps(nextProps) {
@@ -194,28 +196,29 @@ export default class SimpleStepper extends Component {
     }
     return source;
   };
-  _renderImageView = (type, opacity) => {
-    let style = {};
+  _getImageViewProps = (type, opacity) => {
+    let style = {
+      height: 36,
+      width: 36,
+    };
     let imageSource = null;
     switch (type) {
       case STEP.increment:
-        const { renderIncrement, incrementImageStyle, incrementImage } = this.props;
-        if (renderIncrement) {
-          return renderIncrement(this.props);
-        }
+        const { incrementImageStyle, incrementImage } = this.props;
         style = incrementImageStyle;
         imageSource = incrementImage;
         break;
       case STEP.decrement:
-        const { renderDecrement, decrementImageStyle, decrementImage } = this.props;
-        if (renderDecrement) {
-          return renderDecrement(this.props);
-        }
+        const { decrementImageStyle, decrementImage } = this.props;
         style = decrementImageStyle;
         imageSource = decrementImage;
         break;
     }
-    return <ImageView style={style} opacity={opacity} source={this._getImageSource(type, imageSource)} />;
+    return {
+      style,
+      opacity,
+      source: this._getImageSource(type, imageSource),
+    };
   };
   _renderText = (value, renderText, textStyle) => {
     if (renderText) {
@@ -236,29 +239,45 @@ export default class SimpleStepper extends Component {
       textStyle,
       incrementStepStyle,
       decrementStepStyle,
+      renderIncrementImage,
+      renderDecrementImage,
+      renderDecrementStep,
+      renderIncrementStep,
     } = this.props;
     const { hasReachedMin, hasReachedMax } = this._getHasMinMax(value);
     const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
     const incrementOpacity = hasReachedMax || disabled ? disabledOpacity : 1;
+    const decrementImageProps = this._getImageViewProps(STEP.decrement, decrementOpacity);
+    const incrementImageProps = this._getImageViewProps(STEP.increment, incrementOpacity);
     return (
       <View style={containerStyle}>
-        <Step
-          style={decrementStepStyle}
-          activeOpacity={activeOpacity}
-          onPress={this.decrementAction}
-          disabled={hasReachedMin || disabled}
-          renderImage={() => this._renderImageView(STEP.decrement, decrementOpacity)}
-        />
+        {renderDecrementStep
+          ? renderDecrementStep(this.props)
+          : <Step
+              style={decrementStepStyle}
+              activeOpacity={activeOpacity}
+              onPress={this.decrementAction}
+              disabled={hasReachedMin || disabled}
+              renderImage={renderIncrementImage}
+              imageStyle={decrementImageProps.style}
+              imageOpacity={decrementImageProps.opacity}
+              imageSource={decrementImageProps.source}
+            />}
         {showText && <View style={separatorStyle} />}
         {showText && this._renderText(value, renderText, textStyle)}
         <View style={separatorStyle} />
-        <Step
-          style={incrementStepStyle}
-          activeOpacity={activeOpacity}
-          onPress={this.incrementAction}
-          disabled={hasReachedMax || disabled}
-          renderImage={() => this._renderImageView(STEP.increment, incrementOpacity)}
-        />
+        {renderIncrementStep
+          ? renderIncrementStep(this.props)
+          : <Step
+              style={incrementStepStyle}
+              activeOpacity={activeOpacity}
+              onPress={this.incrementAction}
+              disabled={hasReachedMax || disabled}
+              renderImage={renderDecrementImage}
+              imageStyle={incrementImageProps.style}
+              imageOpacity={incrementImageProps.opacity}
+              imageSource={incrementImageProps.source}
+            />}
       </View>
     );
   }

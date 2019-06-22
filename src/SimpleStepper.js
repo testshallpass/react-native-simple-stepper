@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import Step from './Step';
 import ImageView from './ImageView';
+const STEP = {
+  increment: 'increment',
+  decrement: 'decrement',
+};
 
 export default class SimpleStepper extends Component {
   static propTypes = {
@@ -11,15 +15,7 @@ export default class SimpleStepper extends Component {
     minimumValue: PropTypes.number,
     maximumValue: PropTypes.number,
     stepValue: PropTypes.number,
-    backgroundColor: PropTypes.string,
-    tintColor: PropTypes.string,
-    underlayColor: PropTypes.string,
-    padding: PropTypes.number,
     valueChanged: PropTypes.func,
-    tintOnIncrementImage: PropTypes.bool,
-    tintOnDecrementImage: PropTypes.bool,
-    imageHeight: PropTypes.number,
-    imageWidth: PropTypes.number,
     activeOpacity: PropTypes.number,
     disabledOpacity: PropTypes.number,
     incrementImage: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -28,6 +24,19 @@ export default class SimpleStepper extends Component {
     renderDecrement: PropTypes.func,
     renderIncrement: PropTypes.func,
     wraps: PropTypes.bool,
+    onMin: PropTypes.func,
+    onMax: PropTypes.func,
+    onIncrement: PropTypes.func,
+    onDecrement: PropTypes.func,
+    showText: PropTypes.bool,
+    renderText: PropTypes.func,
+    textStyle: PropTypes.object,
+    containerStyle: PropTypes.object,
+    separatorStyle: PropTypes.object,
+    incrementStepStyle: PropTypes.object,
+    decrementStepStyle: PropTypes.object,
+    incrementImageStyle: PropTypes.object,
+    decrementImageStyle: PropTypes.object,
   };
   static defaultProps = {
     value: 0,
@@ -35,37 +44,61 @@ export default class SimpleStepper extends Component {
     minimumValue: 0,
     maximumValue: 10,
     stepValue: 1,
-    backgroundColor: 'transparent',
-    tintColor: 'blue',
     valueChanged: () => {},
     decrementImage: require('./assets/decrement.png'),
     incrementImage: require('./assets/increment.png'),
-    tintOnIncrementImage: true,
-    tintOnDecrementImage: true,
-    padding: 8,
-    imageHeight: 36,
-    imageWidth: 36,
     activeOpacity: 0.4,
     disabledOpacity: 0.5,
     disabled: false,
     renderDecrement: undefined,
     renderIncrement: undefined,
     wraps: false,
+    onMin: () => {},
+    onMax: () => {},
+    onIncrement: () => {},
+    onDecrement: () => {},
+    showText: true,
+    renderText: undefined,
+    textStyle: {
+      padding: 8,
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'blue',
+    },
+    containerStyle: {
+      backgroundColor: 'transparent',
+      flexDirection: 'row',
+      borderWidth: 2,
+      borderRadius: 8,
+      overflow: 'hidden',
+      alignItems: 'center',
+      borderColor: 'blue',
+    },
+    separatorStyle: {
+      width: StyleSheet.hairlineWidth,
+      backgroundColor: 'blue',
+      height: '100%',
+    },
+    incrementStepStyle: {
+      padding: 8,
+    },
+    decrementStepStyle: {
+      padding: 8,
+    },
+    incrementImageStyle: {
+      height: 36,
+      width: 36,
+    },
+    decrementImageStyle: {
+      height: 36,
+      width: 36,
+    },
   };
   constructor(props) {
     super(props);
     this.state = {
-      decrementOpacity: 1,
-      incrementOpacity: 1,
-      hasReachedMin: false,
-      hasReachedMax: false,
+      changed: false,
     };
-    this.tintIncrementStyle = this.tintStyle(props.tintOnIncrementImage, props.tintColor);
-    this.tintDecrementStyle = this.tintStyle(props.tintOnDecrementImage, props.tintColor);
-    this.decrementImageSrc = this.imageSrc(props.decrementImage, 'decrement');
-    this.incrementImageSrc = this.imageSrc(props.incrementImage, 'increment');
-    this.incrementStyle = this.imageStyle(props.imageWidth, props.imageHeight);
-    this.decrementStyle = this.imageStyle(props.imageWidth, props.imageHeight);
   }
   componentDidMount() {
     const { initialValue, value } = this.props;
@@ -89,17 +122,41 @@ export default class SimpleStepper extends Component {
     }
   }
   decrementAction = () => {
-    const { value, stepValue } = this.props;
+    const { value, stepValue, onDecrement } = this.props;
     const nextValue = value - stepValue;
-    this.validateValue(nextValue, this.props, true);
+    this.validateValue(nextValue, this.props, true, onDecrement);
   };
   incrementAction = () => {
-    const { value, stepValue } = this.props;
+    const { value, stepValue, onIncrement } = this.props;
     const nextValue = value + stepValue;
-    this.validateValue(nextValue, this.props, true);
+    this.validateValue(nextValue, this.props, true, onIncrement);
   };
-  validateValue = (value, props, changed = false) => {
-    const { minimumValue, maximumValue, disabled, stepValue, wraps, valueChanged, disabledOpacity } = props;
+  validateValue = (value, props, changed = false, onAction = () => {}) => {
+    const { minimumValue, maximumValue, wraps, valueChanged, onMin, onMax } = props;
+    const { hasReachedMin, hasReachedMax } = this._getHasMinMax(value);
+    if (value > maximumValue) {
+      value = wraps ? minimumValue : maximumValue;
+    } else if (value == maximumValue) {
+      value = maximumValue;
+    } else if (value < minimumValue) {
+      value = wraps ? maximumValue : minimumValue;
+    } else if (value == minimumValue) {
+      value = minimumValue;
+    }
+    if (hasReachedMin) {
+      onMin(value);
+    }
+    if (hasReachedMax) {
+      onMax(value);
+    }
+    onAction(value);
+    if (changed) {
+      this.setState({ changed });
+      valueChanged(value);
+    }
+  };
+  _getHasMinMax = value => {
+    const { minimumValue, maximumValue, stepValue, wraps } = this.props;
     let hasReachedMax = true;
     let hasReachedMin = true;
     switch (true) {
@@ -108,9 +165,6 @@ export default class SimpleStepper extends Component {
         hasReachedMax = false;
         break;
       case stepValue >= 0:
-        if (stepValue === 0) {
-          console.warn("Warning: Simple Stepper's stepValue is set to 0.");
-        }
         hasReachedMax = value >= maximumValue;
         hasReachedMin = value <= minimumValue;
         break;
@@ -121,113 +175,91 @@ export default class SimpleStepper extends Component {
         hasReachedMin = value >= maximumValue;
         break;
     }
-    if (value > maximumValue) {
-      value = wraps ? minimumValue : maximumValue;
-    } else if (value == maximumValue) {
-      value = maximumValue;
-    } else if (value < minimumValue) {
-      value = wraps ? maximumValue : minimumValue;
-    } else if (value == minimumValue) {
-      value = minimumValue;
-    }
-    this.setState({
-      hasReachedMin: hasReachedMin || disabled,
-      hasReachedMax: hasReachedMax || disabled,
-      decrementOpacity: hasReachedMin || disabled ? disabledOpacity : 1,
-      incrementOpacity: hasReachedMax || disabled ? disabledOpacity : 1,
-    });
-    if (changed) {
-      valueChanged(value);
-    }
+    return {
+      hasReachedMax,
+      hasReachedMin,
+    };
   };
-  tintStyle(status, tintColor) {
-    if (status) {
-      return { tintColor: tintColor };
-    }
-    return null;
-  }
-  imageSrc(src, type) {
-    if (typeof src == 'string') {
-      if (src.length == 0) {
-        if (type == 'decrement') {
+  _getImageSource = (type, source) => {
+    if (typeof source == 'string') {
+      if (source.length == 0) {
+        if (type == STEP.decrement) {
           return require('./assets/decrement.png');
-        } else if (type == 'increment') {
+        } else if (type == STEP.increment) {
           return require('./assets/increment.png');
         }
       } else {
-        return { uri: src };
+        return { uri: source };
       }
     }
-    return src;
-  }
-  imageStyle(width, height) {
-    return { width: width, height: height };
-  }
+    return source;
+  };
+  _renderImageView = (type, opacity) => {
+    let style = {};
+    let imageSource = null;
+    switch (type) {
+      case STEP.increment:
+        const { renderIncrement, incrementImageStyle, incrementImage } = this.props;
+        if (renderIncrement) {
+          return renderIncrement(this.props);
+        }
+        style = incrementImageStyle;
+        imageSource = incrementImage;
+        break;
+      case STEP.decrement:
+        const { renderDecrement, decrementImageStyle, decrementImage } = this.props;
+        if (renderDecrement) {
+          return renderDecrement(this.props);
+        }
+        style = decrementImageStyle;
+        imageSource = decrementImage;
+        break;
+    }
+    return <ImageView style={style} opacity={opacity} source={this._getImageSource(type, imageSource)} />;
+  };
+  _renderText = (value, renderText, textStyle) => {
+    if (renderText) {
+      return renderText(value);
+    }
+    return <Text style={textStyle}>{value}</Text>;
+  };
   render() {
-    const { padding, tintColor, backgroundColor, activeOpacity, disabled, renderDecrement, renderIncrement } = this.props;
-    const { decrementOpacity, incrementOpacity, hasReachedMin, hasReachedMax } = this.state;
+    const {
+      value,
+      activeOpacity,
+      disabled,
+      disabledOpacity,
+      showText,
+      renderText,
+      containerStyle,
+      separatorStyle,
+      textStyle,
+      incrementStepStyle,
+      decrementStepStyle,
+    } = this.props;
+    const { hasReachedMin, hasReachedMax } = this._getHasMinMax(value);
+    const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
+    const incrementOpacity = hasReachedMax || disabled ? disabledOpacity : 1;
     return (
-      <View style={[styles.row, { backgroundColor: backgroundColor, borderColor: tintColor }]}>
+      <View style={containerStyle}>
         <Step
+          style={decrementStepStyle}
           activeOpacity={activeOpacity}
-          style={styles.leftStep}
-          tintColor={tintColor}
-          padding={padding}
           onPress={this.decrementAction}
           disabled={hasReachedMin || disabled}
-          renderImage={() => {
-            return (
-              <ImageView
-                render={renderDecrement}
-                style={this.decrementStyle}
-                tintStyle={this.tintDecrementStyle}
-                opacity={decrementOpacity}
-                source={this.decrementImageSrc}
-              />
-            );
-          }}
+          renderImage={() => this._renderImageView(STEP.decrement, decrementOpacity)}
         />
+        {showText && <View style={separatorStyle} />}
+        {showText && this._renderText(value, renderText, textStyle)}
+        <View style={separatorStyle} />
         <Step
+          style={incrementStepStyle}
           activeOpacity={activeOpacity}
-          style={styles.rightStep}
-          tintColor={tintColor}
-          padding={padding}
           onPress={this.incrementAction}
           disabled={hasReachedMax || disabled}
-          renderImage={() => {
-            return (
-              <ImageView
-                render={renderIncrement}
-                style={this.incrementStyle}
-                tintStyle={this.tintIncrementStyle}
-                opacity={incrementOpacity}
-                source={this.incrementImageSrc}
-              />
-            );
-          }}
+          renderImage={() => this._renderImageView(STEP.increment, incrementOpacity)}
         />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderRadius: 3,
-    overflow: 'hidden',
-    alignItems: 'center',
-  },
-  leftStep: {
-    alignItems: 'center',
-  },
-  rightStep: {
-    alignItems: 'center',
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    borderRightWidth: 0,
-  },
-});

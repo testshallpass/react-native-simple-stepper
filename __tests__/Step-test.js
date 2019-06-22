@@ -11,6 +11,7 @@ describe('Step', () => {
       expect(tree).toMatchSnapshot();
     });
     test('defaultProps onPress', () => {
+      Step.defaultProps.onPress();
       expect(Step.defaultProps.onPress).toBeDefined();
     });
     test('defaultProps renderImage', () => {

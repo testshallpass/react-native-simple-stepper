@@ -1,92 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageView renders correctly 1`] = `
-<Image
-  resizeMode="contain"
-  source={Object {}}
-  style={
-    Array [
-      Object {},
-      Object {},
-      Object {
-        "opacity": 1,
-      },
-    ]
-  }
-/>
-`;
-
-exports[`SimpleStepper renders correctly 1`] = `
+exports[`SimpleStepper renders snapshot 1`] = `
 <Component
   style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "borderRadius": 3,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "overflow": "hidden",
-      },
-      Object {
-        "backgroundColor": "transparent",
-        "borderColor": "blue",
-      },
-    ]
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderColor": "blue",
+      "borderRadius": 8,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "overflow": "hidden",
+    }
   }
 >
   <Step
     activeOpacity={0.4}
     disabled={true}
     onPress={[Function]}
-    padding={8}
     renderImage={[Function]}
     style={
       Object {
-        "alignItems": "center",
+        "padding": 8,
       }
     }
-    tintColor="blue"
+  />
+  <Component
+    style={
+      Object {
+        "backgroundColor": "blue",
+        "height": "100%",
+        "width": 0.5,
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "blue",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "padding": 8,
+      }
+    }
+  >
+    0
+  </Text>
+  <Component
+    style={
+      Object {
+        "backgroundColor": "blue",
+        "height": "100%",
+        "width": 0.5,
+      }
+    }
   />
   <Step
     activeOpacity={0.4}
     disabled={false}
     onPress={[Function]}
-    padding={8}
     renderImage={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "borderBottomWidth": 0,
-        "borderRightWidth": 0,
-        "borderTopWidth": 0,
-        "borderWidth": 0.5,
+        "padding": 8,
       }
     }
-    tintColor="blue"
   />
 </Component>
-`;
-
-exports[`Step renders correctly 1`] = `
-<TouchableOpacity
-  activeOpacity={1}
-  disabled={false}
-  style={
-    Array [
-      Object {},
-      Object {
-        "borderColor": "blue",
-        "padding": 0,
-      },
-    ]
-  }
->
-  <ImageView
-    opacity={1}
-    source={Object {}}
-    style={Object {}}
-    tintStyle={Object {}}
-  />
-</TouchableOpacity>
 `;

@@ -17,7 +17,8 @@
       "/coverage"
     ],
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "setupTestFrameworkScriptFile": "./setupTests.js"
   },
   "repository": {
     "type": "git",

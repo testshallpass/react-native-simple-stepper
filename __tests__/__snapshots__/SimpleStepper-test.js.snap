@@ -17,8 +17,19 @@ exports[`SimpleStepper renders snapshot 1`] = `
   <Step
     activeOpacity={0.4}
     disabled={true}
+    imageOpacity={0.5}
+    imageSource={
+      Object {
+        "testUri": "../../../src/assets/decrement.png",
+      }
+    }
+    imageStyle={
+      Object {
+        "height": 36,
+        "width": 36,
+      }
+    }
     onPress={[Function]}
-    renderImage={[Function]}
     style={
       Object {
         "padding": 8,
@@ -61,8 +72,19 @@ exports[`SimpleStepper renders snapshot 1`] = `
   <Step
     activeOpacity={0.4}
     disabled={false}
+    imageOpacity={1}
+    imageSource={
+      Object {
+        "testUri": "../../../src/assets/increment.png",
+      }
+    }
+    imageStyle={
+      Object {
+        "height": 36,
+        "width": 36,
+      }
+    }
     onPress={[Function]}
-    renderImage={[Function]}
     style={
       Object {
         "padding": 8,

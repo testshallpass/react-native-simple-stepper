@@ -10,14 +10,19 @@ describe('Step', () => {
       const tree = toJson(wrapper);
       expect(tree).toMatchSnapshot();
     });
-    test('onPress', () => {
-      const onPress = () => {};
-      const wrapper = shallow(<Step />);
-      wrapper.setProps({
-        onPress,
-      });
-      expect(wrapper.prop('onPress')).toEqual(onPress);
-      expect(wrapper.props().onPress).toBeDefined();
+    test('defaultProps onPress', () => {
+      expect(Step.defaultProps.onPress).toBeDefined();
+    });
+    test('defaultProps renderImage', () => {
+      expect(Step.defaultProps.renderImage).toBeUndefined();
+    });
+    test('renderImage to be defined', () => {
+      const wrapper = shallow(<Step renderImage={() => {}} />);
+      expect(wrapper).toBeDefined();
+    });
+    test('onPress to be defined', () => {
+      const wrapper = shallow(<Step onPress={() => {}} />);
+      expect(wrapper).toBeDefined();
     });
   });
 });

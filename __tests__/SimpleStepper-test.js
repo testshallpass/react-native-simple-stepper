@@ -200,32 +200,44 @@ describe('SimpleStepper', () => {
       expect(source).toEqual({ uri: ' ' });
     });
   });
-  describe('_renderImageView', () => {
+  describe('_getImageViewProps', () => {
     test('test increment to be defined', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const renderImage = wrapper.instance()._renderImageView(STEP.increment, 1);
-      expect(renderImage).toBeDefined();
+      const imageProps = wrapper.instance()._getImageViewProps(STEP.increment, 1);
+      expect(imageProps).toBeDefined();
+      expect(imageProps.style).toEqual({ height: 36, width: 36 });
+      expect(imageProps.opacity).toEqual(1);
+      expect(imageProps.source).toBeDefined();
     });
     test('test decrement to be defined', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const renderImage = wrapper.instance()._renderImageView(STEP.decrement, 1);
-      expect(renderImage).toBeDefined();
-    });
-    test('test increment to be defined with renderIncrement', () => {
-      const wrapper = shallow(<SimpleStepper renderIncrement={() => {}} />);
-      wrapper.instance()._renderImageView(STEP.increment, 1);
-    });
-    test('test decrement to be defined with renderDecrement', () => {
-      const wrapper = shallow(<SimpleStepper renderDecrement={() => {}} />);
-      wrapper.instance()._renderImageView(STEP.decrement, 1);
+      const imageProps = wrapper.instance()._getImageViewProps(STEP.decrement, 1);
+      expect(imageProps).toBeDefined();
+      expect(imageProps.style).toEqual({ height: 36, width: 36 });
+      expect(imageProps.opacity).toEqual(1);
+      expect(imageProps.source).toBeDefined();
     });
   });
   describe('_renderText', () => {
     test('test renderText to be function', () => {
       const wrapper = shallow(<SimpleStepper />);
       const func = wrapper.instance()._renderText('value', () => {}, {});
-      expect(func).toBeUndefined()
+      expect(func).toBeUndefined();
     });
   });
-  describe('render', () => {});
+  describe('render', () => {
+    test('renderDecrementStep and renderIncrementStep', () => {
+      const wrapper = shallow(
+        <SimpleStepper
+          renderDecrementStep={() => {
+            return null;
+          }}
+          renderIncrementStep={() => {
+            return null;
+          }}
+        />
+      );
+      expect(wrapper).toBeDefined();
+    });
+  });
 });

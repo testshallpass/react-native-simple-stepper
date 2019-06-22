@@ -10,5 +10,16 @@ exports[`Step renders snapshot 1`] = `
       "padding": 8,
     }
   }
-/>
+>
+  <ImageView
+    opacity={1}
+    source={Object {}}
+    style={
+      Object {
+        "height": 36,
+        "width": 36,
+      }
+    }
+  />
+</TouchableOpacity>
 `;

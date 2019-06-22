@@ -5,7 +5,10 @@ exports[`ImageView renders snapshot 1`] = `
   source={Object {}}
   style={
     Array [
-      Object {},
+      Object {
+        "height": 36,
+        "width": 36,
+      },
       Object {
         "opacity": 1,
       },

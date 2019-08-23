@@ -1,95 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SimpleStepper renders snapshot 1`] = `
-<Component
-  style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "transparent",
-      "borderColor": "blue",
-      "borderRadius": 8,
-      "borderWidth": 2,
-      "flexDirection": "row",
-      "overflow": "hidden",
-    }
-  }
->
-  <Step
-    activeOpacity={0.4}
-    disabled={true}
-    imageOpacity={0.5}
-    imageSource={
-      Object {
-        "testUri": "../../../src/assets/decrement.png",
-      }
-    }
-    imageStyle={
-      Object {
-        "height": 36,
-        "width": 36,
-      }
-    }
-    onPress={[Function]}
-    style={
-      Object {
-        "padding": 8,
-      }
-    }
-  />
+<Component>
   <Component
     style={
       Object {
-        "backgroundColor": "blue",
-        "height": "100%",
-        "width": 0.5,
-      }
-    }
-  />
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "color": "blue",
-        "fontSize": 20,
-        "fontWeight": "bold",
-        "padding": 8,
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "borderColor": "blue",
+        "borderRadius": 8,
+        "borderWidth": 2,
+        "flexDirection": "row",
+        "overflow": "hidden",
       }
     }
   >
-    0
-  </Text>
-  <Component
-    style={
-      Object {
-        "backgroundColor": "blue",
-        "height": "100%",
-        "width": 0.5,
+    <Step
+      activeOpacity={0.4}
+      disabled={true}
+      imageOpacity={0.5}
+      imageSource={
+        Object {
+          "testUri": "../../../src/assets/decrement.png",
+        }
       }
-    }
-  />
-  <Step
-    activeOpacity={0.4}
-    disabled={false}
-    imageOpacity={1}
-    imageSource={
-      Object {
-        "testUri": "../../../src/assets/increment.png",
+      imageStyle={
+        Object {
+          "height": 36,
+          "width": 36,
+        }
       }
-    }
-    imageStyle={
-      Object {
-        "height": 36,
-        "width": 36,
+      onPress={[Function]}
+      style={
+        Object {
+          "padding": 8,
+        }
       }
-    }
-    onPress={[Function]}
-    style={
-      Object {
-        "padding": 8,
+    />
+    <Component
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "height": "100%",
+          "width": 0.5,
+        }
       }
-    }
-  />
+    />
+    <Step
+      activeOpacity={0.4}
+      disabled={false}
+      imageOpacity={1}
+      imageSource={
+        Object {
+          "testUri": "../../../src/assets/increment.png",
+        }
+      }
+      imageStyle={
+        Object {
+          "height": 36,
+          "width": 36,
+        }
+      }
+      onPress={[Function]}
+      style={
+        Object {
+          "padding": 8,
+        }
+      }
+    />
+  </Component>
 </Component>
 `;

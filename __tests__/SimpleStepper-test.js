@@ -138,19 +138,26 @@ describe('SimpleStepper', () => {
       const wrapper = shallow(<SimpleStepper />);
       const props = { minimumValue: 0, maximumValue: 10, wraps: false, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
       wrapper.instance().validateValue(10, props, true);
-      expect(wrapper.instance().state.changed).toBeTruthy();
+      expect(wrapper.instance().state.value).toEqual(10);
     });
     test('test value greater than maximumValue', () => {
       const wrapper = shallow(<SimpleStepper />);
       const props = { minimumValue: 0, maximumValue: 10, wraps: false, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
       wrapper.instance().validateValue(11, props, true);
-      expect(wrapper.instance().state.changed).toBeTruthy();
+      expect(wrapper.instance().state.value).toEqual(10);
     });
     test('test value greater than maximumValue with wraps', () => {
       const wrapper = shallow(<SimpleStepper />);
       const props = { minimumValue: 0, maximumValue: 10, wraps: true, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
       wrapper.instance().validateValue(11, props, true);
-      expect(wrapper.instance().state.changed).toBeTruthy();
+      expect(wrapper.instance().state.value).toEqual(0);
+    });
+  });
+  describe('setValue', () => {
+    test('test setValue to be 6', () => {
+      const wrapper = shallow(<SimpleStepper />);
+      wrapper.instance().setValue(6);
+      expect(wrapper.instance().state.value).toEqual(6);
     });
   });
   describe('_getHasMinMax', () => {
@@ -223,6 +230,11 @@ describe('SimpleStepper', () => {
       const wrapper = shallow(<SimpleStepper />);
       const func = wrapper.instance()._renderText('value', () => {}, {});
       expect(func).toBeUndefined();
+    });
+    test('test renderText to be defined', () => {
+      const wrapper = shallow(<SimpleStepper />);
+      const func = wrapper.instance()._renderText('value', null, {});
+      expect(func).toBeDefined();
     });
   });
   describe('render', () => {

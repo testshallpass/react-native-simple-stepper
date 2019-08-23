@@ -1,74 +1,106 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
 import { SimpleStepper } from './src/index';
 import List from './List';
-import items from './steppers.json';
-const NAME = {
-  basic: 'basic',
-  text: 'text',
-  style: 'style',
-};
+import { TYPE, ITEMS } from './data';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: ITEMS,
+    };
+  }
   _renderItem = ({ item, index }) => {
-    const { name } = item;
-    console.log(item);
+    const { type } = item;
     return (
       <View>
-        {name == NAME.basic && this._renderBasic(item)}
-        {name == NAME.text && this._renderText(item)}
+        {type == TYPE.basic && this._renderBasic(item)}
+        {type == TYPE.action && this._renderAction(item)}
+        {type == TYPE.style && this._renderStyle(item)}
+      </View>
+    );
+  };
+  _renderAction = item => {
+    const { value, props } = item;
+    const { onMin, onMax, onIncrement, onDecrement } = props;
+    const keys = Object.keys(props);
+    return (
+      <View key={item.key} style={styles.content}>
+        <View style={styles.stepper}>
+          <Text style={styles.value}>{value}</Text>
+          <SimpleStepper
+            onMin={onMin}
+            onMax={onMax}
+            onIncrement={onIncrement}
+            onDecrement={onDecrement}
+          />
+        </View>
+        <View style={styles.column}>
+          {keys.map(key => {
+            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
+          })}
+        </View>
       </View>
     );
   };
   _renderBasic = item => {
-    const { props } = item;
+    const { value, props } = item;
     const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, incrementImage, decrementImage } = props;
     const keys = Object.keys(props);
     return (
-      <View key={item.id} style={styles.content}>
-        <SimpleStepper
-          minimumValue={minimumValue}
-          maximumValue={maximumValue}
-          initialValue={initialValue}
-          stepValue={stepValue}
-          disabled={disabled}
-          wraps={wraps}
-          incrementImage={incrementImage}
-          decrementImage={decrementImage}
-        />
-        {keys.map(key => {
-          return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
-        })}
+      <View key={item.key} style={styles.content}>
+        <View style={styles.stepper}>
+          <Text style={styles.value}>{value}</Text>
+          <SimpleStepper
+            minimumValue={minimumValue}
+            maximumValue={maximumValue}
+            initialValue={initialValue}
+            stepValue={stepValue}
+            disabled={disabled}
+            wraps={wraps}
+            incrementImage={incrementImage}
+            decrementImage={decrementImage}
+          />
+        </View>
+        <View style={styles.column}>
+          {keys.map(key => {
+            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
+          })}
+        </View>
       </View>
     );
   };
-  _renderText = item => {
-    const { props } = item;
-    const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, showText, textPosition } = props;
+  _renderStyle = item => {
+    const { value, props } = item;
+    const { showText, textPosition, textStyle, containerStyle, separatorStyle, incrementImageStyle, decrementImageStyle } = props;
     const keys = Object.keys(props);
     return (
-      <View key={item.id} style={styles.content}>
-        <SimpleStepper
-          minimumValue={minimumValue}
-          maximumValue={maximumValue}
-          initialValue={initialValue}
-          stepValue={stepValue}
-          disabled={disabled}
-          wraps={wraps}
-          showText={showText}
-          textPosition={textPosition}
-        />
-        {keys.map(key => {
-          return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
-        })}
+      <View key={item.key} style={styles.content}>
+        <View style={styles.stepper}>
+          {!showText && <Text style={styles.value}>{value}</Text>}
+          <SimpleStepper
+            showText={showText}
+            textPosition={textPosition}
+            textStyle={textStyle}
+            containerStyle={containerStyle}
+            separatorStyle={separatorStyle}
+            incrementImageStyle={incrementImageStyle}
+            decrementImageStyle={decrementImageStyle}
+          />
+        </View>
+        <View style={styles.column}>
+          {keys.map(key => {
+            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
+          })}
+        </View>
       </View>
     );
   };
-  _renderStyle = ({ item, index }) => {};
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <List items={items} renderItem={this._renderItem} />
+        <List items={this.state.items} renderItem={this._renderItem} />
       </SafeAreaView>
     );
   }
@@ -76,14 +108,28 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#E9EEEF',
+  },
+  column: {
+    padding: 8,
+  },
+  value: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#222222',
+    padding: 8,
   },
   key: {
     fontSize: 14,
     color: '#222222',
   },
   content: {
-    padding: 8,
+    paddingVertical: 8,
+    justifyContent: 'space-evenly',
   },
+  stepper: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    margin: 8
+  }
 });

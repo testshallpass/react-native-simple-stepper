@@ -53,7 +53,7 @@ export const ITEMS = [
     },
   },
   {
-    key: 6,
+    key: 3,
     type: TYPE.action,
     value: 0,
     props: {
@@ -72,7 +72,7 @@ export const ITEMS = [
     },
   },
   {
-    key: 7,
+    key: 4,
     type: TYPE.style,
     value: 0,
     props: {
@@ -103,7 +103,7 @@ export const ITEMS = [
     },
   },
   {
-    key: 8,
+    key: 5,
     type: TYPE.style,
     value: 0,
     props: {
@@ -178,7 +178,7 @@ export const ITEMS = [
     },
   },
   {
-    key: 9,
+    key: 7,
     type: TYPE.style,
     value: 0,
     props: {

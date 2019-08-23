@@ -11,7 +11,20 @@ export default class App extends Component {
       items: ITEMS,
     };
   }
-  _renderItem = ({ item, index }) => {
+  _onValueChanged = (value, item) => {
+    if (!item.props.showText) {
+      let data = this.state.items.slice();
+      if (`${value}`.length > 4) {
+        data[item.key].value = value.toFixed(2);
+      } else {
+        data[item.key].value = value;
+      }
+      this.setState({
+        items: data
+      });
+    }
+  }
+  _renderItem = ({ item }) => {
     const { type } = item;
     return (
       <View>
@@ -24,22 +37,17 @@ export default class App extends Component {
   _renderAction = item => {
     const { value, props } = item;
     const { onMin, onMax, onIncrement, onDecrement } = props;
-    const keys = Object.keys(props);
     return (
-      <View key={item.key} style={styles.content}>
+      <View style={styles.content}>
         <View style={styles.stepper}>
-          <Text style={styles.value}>{value}</Text>
           <SimpleStepper
             onMin={onMin}
             onMax={onMax}
             onIncrement={onIncrement}
             onDecrement={onDecrement}
+            valueChanged={value => this._onValueChanged(value, item)}
           />
-        </View>
-        <View style={styles.column}>
-          {keys.map(key => {
-            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
-          })}
+          <Text style={styles.value}>{value}</Text>
         </View>
       </View>
     );
@@ -47,11 +55,9 @@ export default class App extends Component {
   _renderBasic = item => {
     const { value, props } = item;
     const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, incrementImage, decrementImage } = props;
-    const keys = Object.keys(props);
     return (
-      <View key={item.key} style={styles.content}>
+      <View style={styles.content}>
         <View style={styles.stepper}>
-          <Text style={styles.value}>{value}</Text>
           <SimpleStepper
             minimumValue={minimumValue}
             maximumValue={maximumValue}
@@ -61,12 +67,9 @@ export default class App extends Component {
             wraps={wraps}
             incrementImage={incrementImage}
             decrementImage={decrementImage}
+            valueChanged={value => this._onValueChanged(value, item)}
           />
-        </View>
-        <View style={styles.column}>
-          {keys.map(key => {
-            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
-          })}
+          <Text style={styles.value}>{value}</Text>
         </View>
       </View>
     );
@@ -74,11 +77,9 @@ export default class App extends Component {
   _renderStyle = item => {
     const { value, props } = item;
     const { showText, textPosition, textStyle, containerStyle, separatorStyle, incrementImageStyle, decrementImageStyle } = props;
-    const keys = Object.keys(props);
     return (
-      <View key={item.key} style={styles.content}>
+      <View style={styles.content}>
         <View style={styles.stepper}>
-          {!showText && <Text style={styles.value}>{value}</Text>}
           <SimpleStepper
             showText={showText}
             textPosition={textPosition}
@@ -87,12 +88,9 @@ export default class App extends Component {
             separatorStyle={separatorStyle}
             incrementImageStyle={incrementImageStyle}
             decrementImageStyle={decrementImageStyle}
+            valueChanged={value => this._onValueChanged(value, item)}
           />
-        </View>
-        <View style={styles.column}>
-          {keys.map(key => {
-            return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
-          })}
+          {!showText && <Text style={styles.value}>{value}</Text>}
         </View>
       </View>
     );
@@ -100,7 +98,7 @@ export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <List items={this.state.items} renderItem={this._renderItem} />
+        <List extraData={this.state} items={this.state.items} renderItem={this._renderItem} />
       </SafeAreaView>
     );
   }
@@ -108,13 +106,14 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#E9EEEF',
   },
   column: {
     padding: 8,
   },
   value: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#222222',
     padding: 8,
@@ -128,8 +127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   stepper: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
     margin: 8
   }
 });

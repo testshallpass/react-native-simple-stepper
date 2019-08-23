@@ -3,12 +3,13 @@ import { FlatList, View } from 'react-native';
 
 export default class List extends Component {
   render() {
-    const { items, renderItem } = this.props;
+    const { items, renderItem, extraData } = this.props;
     return (
       <FlatList
         data={items}
         renderItem={renderItem}
-        keyExtractor={item => `${item.id}`}
+        extraData={extraData}
+        keyExtractor={item => `${item.key}`}
         ItemSeparatorComponent={() => {
           return <View style={{ backgroundColor: 'black', height: 1 }} />;
         }}

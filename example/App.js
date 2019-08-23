@@ -1,65 +1,96 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, FlatList, SafeAreaView, View } from 'react-native';
-import { SimpleStepper } from 'react-native-simple-stepper';
-import { data } from './data';
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import { SimpleStepper } from './src/index';
+import List from './List';
+import { TYPE, ITEMS } from './data';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
+      items: ITEMS,
     };
   }
-  valueChanged(value, key) {
-    let data = this.state.data.slice();
-    data[key].value = Number(value.toFixed(2));
-    this.setState({
-      data,
-    });
+  _onValueChanged = (value, item) => {
+    if (!item.props.showText) {
+      let data = this.state.items.slice();
+      if (`${value}`.length > 4) {
+        data[item.key].value = value.toFixed(2);
+      } else {
+        data[item.key].value = value;
+      }
+      this.setState({
+        items: data
+      });
+    }
   }
-  renderItem = ({ item, index }) => {
+  _renderItem = ({ item }) => {
+    const { type } = item;
     return (
-      <View style={styles.separator}>
-        <View style={styles.content}>
-          <Text
-            style={[
-              styles.value,
-              {
-                color: item.tintColor,
-              },
-            ]}
-          >
-            {`${item.value}`}
-          </Text>
+      <View>
+        {type == TYPE.basic && this._renderBasic(item)}
+        {type == TYPE.action && this._renderAction(item)}
+        {type == TYPE.style && this._renderStyle(item)}
+      </View>
+    );
+  };
+  _renderAction = item => {
+    const { value, props } = item;
+    const { onMin, onMax, onIncrement, onDecrement } = props;
+    return (
+      <View style={styles.content}>
+        <View style={styles.stepper}>
           <SimpleStepper
-            value={item.value}
-            tintColor={item.tintColor}
-            valueChanged={value => this.valueChanged(value, item.key)}
-            tintOnIncrementImage={item.tintOnIncrementImage}
-            tintOnDecrementImage={item.tintOnDecrementImage}
-            incrementImage={item.incrementImage}
-            decrementImage={item.decrementImage}
-            minimumValue={item.minimumValue}
-            maximumValue={item.maximumValue}
-            initialValue={item.initialValue}
-            stepValue={item.stepValue}
-            disabled={item.disabled}
-            wraps={item.wraps}
+            onMin={onMin}
+            onMax={onMax}
+            onIncrement={onIncrement}
+            onDecrement={onDecrement}
+            valueChanged={value => this._onValueChanged(value, item)}
           />
-          {item.wraps &&
-            <Text style={[styles.wraps, { color: item.tintColor }]}>
-              {'wraps enabled'}
-            </Text>}
-          {!item.wraps &&
-            <Text style={[styles.wraps, { color: item.tintColor }]}>
-              {'wraps disabled'}
-            </Text>}
-          <View style={styles.row}>
-            <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>
-            <Text style={styles.text}>{'min: '}{item.minimumValue}</Text>
-            <Text style={styles.text}>{'max: '}{item.maximumValue}</Text>
-            <Text style={styles.text}>{'step: '}{item.stepValue}</Text>
-          </View>
+          <Text style={styles.value}>{value}</Text>
+        </View>
+      </View>
+    );
+  };
+  _renderBasic = item => {
+    const { value, props } = item;
+    const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, incrementImage, decrementImage } = props;
+    return (
+      <View style={styles.content}>
+        <View style={styles.stepper}>
+          <SimpleStepper
+            minimumValue={minimumValue}
+            maximumValue={maximumValue}
+            initialValue={initialValue}
+            stepValue={stepValue}
+            disabled={disabled}
+            wraps={wraps}
+            incrementImage={incrementImage}
+            decrementImage={decrementImage}
+            valueChanged={value => this._onValueChanged(value, item)}
+          />
+          <Text style={styles.value}>{value}</Text>
+        </View>
+      </View>
+    );
+  };
+  _renderStyle = item => {
+    const { value, props } = item;
+    const { showText, textPosition, textStyle, containerStyle, separatorStyle, incrementImageStyle, decrementImageStyle } = props;
+    return (
+      <View style={styles.content}>
+        <View style={styles.stepper}>
+          <SimpleStepper
+            showText={showText}
+            textPosition={textPosition}
+            textStyle={textStyle}
+            containerStyle={containerStyle}
+            separatorStyle={separatorStyle}
+            incrementImageStyle={incrementImageStyle}
+            decrementImageStyle={decrementImageStyle}
+            valueChanged={value => this._onValueChanged(value, item)}
+          />
+          {!showText && <Text style={styles.value}>{value}</Text>}
         </View>
       </View>
     );
@@ -67,7 +98,7 @@ export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <FlatList data={this.state.data} renderItem={this.renderItem} keyExtractor={item => `${item.key}`} />
+        <List extraData={this.state} items={this.state.items} renderItem={this._renderItem} />
       </SafeAreaView>
     );
   }
@@ -76,30 +107,27 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#E9EEEF',
   },
-  content: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  text: {
-    fontSize: 16,
-    color: '#222222',
-    margin: 8,
+  column: {
+    padding: 8,
   },
   value: {
     fontSize: 28,
     fontWeight: 'bold',
+    color: '#222222',
+    padding: 8,
   },
-  wraps: {
-    fontWeight: 'bold',
-    fontSize: 18,
+  key: {
+    fontSize: 14,
+    color: '#222222',
   },
-  separator: {
-    borderBottomColor: '#222222',
-    borderBottomWidth: 1,
+  content: {
+    paddingVertical: 8,
+    justifyContent: 'space-evenly',
   },
+  stepper: {
+    flexDirection: 'row',
+    margin: 8
+  }
 });

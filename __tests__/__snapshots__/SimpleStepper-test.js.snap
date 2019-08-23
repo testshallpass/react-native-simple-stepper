@@ -1,92 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageView renders correctly 1`] = `
-<Image
-  resizeMode="contain"
-  source={Object {}}
-  style={
-    Array [
-      Object {},
-      Object {},
-      Object {
-        "opacity": 1,
-      },
-    ]
-  }
-/>
-`;
-
-exports[`SimpleStepper renders correctly 1`] = `
-<Component
-  style={
-    Array [
+exports[`SimpleStepper renders snapshot 1`] = `
+<Component>
+  <Component
+    style={
       Object {
         "alignItems": "center",
-        "borderRadius": 3,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "overflow": "hidden",
-      },
-      Object {
         "backgroundColor": "transparent",
         "borderColor": "blue",
-      },
-    ]
-  }
->
-  <Step
-    activeOpacity={0.4}
-    disabled={true}
-    onPress={[Function]}
-    padding={8}
-    renderImage={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
+        "borderRadius": 8,
+        "borderWidth": 2,
+        "flexDirection": "row",
+        "overflow": "hidden",
       }
     }
-    tintColor="blue"
-  />
-  <Step
-    activeOpacity={0.4}
-    disabled={false}
-    onPress={[Function]}
-    padding={8}
-    renderImage={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "borderBottomWidth": 0,
-        "borderRightWidth": 0,
-        "borderTopWidth": 0,
-        "borderWidth": 0.5,
+  >
+    <Step
+      activeOpacity={0.4}
+      disabled={true}
+      imageOpacity={0.5}
+      imageSource={
+        Object {
+          "testUri": "../../../src/assets/decrement.png",
+        }
       }
-    }
-    tintColor="blue"
-  />
+      imageStyle={
+        Object {
+          "height": 36,
+          "width": 36,
+        }
+      }
+      onPress={[Function]}
+      style={
+        Object {
+          "padding": 8,
+        }
+      }
+    />
+    <Component
+      style={
+        Object {
+          "backgroundColor": "blue",
+          "height": "100%",
+          "width": 0.5,
+        }
+      }
+    />
+    <Step
+      activeOpacity={0.4}
+      disabled={false}
+      imageOpacity={1}
+      imageSource={
+        Object {
+          "testUri": "../../../src/assets/increment.png",
+        }
+      }
+      imageStyle={
+        Object {
+          "height": 36,
+          "width": 36,
+        }
+      }
+      onPress={[Function]}
+      style={
+        Object {
+          "padding": 8,
+        }
+      }
+    />
+  </Component>
 </Component>
-`;
-
-exports[`Step renders correctly 1`] = `
-<TouchableOpacity
-  activeOpacity={1}
-  disabled={false}
-  style={
-    Array [
-      Object {},
-      Object {
-        "borderColor": "blue",
-        "padding": 0,
-      },
-    ]
-  }
->
-  <ImageView
-    opacity={1}
-    source={Object {}}
-    style={Object {}}
-    tintStyle={Object {}}
-  />
-</TouchableOpacity>
 `;

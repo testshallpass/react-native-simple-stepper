@@ -7,16 +7,13 @@
 [![codecov](https://codecov.io/gh/testshallpass/react-native-simple-stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-simple-stepper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
-![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/red.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/blue.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/green.png) ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/custom.png)
-
-A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS.
+A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS with added customization and flexibility.
 
 ## Table of contents
 
 1. [Installation](#installation)
-2. [Demo](#demo)
-3. [Usage](#usage)
-4. [Props](#props)
+2. [Usage](#usage)
+3. [Props](#props)
 
 ## Installation
 
@@ -35,45 +32,60 @@ export default class App extends Component {
     this.state = { value: 0 };
   }
   valueChanged(value) {
-    // Truncate value to 2 decimal places and cast as Number (like the demo).
+    // Truncate value to 2 decimal places and cast as Number.
     const nextValue = Number(value.toFixed(2));
     this.setState({ value: nextValue });
     // ...
   }
   render() {
-    const { value } = this.state;
-    return <SimpleStepper value={value} valueChanged={value => this.valueChanged(value)} />;
+    return <SimpleStepper valueChanged={value => this.valueChanged(value)} />;
   }
 }
 
 ```
 
-## Demo
-
-![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/master/screenshots/demo.gif)
-
 ## Props
+
+### Values
 
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
-| ```value``` | Number  | stepper's value | 0
 | ```initialValue``` | Number  | initial value | 0
 | ```minimumValue``` | Number  | minimum value | 0
 | ```maximumValue``` | Number  | maximum value | 10
-| ```stepValue``` | Number  | step value (i.e. increment by 10) | 1
-| ```backgroundColor``` | String  | background color | transparent
-| ```tintColor``` | String  | color for border, divider and images | blue
-| ```padding``` | Number | stepper padding | 4
-| ```valueChanged``` | Function  | Fires when the value changes and the value will be passed down for processing like display or calculations | null
+| ```stepValue``` | Number  | step value (ex. increment by 10) | 1
 | ```incrementImage``` | String or Number  | network or local image | require('./assets/increment.png')
 | ```decrementImage``` | String or Number  | network or local image | require('./assets/decrement.png')
-| ```tintOnIncrementImage``` | Boolean  | whether or not you want tintColor applied to increment image | true
-| ```tintOnDecrementImage``` | Boolean  | whether or not you want tintColor applied to decrement image | true
-| ```imageHeight``` | Number  | network image height | 36
-| ```imageWidth``` | Number  | network image width | 36
 | ```activeOpacity``` | Number  | touch opacity | 0.4
 | ```disabledOpacity``` | Number  | when step button is disabled | 0.5
 | ```disabled``` | Boolean  | stepper disable state | false
 | ```wraps``` | Boolean  | whether or not it wraps. [more info](https://developer.apple.com/documentation/uikit/uistepper/1624068-wraps) | false
-| ```renderIncrement``` | Function  | render increment component(s) | null
-| ```renderDecrement``` | Function  | render decrement component(s) | null
+| ```showText``` | Boolean  | whether or not to show text component | false
+| ```textPosition``` | String  | placement of the text component | center
+
+### Functions
+
+| Name | Type | Description | Default |
+| --- | :---: | --- | --- |
+| ```valueChanged``` | Function  | invoked when value changes | `() => {}`
+| ```onMin``` | Function  | invoked when value reaches min value | `() => {}`
+| ```onMax``` | Function  | invoked when value reaches min value | `() => {}`
+| ```onIncrement``` | Function  | invoked each time value increments | `() => {}`
+| ```onDecrement``` | Function  | invoked each time value decrements | `() => {}`
+| ```renderDecrementImage``` | Function  | used to override decrement image component | `undefined`
+| ```renderIncrementImage``` | Function  | used to override increment image component | `undefined`
+| ```renderDecrementStep``` | Function  | used to override decrement step component | `undefined`
+| ```renderIncrementStep``` | Function  | used to override increment step component | `undefined`
+| ```renderText``` | Function  | used to override increment text component | `undefined`
+
+### Styles
+
+| Name | Type | Description | Default |
+| --- | :---: | --- | --- |
+| ```textStyle``` | Object  | text component style | `{ padding: 8, fontSize: 20, fontWeight: 'bold', color: 'blue' }`
+| ```containerStyle``` | Object  | container component style | `{ backgroundColor: 'transparent', flexDirection: 'row', borderWidth: 2, borderRadius: 8, overflow: 'hidden', alignItems: 'center', borderColor: 'blue' }`
+| ```separatorStyle``` | Object  | separator component style | `{ width: StyleSheet.hairlineWidth, backgroundColor: 'blue', height: '100%' }`
+| ```incrementStepStyle``` | Object  | increment step component style | `{ padding: 8 }`
+| ```decrementStepStyle``` | Object  | decrement step component style | `{ padding: 8 }`
+| ```incrementImageStyle``` | Object  | increment image component styles | `{ height: 36, width: 36 }`
+| ```decrementImageStyle``` | Object  | decrement image component styles | `{ height: 36, width: 36 }`

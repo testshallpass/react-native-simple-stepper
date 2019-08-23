@@ -4,30 +4,22 @@ import { Image } from 'react-native';
 
 export default class ImageView extends Component {
   static propTypes = {
-    render: PropTypes.func,
     style: PropTypes.object,
-    tintStyle: PropTypes.object,
-    opacity: PropTypes.number,
     source: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    opacity: PropTypes.number,
   };
 
   static defaultProps = {
-    render: undefined,
-    style: {},
-    tintStyle: {},
-    opacity: 1,
+    style: {
+      height: 36,
+      width: 36,
+    },
     source: {},
+    opacity: 1,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { render, style, tintStyle, opacity, source } = this.props;
-    if (render) {
-      return render(this.props);
-    }
-    return <Image resizeMode={'contain'} style={[style, tintStyle, { opacity: opacity }]} source={source} />;
+    const { style, source, opacity } = this.props;
+    return <Image style={[style, { opacity }]} source={source} />;
   }
 }

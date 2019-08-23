@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageView renders snapshot 1`] = `
+<Image
+  source={Object {}}
+  style={
+    Array [
+      Object {
+        "height": 36,
+        "width": 36,
+      },
+      Object {
+        "opacity": 1,
+      },
+    ]
+  }
+/>
+`;

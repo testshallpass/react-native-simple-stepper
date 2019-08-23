@@ -1,73 +1,74 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, FlatList, SafeAreaView, View } from 'react-native';
-import { SimpleStepper } from 'react-native-simple-stepper';
-import { data } from './data';
+import { StyleSheet, Text, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { SimpleStepper } from './src/index';
+import List from './List';
+import items from './steppers.json';
+const NAME = {
+  basic: 'basic',
+  text: 'text',
+  style: 'style',
+};
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: data,
-    };
-  }
-  valueChanged(value, key) {
-    let data = this.state.data.slice();
-    data[key].value = Number(value.toFixed(2));
-    this.setState({
-      data,
-    });
-  }
-  renderItem = ({ item, index }) => {
+  _renderItem = ({ item, index }) => {
+    const { name } = item;
+    console.log(item);
     return (
-      <View style={styles.separator}>
-        <View style={styles.content}>
-          <Text
-            style={[
-              styles.value,
-              {
-                color: item.tintColor,
-              },
-            ]}
-          >
-            {`${item.value}`}
-          </Text>
-          <SimpleStepper
-            value={item.value}
-            tintColor={item.tintColor}
-            valueChanged={value => this.valueChanged(value, item.key)}
-            tintOnIncrementImage={item.tintOnIncrementImage}
-            tintOnDecrementImage={item.tintOnDecrementImage}
-            incrementImage={item.incrementImage}
-            decrementImage={item.decrementImage}
-            minimumValue={item.minimumValue}
-            maximumValue={item.maximumValue}
-            initialValue={item.initialValue}
-            stepValue={item.stepValue}
-            disabled={item.disabled}
-            wraps={item.wraps}
-          />
-          {item.wraps &&
-            <Text style={[styles.wraps, { color: item.tintColor }]}>
-              {'wraps enabled'}
-            </Text>}
-          {!item.wraps &&
-            <Text style={[styles.wraps, { color: item.tintColor }]}>
-              {'wraps disabled'}
-            </Text>}
-          <View style={styles.row}>
-            <Text style={styles.text}>{'initial: '}{item.initialValue}</Text>
-            <Text style={styles.text}>{'min: '}{item.minimumValue}</Text>
-            <Text style={styles.text}>{'max: '}{item.maximumValue}</Text>
-            <Text style={styles.text}>{'step: '}{item.stepValue}</Text>
-          </View>
-        </View>
+      <View>
+        {name == NAME.basic && this._renderBasic(item)}
+        {name == NAME.text && this._renderText(item)}
       </View>
     );
   };
+  _renderBasic = item => {
+    const { props } = item;
+    const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, incrementImage, decrementImage } = props;
+    const keys = Object.keys(props);
+    return (
+      <View key={item.id} style={styles.content}>
+        <SimpleStepper
+          minimumValue={minimumValue}
+          maximumValue={maximumValue}
+          initialValue={initialValue}
+          stepValue={stepValue}
+          disabled={disabled}
+          wraps={wraps}
+          incrementImage={incrementImage}
+          decrementImage={decrementImage}
+        />
+        {keys.map(key => {
+          return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
+        })}
+      </View>
+    );
+  };
+  _renderText = item => {
+    const { props } = item;
+    const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, showText, textPosition } = props;
+    const keys = Object.keys(props);
+    return (
+      <View key={item.id} style={styles.content}>
+        <SimpleStepper
+          minimumValue={minimumValue}
+          maximumValue={maximumValue}
+          initialValue={initialValue}
+          stepValue={stepValue}
+          disabled={disabled}
+          wraps={wraps}
+          showText={showText}
+          textPosition={textPosition}
+        />
+        {keys.map(key => {
+          return <Text key={key} style={styles.key}>{`${key}: ${props[key]}`}</Text>;
+        })}
+      </View>
+    );
+  };
+  _renderStyle = ({ item, index }) => {};
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <FlatList data={this.state.data} renderItem={this.renderItem} keyExtractor={item => `${item.key}`} />
+        <List items={items} renderItem={this._renderItem} />
       </SafeAreaView>
     );
   }
@@ -78,28 +79,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  content: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  text: {
-    fontSize: 16,
+  key: {
+    fontSize: 14,
     color: '#222222',
-    margin: 8,
   },
-  value: {
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  wraps: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  separator: {
-    borderBottomColor: '#222222',
-    borderBottomWidth: 1,
+  content: {
+    padding: 8,
   },
 });

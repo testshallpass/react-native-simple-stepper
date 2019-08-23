@@ -6,10 +6,14 @@ const STEP = {
   increment: 'increment',
   decrement: 'decrement',
 };
+const TEXT_POSITION = {
+  left: 'left',
+  center: 'center',
+  right: 'right',
+};
 
 export default class SimpleStepper extends Component {
   static propTypes = {
-    value: PropTypes.number,
     initialValue: PropTypes.number,
     minimumValue: PropTypes.number,
     maximumValue: PropTypes.number,
@@ -38,9 +42,9 @@ export default class SimpleStepper extends Component {
     decrementStepStyle: PropTypes.object,
     incrementImageStyle: PropTypes.object,
     decrementImageStyle: PropTypes.object,
+    textPosition: PropTypes.oneOfType([TEXT_POSITION.left, TEXT_POSITION.center, TEXT_POSITION.right]),
   };
   static defaultProps = {
-    value: 0,
     initialValue: 0,
     minimumValue: 0,
     maximumValue: 10,
@@ -60,7 +64,7 @@ export default class SimpleStepper extends Component {
     onMax: () => {},
     onIncrement: () => {},
     onDecrement: () => {},
-    showText: true,
+    showText: false,
     renderText: undefined,
     textStyle: {
       padding: 8,
@@ -96,40 +100,41 @@ export default class SimpleStepper extends Component {
       height: 36,
       width: 36,
     },
+    textPosition: TEXT_POSITION.center,
   };
   constructor(props) {
     super(props);
     this.state = {
-      changed: false,
+      value: props.initialValue,
     };
-  }
-  componentDidMount() {
-    const { initialValue, value } = this.props;
-    this.validateValue(initialValue, this.props, value !== initialValue);
+    this.validateValue(props.initialValue, props);
   }
   componentWillReceiveProps(nextProps) {
-    const { value, initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
+    const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
+    const { value } = this.state;
     if (nextProps.initialValue !== initialValue) {
       this.validateValue(nextProps.initialValue, nextProps, nextProps.value !== nextProps.initialValue);
     } else if (nextProps.disabled !== disabled || nextProps.stepValue !== stepValue) {
-      this.validateValue(nextProps.value, nextProps);
+      this.validateValue(value, nextProps);
     } else if (nextProps.minimumValue !== minimumValue || nextProps.maximumValue !== maximumValue) {
-      const isValidNextMin = nextProps.minimumValue < maximumValue;
-      const isValidNextMax = nextProps.maximumValue > minimumValue;
-      if (isValidNextMin && isValidNextMax) {
-        this.validateValue(nextProps.value, nextProps);
+      const isOkay = nextProps.minimumValue < nextProps.maximumValue;
+      if (isOkay) {
+        this.validateValue(value, nextProps);
       }
-    } else if (nextProps.value !== value) {
-      this.validateValue(nextProps.value, nextProps);
     }
   }
+  setValue = value => {
+    this.validateValue(value, this.props, this.state.value !== value);
+  };
   decrementAction = () => {
-    const { value, stepValue, onDecrement } = this.props;
+    const { stepValue, onDecrement } = this.props;
+    const { value } = this.state;
     const nextValue = value - stepValue;
     this.validateValue(nextValue, this.props, true, onDecrement);
   };
   incrementAction = () => {
-    const { value, stepValue, onIncrement } = this.props;
+    const { stepValue, onIncrement } = this.props;
+    const { value } = this.state;
     const nextValue = value + stepValue;
     this.validateValue(nextValue, this.props, true, onIncrement);
   };
@@ -145,16 +150,16 @@ export default class SimpleStepper extends Component {
     } else if (value == minimumValue) {
       value = minimumValue;
     }
+    onAction(value);
     if (hasReachedMin) {
       onMin(value);
     }
     if (hasReachedMax) {
       onMax(value);
     }
-    onAction(value);
     if (changed) {
-      this.setState({ changed });
       valueChanged(value);
+      this.setState({ value });
     }
   };
   _getHasMinMax = value => {
@@ -228,7 +233,6 @@ export default class SimpleStepper extends Component {
   };
   render() {
     const {
-      value,
       activeOpacity,
       disabled,
       disabledOpacity,
@@ -243,41 +247,52 @@ export default class SimpleStepper extends Component {
       renderDecrementImage,
       renderDecrementStep,
       renderIncrementStep,
+      textPosition,
     } = this.props;
+    const { value } = this.state;
     const { hasReachedMin, hasReachedMax } = this._getHasMinMax(value);
     const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
     const incrementOpacity = hasReachedMax || disabled ? disabledOpacity : 1;
     const decrementImageProps = this._getImageViewProps(STEP.decrement, decrementOpacity);
     const incrementImageProps = this._getImageViewProps(STEP.increment, incrementOpacity);
+    const isLeft = showText && textPosition == TEXT_POSITION.left;
+    const isCenter = showText && textPosition == TEXT_POSITION.center;
+    const isRight = showText && textPosition == TEXT_POSITION.right;
     return (
-      <View style={containerStyle}>
-        {renderDecrementStep
-          ? renderDecrementStep(this.props)
-          : <Step
-              style={decrementStepStyle}
-              activeOpacity={activeOpacity}
-              onPress={this.decrementAction}
-              disabled={hasReachedMin || disabled}
-              renderImage={renderIncrementImage}
-              imageStyle={decrementImageProps.style}
-              imageOpacity={decrementImageProps.opacity}
-              imageSource={decrementImageProps.source}
-            />}
-        {showText && <View style={separatorStyle} />}
-        {showText && this._renderText(value, renderText, textStyle)}
-        <View style={separatorStyle} />
-        {renderIncrementStep
-          ? renderIncrementStep(this.props)
-          : <Step
-              style={incrementStepStyle}
-              activeOpacity={activeOpacity}
-              onPress={this.incrementAction}
-              disabled={hasReachedMax || disabled}
-              renderImage={renderDecrementImage}
-              imageStyle={incrementImageProps.style}
-              imageOpacity={incrementImageProps.opacity}
-              imageSource={incrementImageProps.source}
-            />}
+      <View>
+        <View style={containerStyle}>
+          {isLeft && this._renderText(value, renderText, textStyle)}
+          {isLeft && <View style={separatorStyle} />}
+          {renderDecrementStep
+            ? renderDecrementStep(this.props)
+            : <Step
+                style={decrementStepStyle}
+                activeOpacity={activeOpacity}
+                onPress={this.decrementAction}
+                disabled={hasReachedMin || disabled}
+                renderImage={renderIncrementImage}
+                imageStyle={decrementImageProps.style}
+                imageOpacity={decrementImageProps.opacity}
+                imageSource={decrementImageProps.source}
+              />}
+          {isCenter && <View style={separatorStyle} />}
+          {isCenter && this._renderText(value, renderText, textStyle)}
+          <View style={separatorStyle} />
+          {renderIncrementStep
+            ? renderIncrementStep(this.props)
+            : <Step
+                style={incrementStepStyle}
+                activeOpacity={activeOpacity}
+                onPress={this.incrementAction}
+                disabled={hasReachedMax || disabled}
+                renderImage={renderDecrementImage}
+                imageStyle={incrementImageProps.style}
+                imageOpacity={incrementImageProps.opacity}
+                imageSource={incrementImageProps.source}
+              />}
+          {isRight && <View style={separatorStyle} />}
+          {isRight && this._renderText(value, renderText, textStyle)}
+        </View>
       </View>
     );
   }

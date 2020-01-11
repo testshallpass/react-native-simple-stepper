@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
-import { SimpleStepper } from './src/index';
+import React, {Component} from 'react';
+import {StyleSheet, Text, SafeAreaView, View} from 'react-native';
+import {SimpleStepper} from 'react-native-simple-stepper';
 import List from './List';
-import { TYPE, ITEMS } from './data';
+import {TYPE, ITEMS} from './data';
 
 export default class App extends Component {
   constructor(props) {
@@ -20,12 +20,12 @@ export default class App extends Component {
         data[item.key].value = value;
       }
       this.setState({
-        items: data
+        items: data,
       });
     }
-  }
-  _renderItem = ({ item }) => {
-    const { type } = item;
+  };
+  _renderItem = ({item}) => {
+    const {type} = item;
     return (
       <View>
         {type == TYPE.basic && this._renderBasic(item)}
@@ -35,8 +35,8 @@ export default class App extends Component {
     );
   };
   _renderAction = item => {
-    const { value, props } = item;
-    const { onMin, onMax, onIncrement, onDecrement } = props;
+    const {value, props} = item;
+    const {onMin, onMax, onIncrement, onDecrement} = props;
     return (
       <View style={styles.content}>
         <View style={styles.stepper}>
@@ -53,8 +53,17 @@ export default class App extends Component {
     );
   };
   _renderBasic = item => {
-    const { value, props } = item;
-    const { minimumValue, maximumValue, initialValue, stepValue, disabled, wraps, incrementImage, decrementImage } = props;
+    const {value, props} = item;
+    const {
+      minimumValue,
+      maximumValue,
+      initialValue,
+      stepValue,
+      disabled,
+      wraps,
+      incrementImage,
+      decrementImage,
+    } = props;
     return (
       <View style={styles.content}>
         <View style={styles.stepper}>
@@ -75,8 +84,16 @@ export default class App extends Component {
     );
   };
   _renderStyle = item => {
-    const { value, props } = item;
-    const { showText, textPosition, textStyle, containerStyle, separatorStyle, incrementImageStyle, decrementImageStyle } = props;
+    const {value, props} = item;
+    const {
+      showText,
+      textPosition,
+      textStyle,
+      containerStyle,
+      separatorStyle,
+      incrementImageStyle,
+      decrementImageStyle,
+    } = props;
     return (
       <View style={styles.content}>
         <View style={styles.stepper}>
@@ -98,7 +115,11 @@ export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <List extraData={this.state} items={this.state.items} renderItem={this._renderItem} />
+        <List
+          extraData={this.state}
+          items={this.state.items}
+          renderItem={this._renderItem}
+        />
       </SafeAreaView>
     );
   }
@@ -128,6 +149,6 @@ const styles = StyleSheet.create({
   },
   stepper: {
     flexDirection: 'row',
-    margin: 8
-  }
+    margin: 8,
+  },
 });

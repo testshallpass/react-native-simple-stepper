@@ -46,8 +46,10 @@ export const ITEMS = [
       maximumValue: 70,
       initialValue: 30,
       stepValue: 10,
-      incrementImage: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
-      decrementImage: 'https://facebook.github.io/react-native/docs/assets/favicon.png',
+      incrementImage:
+        'https://facebook.github.io/react-native/docs/assets/favicon.png',
+      decrementImage:
+        'https://facebook.github.io/react-native/docs/assets/favicon.png',
       disabled: false,
       wraps: false,
     },

@@ -1,14 +1,12 @@
 import React from 'react';
 import ImageView from '../src/ImageView';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import renderer from 'react-test-renderer';
 
 describe('ImageView', () => {
   describe('renders', () => {
     test('snapshot', () => {
-      const wrapper = shallow(<ImageView />);
-      const tree = toJson(wrapper);
-      expect(tree).toMatchSnapshot();
+      const wrapper = renderer.create(<ImageView />).toJSON();
+      expect(wrapper).toMatchSnapshot();
     });
   });
 });

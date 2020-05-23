@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - "6.9.1"
+  - "13.8.0"
 branches:
   only:
     - master
 build:
   run:
-    - npm test
+    - yarn test
 before_install:
   - pip install --user codecov
 after_success:

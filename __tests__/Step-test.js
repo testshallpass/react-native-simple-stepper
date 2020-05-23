@@ -1,14 +1,12 @@
 import React from 'react';
 import Step from '../src/Step';
-import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
+import renderer from 'react-test-renderer';
 
 describe('Step', () => {
   describe('renders', () => {
     test('snapshot', () => {
-      const wrapper = shallow(<Step />);
-      const tree = toJson(wrapper);
-      expect(tree).toMatchSnapshot();
+      const wrapper = renderer.create(<Step />).toJSON();
+      expect(wrapper).toMatchSnapshot();
     });
     test('defaultProps onPress', () => {
       Step.defaultProps.onPress();
@@ -18,11 +16,11 @@ describe('Step', () => {
       expect(Step.defaultProps.renderImage).toBeUndefined();
     });
     test('renderImage to be defined', () => {
-      const wrapper = shallow(<Step renderImage={() => {}} />);
+      const wrapper = renderer.create(<Step renderImage={() => {}} />);
       expect(wrapper).toBeDefined();
     });
     test('onPress to be defined', () => {
-      const wrapper = shallow(<Step onPress={() => {}} />);
+      const wrapper = renderer.create(<Step onPress={() => {}} />);
       expect(wrapper).toBeDefined();
     });
   });

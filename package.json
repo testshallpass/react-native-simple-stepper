@@ -7,18 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "./node_modules/.bin/jest --forceExit --runInBand"
-  },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "/example",
-      "/coverage"
-    ],
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
-    "setupTestFrameworkScriptFile": "./setupTests.js"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -46,15 +35,17 @@
   },
   "homepage": "https://github.com/testshallpass/react-native-simple-stepper#readme",
   "devDependencies": {
-    "babel-preset-react-native": "4.0.1",
-    "enzyme": "3.7.0",
-    "enzyme-adapter-react-16": "1.6.0",
-    "enzyme-to-json": "3.3.4",
-    "jest": "23.6.0",
-    "prop-types": "15.5.10",
-    "react": "16.3.1",
-    "react-dom": "16.3.1",
-    "react-native": "0.55.4"
+    "@babel/core": "7.7.7",
+    "@babel/preset-env": "7.7.7",
+    "babel-jest": "26.0.1",
+    "enzyme": "3.11.0",
+    "enzyme-adapter-react-16": "1.15.2",
+    "jest": "26.0.1",
+    "metro-react-native-babel-preset": "0.57.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-native": "0.61.5",
+    "react-test-renderer": "16.9.0"
   },
   "dependencies": {
     "prop-types": "15.5.10"

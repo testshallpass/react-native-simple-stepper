@@ -1,8 +1,8 @@
 import React from 'react';
 import SimpleStepper from '../src/SimpleStepper';
 import { shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-const reactNativeLogo = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
+import renderer from 'react-test-renderer';
+const reactNativeLogo = 'https://reactnative.dev/docs/assets/favicon.png';
 const STEP = {
   increment: 'increment',
   decrement: 'decrement',
@@ -12,13 +12,24 @@ const STEP = {
 describe('SimpleStepper', () => {
   describe('renders', () => {
     test('snapshot', () => {
-      const wrapper = shallow(<SimpleStepper />);
-      const tree = toJson(wrapper);
-      expect(tree).toMatchSnapshot();
+      const wrapper = renderer.create(<SimpleStepper />).toJSON();
+      expect(wrapper).toMatchSnapshot();
+    });
+    test('showText with text position left to be left', () => {
+      const wrapper = renderer.create(<SimpleStepper showText={true} position={'left'} />);
+      expect(wrapper).toBeDefined();
+    });
+    test('showText with default to be text position center', () => {
+      const wrapper = renderer.create(<SimpleStepper showText={true} />);
+      expect(wrapper).toBeDefined();
+    });
+    test('showText with text position right to be right', () => {
+      const wrapper = renderer.create(<SimpleStepper showText={true} position={'right'} />);
+      expect(wrapper).toBeDefined();
     });
   });
   describe('componentDidMount', () => {});
-  describe('componentDidReceiveProps', () => {
+  describe('UNSAFE_componentWillReceiveProp', () => {
     test('test value is different', () => {
       const wrapper = shallow(<SimpleStepper />);
       wrapper.setProps({

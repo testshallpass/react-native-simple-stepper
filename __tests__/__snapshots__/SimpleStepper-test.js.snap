@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SimpleStepper renders snapshot 1`] = `
-<Component>
-  <Component
+<View>
+  <View
     style={
       Object {
         "alignItems": "center",
@@ -15,29 +15,44 @@ exports[`SimpleStepper renders snapshot 1`] = `
       }
     }
   >
-    <Step
-      activeOpacity={0.4}
-      disabled={true}
-      imageOpacity={0.5}
-      imageSource={
-        Object {
-          "testUri": "../../../src/assets/decrement.png",
-        }
-      }
-      imageStyle={
-        Object {
-          "height": 36,
-          "width": 36,
-        }
-      }
-      onPress={[Function]}
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
+          "opacity": 1,
           "padding": 8,
         }
       }
-    />
-    <Component
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../src/assets/decrement.png",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "height": 36,
+              "width": 36,
+            },
+            Object {
+              "opacity": 0.5,
+            },
+          ]
+        }
+      />
+    </View>
+    <View
       style={
         Object {
           "backgroundColor": "blue",
@@ -46,28 +61,43 @@ exports[`SimpleStepper renders snapshot 1`] = `
         }
       }
     />
-    <Step
-      activeOpacity={0.4}
-      disabled={false}
-      imageOpacity={1}
-      imageSource={
-        Object {
-          "testUri": "../../../src/assets/increment.png",
-        }
-      }
-      imageStyle={
-        Object {
-          "height": 36,
-          "width": 36,
-        }
-      }
-      onPress={[Function]}
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
+          "opacity": 1,
           "padding": 8,
         }
       }
-    />
-  </Component>
-</Component>
+    >
+      <Image
+        source={
+          Object {
+            "testUri": "../../../src/assets/increment.png",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "height": 36,
+              "width": 36,
+            },
+            Object {
+              "opacity": 1,
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</View>
 `;

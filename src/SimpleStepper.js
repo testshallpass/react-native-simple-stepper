@@ -109,7 +109,7 @@ export default class SimpleStepper extends Component {
     };
     this.validateValue(props.initialValue, props);
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProp(nextProps) {
     const { initialValue, stepValue, minimumValue, maximumValue, disabled } = this.props;
     const { value } = this.state;
     if (nextProps.initialValue !== initialValue) {

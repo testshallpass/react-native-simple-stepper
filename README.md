@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/testshallpass/react-native-simple-stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-simple-stepper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
-A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS with added customization and flexibility.
+A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. To note, customization is available, see [Props](#props) for more info.
 
 ## Table of contents
 
@@ -46,7 +46,7 @@ export default class App extends Component {
 
 ## Using Text Position
 
-First, set prop `showText` to `true`. Second, set prop `textPosition` to be `left`, `center` or `right`. Third, profit. It will render as a `<Text/>` component by default or you can override with `renderText` prop. Example layouts:
+First, set prop `showText` to `true`. Second, set prop `textPosition` to be `left`, `center` or `right` (default: `center`). Third, profit. It will render as a `<Text/>` component by default or you can override it with `renderText` prop. Example layouts:
 
 | Left | Center | Right |
 | :---: | :---: | :---: |
@@ -76,15 +76,15 @@ First, set prop `showText` to `true`. Second, set prop `textPosition` to be `lef
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
 | ```valueChanged``` | Function  | invoked when value changes | `() => {}`
-| ```onMin``` | Function  | invoked when value reaches min value | `() => {}`
-| ```onMax``` | Function  | invoked when value reaches min value | `() => {}`
+| ```onMin``` | Function  | invoked when value reaches `minimumValue` | `() => {}`
+| ```onMax``` | Function  | invoked when value reaches `maximumValue` | `() => {}`
 | ```onIncrement``` | Function  | invoked each time value increments | `() => {}`
 | ```onDecrement``` | Function  | invoked each time value decrements | `() => {}`
 | ```renderDecrementImage``` | Function  | used to override decrement image component | `undefined`
 | ```renderIncrementImage``` | Function  | used to override increment image component | `undefined`
 | ```renderDecrementStep``` | Function  | used to override decrement step component | `undefined`
 | ```renderIncrementStep``` | Function  | used to override increment step component | `undefined`
-| ```renderText``` | Function  | used to override increment text component | `undefined`
+| ```renderText``` | Function  | used to override text component when `showText` is true (defaults to `Text/>`) | `undefined`
 
 ### Styles
 

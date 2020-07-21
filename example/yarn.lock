@@ -5072,10 +5072,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-simple-stepper@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-stepper/-/react-native-simple-stepper-3.0.0.tgz#58061c14f13c0b5b4b005ea49b360e6a8ff4b283"
-  integrity sha512-ECrtxiSXH4GQMSEvUHDPtI27UveRKdV6/mBGLq55x4oNZdgP8pw75hB271q0JyoGurgnMnzB+x8jvpCLqIhbRw==
+react-native-simple-stepper@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-simple-stepper/-/react-native-simple-stepper-3.0.2.tgz#47461b029945ddfdb12f4fb8f7268b5186248d05"
+  integrity sha512-wZj5glE+HGI6VMUVv3HNGdBJ1tokEFeEQU85G5vob75bipPkwzYf9c/L+wpNY3/UVNYePeJScgFfCumcizOdeg==
   dependencies:
     prop-types "15.5.10"
 

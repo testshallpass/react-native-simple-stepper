@@ -42,7 +42,7 @@ export default class SimpleStepper extends Component {
     decrementStepStyle: PropTypes.object,
     incrementImageStyle: PropTypes.object,
     decrementImageStyle: PropTypes.object,
-    textPosition: PropTypes.oneOfType([TEXT_POSITION.left, TEXT_POSITION.center, TEXT_POSITION.right]),
+    textPosition: PropTypes.oneOf([TEXT_POSITION.left, TEXT_POSITION.center, TEXT_POSITION.right]),
   };
   static defaultProps = {
     initialValue: 0,

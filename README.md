@@ -11,13 +11,17 @@ A super simple react-native implementation of the [UIStepper](https://developer.
 
 ## Table of contents
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Props](#props)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Props](#props)
+  * [Values](#values)
+  * [Functions](#functions)
+  * [Styles](#styles)
 
 ## Installation
 
-```npm i react-native-simple-stepper --save``` OR ```yarn add react-native-simple-stepper```
+* ```npm i react-native-simple-stepper --save```
+* ```yarn add react-native-simple-stepper```
 
 ## Usage
 
@@ -31,14 +35,11 @@ export default class App extends Component {
     super(props);
     this.state = { value: 0 };
   }
-  valueChanged(value) {
-    // Truncate value to 2 decimal places and cast as Number.
-    const nextValue = Number(value.toFixed(2));
-    this.setState({ value: nextValue });
-    // ...
-  }
+  _valueChanged = value => {
+    this.setState({ value });
+  };
   render() {
-    return <SimpleStepper valueChanged={value => this.valueChanged(value)} />;
+    return <SimpleStepper valueChanged={value => this._valueChanged(value)} />;
   }
 }
 

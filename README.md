@@ -1,6 +1,6 @@
 # react-native-simple-stepper
 
-[![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
+[![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](https://reactnative.dev)
 [![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
 [![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
 [![Build Status](https://travis-ci.org/testshallpass/react-native-simple-stepper.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-simple-stepper)
@@ -13,6 +13,7 @@ A super simple react-native implementation of the [UIStepper](https://developer.
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Using Text Position](#Using-Text-Position)
 * [Props](#props)
   * [Values](#values)
   * [Functions](#functions)
@@ -26,7 +27,6 @@ A super simple react-native implementation of the [UIStepper](https://developer.
 ## Usage
 
 ```javascript
-
 import React, { Component } from 'react';
 import { SimpleStepper } from 'react-native-simple-stepper';
 
@@ -42,8 +42,15 @@ export default class App extends Component {
     return <SimpleStepper valueChanged={value => this._valueChanged(value)} />;
   }
 }
-
 ```
+
+## Using Text Position
+
+First, set prop `showText` to `true`. Second, set prop `textPosition` to be `left`, `center` or `right`. Third, profit. It will render as a `<Text/>` component by default or you can override with `renderText` prop. Example layouts:
+
+| Left | Center | Right |
+| :---: | :---: | :---: |
+| ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/left.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/center.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/right.png)
 
 ## Props
 

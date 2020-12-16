@@ -50,7 +50,7 @@ First, set prop `showText` to `true`. Second, set prop `textPosition` to be `lef
 
 | Left | Center | Right |
 | :---: | :---: | :---: |
-| ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/left.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/center.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-simple-stepper/add-typescript-definitions/screenshots/right.png)
+| ![screenshot](./screenshots/left.png) | ![screenshot](./screenshots/center.png) | ![screenshot](./screenshots/right.png)
 
 ## Props
 

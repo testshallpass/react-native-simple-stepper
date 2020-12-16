@@ -1,11 +1,11 @@
 # react-native-simple-stepper
 
-[![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](https://reactnative.dev)
-[![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
-[![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![Platform](https://img.shields.io/badge/platform-react--native-blue.svg?style=flat-square)](https://reactnative.dev)
+[![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
 [![Build Status](https://travis-ci.org/testshallpass/react-native-simple-stepper.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-simple-stepper)
 [![codecov](https://codecov.io/gh/testshallpass/react-native-simple-stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-simple-stepper)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
 A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. To note, customization is available, see [Props](#props) for more info.
 
@@ -21,8 +21,8 @@ A simple react-native implementation of the [UIStepper](https://developer.apple.
 
 ## Installation
 
-* ```npm i react-native-simple-stepper --save```
 * ```yarn add react-native-simple-stepper```
+* ```npm install react-native-simple-stepper --save```
 
 ## Usage
 

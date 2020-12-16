@@ -1,28 +1,32 @@
 # react-native-simple-stepper
 
-[![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
-[![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
-[![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![Platform](https://img.shields.io/badge/platform-react--native-blue.svg?style=flat-square)](https://reactnative.dev)
+[![npm version](http://img.shields.io/npm/v/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![npm version](http://img.shields.io/npm/dm/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
 [![Build Status](https://travis-ci.org/testshallpass/react-native-simple-stepper.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-simple-stepper)
 [![codecov](https://codecov.io/gh/testshallpass/react-native-simple-stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-simple-stepper)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
-A super simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS with added customization and flexibility.
+A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. To note, customization is available, see [Props](#props) for more info.
 
 ## Table of contents
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Props](#props)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Using Text Position](#Using-Text-Position)
+* [Props](#props)
+  * [Values](#values)
+  * [Functions](#functions)
+  * [Styles](#styles)
 
 ## Installation
 
-```npm i react-native-simple-stepper --save``` OR ```yarn add react-native-simple-stepper```
+* ```yarn add react-native-simple-stepper```
+* ```npm install react-native-simple-stepper --save```
 
 ## Usage
 
 ```javascript
-
 import React, { Component } from 'react';
 import { SimpleStepper } from 'react-native-simple-stepper';
 
@@ -31,18 +35,22 @@ export default class App extends Component {
     super(props);
     this.state = { value: 0 };
   }
-  valueChanged(value) {
-    // Truncate value to 2 decimal places and cast as Number.
-    const nextValue = Number(value.toFixed(2));
-    this.setState({ value: nextValue });
-    // ...
-  }
+  _valueChanged = value => {
+    this.setState({ value });
+  };
   render() {
-    return <SimpleStepper valueChanged={value => this.valueChanged(value)} />;
+    return <SimpleStepper valueChanged={value => this._valueChanged(value)} />;
   }
 }
-
 ```
+
+## Using Text Position
+
+First, set prop `showText` to `true`. Second, set prop `textPosition` to be `left`, `center` or `right` (default: `center`). Third, profit. It will render as a `<Text/>` component by default or you can override it with `renderText` prop. Example layouts:
+
+| Left | Center | Right |
+| :---: | :---: | :---: |
+| ![screenshot](./screenshots/left.png) | ![screenshot](./screenshots/center.png) | ![screenshot](./screenshots/right.png)
 
 ## Props
 
@@ -68,15 +76,15 @@ export default class App extends Component {
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
 | ```valueChanged``` | Function  | invoked when value changes | `() => {}`
-| ```onMin``` | Function  | invoked when value reaches min value | `() => {}`
-| ```onMax``` | Function  | invoked when value reaches min value | `() => {}`
+| ```onMin``` | Function  | invoked when value reaches `minimumValue` | `() => {}`
+| ```onMax``` | Function  | invoked when value reaches `maximumValue` | `() => {}`
 | ```onIncrement``` | Function  | invoked each time value increments | `() => {}`
 | ```onDecrement``` | Function  | invoked each time value decrements | `() => {}`
 | ```renderDecrementImage``` | Function  | used to override decrement image component | `undefined`
 | ```renderIncrementImage``` | Function  | used to override increment image component | `undefined`
 | ```renderDecrementStep``` | Function  | used to override decrement step component | `undefined`
 | ```renderIncrementStep``` | Function  | used to override increment step component | `undefined`
-| ```renderText``` | Function  | used to override increment text component | `undefined`
+| ```renderText``` | Function  | used to override text component when `showText` is true (defaults to `Text/>`) | `undefined`
 
 ### Styles
 

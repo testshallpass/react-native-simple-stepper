@@ -1,40 +1,35 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, SafeAreaView, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, SafeAreaView, FlatList, View} from 'react-native';
 import {SimpleStepper} from 'react-native-simple-stepper';
-import List from './List';
 import {TYPE, ITEMS} from './data';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: ITEMS,
-    };
-  }
-  _onValueChanged = (value, item) => {
+const App = () => {
+  const [items, setItems] = useState(ITEMS);
+
+  const _onValueChanged = (value, item) => {
     if (!item.props.showText) {
-      let data = this.state.items.slice();
+      let data = items.slice();
       if (`${value}`.length > 4) {
         data[item.key].value = value.toFixed(2);
       } else {
         data[item.key].value = value;
       }
-      this.setState({
-        items: data,
-      });
+      setItems(data);
     }
   };
-  _renderItem = ({item}) => {
+
+  const _renderItem = ({item}) => {
     const {type} = item;
     return (
       <View>
-        {type == TYPE.basic && this._renderBasic(item)}
-        {type == TYPE.action && this._renderAction(item)}
-        {type == TYPE.style && this._renderStyle(item)}
+        {type == TYPE.basic && _renderBasic(item)}
+        {type == TYPE.action && _renderAction(item)}
+        {type == TYPE.style && _renderStyle(item)}
       </View>
     );
   };
-  _renderAction = item => {
+
+  const _renderAction = item => {
     const {value, props} = item;
     const {onMin, onMax, onIncrement, onDecrement} = props;
     return (
@@ -45,14 +40,15 @@ export default class App extends Component {
             onMax={onMax}
             onIncrement={onIncrement}
             onDecrement={onDecrement}
-            valueChanged={value => this._onValueChanged(value, item)}
+            valueChanged={value => _onValueChanged(value, item)}
           />
           <Text style={styles.value}>{value}</Text>
         </View>
       </View>
     );
   };
-  _renderBasic = item => {
+
+  const _renderBasic = item => {
     const {value, props} = item;
     const {
       minimumValue,
@@ -76,14 +72,15 @@ export default class App extends Component {
             wraps={wraps}
             incrementImage={incrementImage}
             decrementImage={decrementImage}
-            valueChanged={value => this._onValueChanged(value, item)}
+            valueChanged={value => _onValueChanged(value, item)}
           />
           <Text style={styles.value}>{value}</Text>
         </View>
       </View>
     );
   };
-  _renderStyle = item => {
+  
+  const _renderStyle = item => {
     const {value, props} = item;
     const {
       showText,
@@ -105,25 +102,28 @@ export default class App extends Component {
             separatorStyle={separatorStyle}
             incrementImageStyle={incrementImageStyle}
             decrementImageStyle={decrementImageStyle}
-            valueChanged={value => this._onValueChanged(value, item)}
+            valueChanged={value => _onValueChanged(value, item)}
           />
           {!showText && <Text style={styles.value}>{value}</Text>}
         </View>
       </View>
     );
   };
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <List
-          extraData={this.state}
-          items={this.state.items}
-          renderItem={this._renderItem}
-        />
-      </SafeAreaView>
-    );
-  }
-}
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={items}
+        renderItem={_renderItem}
+        extraData={items}
+        keyExtractor={item => `${item.key}`}
+        ItemSeparatorComponent={() => {
+          return <View style={styles.separator} />;
+        }}
+      />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -151,4 +151,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 8,
   },
+  separator: {
+    backgroundColor: 'black', 
+    height: 1
+  }
 });
+
+export default App;

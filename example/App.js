@@ -22,14 +22,14 @@ const App = () => {
     const {type} = item;
     return (
       <View>
-        {type == TYPE.basic && _renderBasic(item)}
-        {type == TYPE.action && _renderAction(item)}
-        {type == TYPE.style && _renderStyle(item)}
+        {type === TYPE.basic && _renderBasic(item)}
+        {type === TYPE.action && _renderAction(item)}
+        {type === TYPE.style && _renderStyle(item)}
       </View>
     );
   };
 
-  const _renderAction = item => {
+  const _renderAction = (item) => {
     const {value, props} = item;
     const {onMin, onMax, onIncrement, onDecrement} = props;
     return (
@@ -40,7 +40,7 @@ const App = () => {
             onMax={onMax}
             onIncrement={onIncrement}
             onDecrement={onDecrement}
-            valueChanged={value => _onValueChanged(value, item)}
+            valueChanged={(val) => _onValueChanged(val, item)}
           />
           <Text style={styles.value}>{value}</Text>
         </View>
@@ -48,7 +48,7 @@ const App = () => {
     );
   };
 
-  const _renderBasic = item => {
+  const _renderBasic = (item) => {
     const {value, props} = item;
     const {
       minimumValue,
@@ -72,15 +72,15 @@ const App = () => {
             wraps={wraps}
             incrementImage={incrementImage}
             decrementImage={decrementImage}
-            valueChanged={value => _onValueChanged(value, item)}
+            valueChanged={(val) => _onValueChanged(val, item)}
           />
           <Text style={styles.value}>{value}</Text>
         </View>
       </View>
     );
   };
-  
-  const _renderStyle = item => {
+
+  const _renderStyle = (item) => {
     const {value, props} = item;
     const {
       showText,
@@ -102,7 +102,7 @@ const App = () => {
             separatorStyle={separatorStyle}
             incrementImageStyle={incrementImageStyle}
             decrementImageStyle={decrementImageStyle}
-            valueChanged={value => _onValueChanged(value, item)}
+            valueChanged={(val) => _onValueChanged(val, item)}
           />
           {!showText && <Text style={styles.value}>{value}</Text>}
         </View>
@@ -116,7 +116,7 @@ const App = () => {
         data={items}
         renderItem={_renderItem}
         extraData={items}
-        keyExtractor={item => `${item.key}`}
+        keyExtractor={(item) => `${item.key}`}
         ItemSeparatorComponent={() => {
           return <View style={styles.separator} />;
         }}
@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   separator: {
-    backgroundColor: 'black', 
-    height: 1
-  }
+    backgroundColor: 'black',
+    height: 1,
+  },
 });
 
 export default App;

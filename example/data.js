@@ -46,10 +46,8 @@ export const ITEMS = [
       maximumValue: 70,
       initialValue: 30,
       stepValue: 10,
-      incrementImage:
-        'https://reactnative.dev/docs/assets/favicon.png',
-      decrementImage:
-        'https://reactnative.dev/docs/assets/favicon.png',
+      incrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
+      decrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
       disabled: false,
       wraps: false,
     },
@@ -59,16 +57,16 @@ export const ITEMS = [
     type: TYPE.action,
     value: 0,
     props: {
-      onMin: value => {
+      onMin: (value) => {
         console.log('[onMin] value: ', value);
       },
-      onMax: value => {
+      onMax: (value) => {
         console.log('[onMax] value: ', value);
       },
-      onIncrement: value => {
+      onIncrement: (value) => {
         console.log('[onIncrement] value: ', value);
       },
-      onDecrement: value => {
+      onDecrement: (value) => {
         console.log('[onDecrement] value: ', value);
       },
     },

@@ -14,7 +14,7 @@ export const ITEMS = [
   },
   {
     name: 'Wraps Stepper',
-    description: 'Stepper that has wraps enabled which means a circular cycle.',
+    description: 'Stepper with wraps enabled in which it cycles around as dictated by minimum and maximum values.',
     value: 0,
     props: {
       wraps: true,
@@ -30,8 +30,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Custom Image Stepper',
-    description: 'Stepper that has custom images as step buttons.',
+    name: 'Image Stepper',
+    description: 'Stepper that has images as step buttons.',
     value: 0,
     props: {
       incrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
@@ -40,7 +40,7 @@ export const ITEMS = [
   },
   {
     name: 'Action Stepper',
-    description: 'Stepper that has uses the action functions.',
+    description: 'Stepper invokes functions: onMin, onMax, onIncrement and onDecrement.',
     value: 0,
     props: {
       onMin: (value) => {
@@ -59,7 +59,7 @@ export const ITEMS = [
   },
   {
     name: 'Blue Stepper',
-    description: 'Stepper that has custom blue styles.',
+    description: 'Stepper that has blue styles.',
     value: 0,
     props: {
       showText: false,
@@ -89,8 +89,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Green Stepper',
-    description: 'Stepper that uses text position center (default) with custom green styles.',
+    name: 'Text Position: Green stepper',
+    description: 'Stepper that uses text position center (default) with green styles.',
     value: 0,
     props: {
       showText: true,
@@ -126,8 +126,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Red Stepper',
-    description: 'Stepper that uses text position right with custom red styles.',
+    name: 'Text Position: Red Stepper',
+    description: 'Stepper that uses text position right with red styles.',
     value: 0,
     props: {
       showText: true,
@@ -164,8 +164,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Purple Stepper',
-    description: 'Stepper that uses text position left with custom purple styles.',
+    name: 'Text Position: Purple Stepper',
+    description: 'Stepper that uses text position left with purple styles.',
     value: 0,
     props: {
       showText: true,

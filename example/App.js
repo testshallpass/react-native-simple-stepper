@@ -80,7 +80,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName={'Steppers'}>
         <Stack.Screen name={'Steppers'} component={HomeScreen} />
-        <Stack.Screen name={'Detail'} component={DetailScreen} options={({ route }) => ({ title: route.params.otherParam.name })} />
+        <Stack.Screen
+          name={'Detail'}
+          component={DetailScreen}
+          options={({route}) => ({title: route.params.otherParam.name})}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

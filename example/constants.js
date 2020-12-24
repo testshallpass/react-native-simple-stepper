@@ -14,7 +14,8 @@ export const ITEMS = [
   },
   {
     name: 'Wraps Stepper',
-    description: 'Stepper with wraps enabled in which it cycles around as dictated by minimum and maximum values.',
+    description:
+      'Stepper with wraps enabled in which it cycles around as dictated by minimum and maximum values.',
     value: 0,
     props: {
       wraps: true,
@@ -22,7 +23,8 @@ export const ITEMS = [
   },
   {
     name: 'Decimal Stepper',
-    description: 'Stepper that has initial and step values set to decimal numbers.',
+    description:
+      'Stepper that has initial and step values set to decimal numbers.',
     value: 0.99,
     props: {
       initialValue: 0.99,
@@ -40,7 +42,8 @@ export const ITEMS = [
   },
   {
     name: 'Action Stepper',
-    description: 'Stepper invokes functions: onMin, onMax, onIncrement and onDecrement.',
+    description:
+      'Stepper invokes functions: onMin, onMax, onIncrement and onDecrement.',
     value: 0,
     props: {
       onMin: (value) => {
@@ -90,7 +93,8 @@ export const ITEMS = [
   },
   {
     name: 'Text Position: Green stepper',
-    description: 'Stepper that uses text position center (default) with green styles.',
+    description:
+      'Stepper that uses text position center (default) with green styles.',
     value: 0,
     props: {
       showText: true,

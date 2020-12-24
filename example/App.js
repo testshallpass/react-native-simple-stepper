@@ -1,159 +1,120 @@
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
-import {StyleSheet, Text, SafeAreaView, FlatList, View} from 'react-native';
-import {SimpleStepper} from 'react-native-simple-stepper';
-import {TYPE, ITEMS} from './data';
+import {
+  StyleSheet,
+  Text,
+  Pressable,
+  SafeAreaView,
+  FlatList,
+  View,
+} from 'react-native';
+import SimpleStepper from './src/SimpleStepper';
+import {ITEMS} from './constants';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const App = () => {
-  const [items, setItems] = useState(ITEMS);
+const HomeScreen = ({navigation}) => {
+  const detailScreen = 'Detail';
 
-  const _onValueChanged = (value, item) => {
-    if (!item.props.showText) {
-      let data = items.slice();
-      if (`${value}`.length > 4) {
-        data[item.key].value = value.toFixed(2);
-      } else {
-        data[item.key].value = value;
-      }
-      setItems(data);
-    }
-  };
-
-  const _renderItem = ({item}) => {
-    const {type} = item;
+  const _renderItem = ({item, index}) => {
+    const {name} = item;
+    const passParam = {itemId: index, otherParam: item};
     return (
-      <View>
-        {type === TYPE.basic && _renderBasic(item)}
-        {type === TYPE.action && _renderAction(item)}
-        {type === TYPE.style && _renderStyle(item)}
-      </View>
+      <Pressable
+        style={styles.stepper}
+        onPress={() => navigation.navigate(detailScreen, passParam)}>
+        <Text style={styles.value}>{name}</Text>
+      </Pressable>
     );
   };
 
-  const _renderAction = (item) => {
-    const {value, props} = item;
-    const {onMin, onMax, onIncrement, onDecrement} = props;
-    return (
-      <View style={styles.content}>
-        <View style={styles.stepper}>
-          <SimpleStepper
-            onMin={onMin}
-            onMax={onMax}
-            onIncrement={onIncrement}
-            onDecrement={onDecrement}
-            valueChanged={(val) => _onValueChanged(val, item)}
-          />
-          <Text style={styles.value}>{value}</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const _renderBasic = (item) => {
-    const {value, props} = item;
-    const {
-      minimumValue,
-      maximumValue,
-      initialValue,
-      stepValue,
-      disabled,
-      wraps,
-      incrementImage,
-      decrementImage,
-    } = props;
-    return (
-      <View style={styles.content}>
-        <View style={styles.stepper}>
-          <SimpleStepper
-            minimumValue={minimumValue}
-            maximumValue={maximumValue}
-            initialValue={initialValue}
-            stepValue={stepValue}
-            disabled={disabled}
-            wraps={wraps}
-            incrementImage={incrementImage}
-            decrementImage={decrementImage}
-            valueChanged={(val) => _onValueChanged(val, item)}
-          />
-          <Text style={styles.value}>{value}</Text>
-        </View>
-      </View>
-    );
-  };
-
-  const _renderStyle = (item) => {
-    const {value, props} = item;
-    const {
-      showText,
-      textPosition,
-      textStyle,
-      containerStyle,
-      separatorStyle,
-      incrementImageStyle,
-      decrementImageStyle,
-    } = props;
-    return (
-      <View style={styles.content}>
-        <View style={styles.stepper}>
-          <SimpleStepper
-            showText={showText}
-            textPosition={textPosition}
-            textStyle={textStyle}
-            containerStyle={containerStyle}
-            separatorStyle={separatorStyle}
-            incrementImageStyle={incrementImageStyle}
-            decrementImageStyle={decrementImageStyle}
-            valueChanged={(val) => _onValueChanged(val, item)}
-          />
-          {!showText && <Text style={styles.value}>{value}</Text>}
-        </View>
-      </View>
-    );
+  const _renderSeparator = () => {
+    return <View style={styles.separator} />;
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={items}
+        data={ITEMS}
         renderItem={_renderItem}
-        extraData={items}
-        keyExtractor={(item) => `${item.key}`}
-        ItemSeparatorComponent={() => {
-          return <View style={styles.separator} />;
-        }}
+        keyExtractor={(item, index) => `${index}`}
+        ItemSeparatorComponent={_renderSeparator}
       />
     </SafeAreaView>
+  );
+};
+
+const DetailScreen = ({route}) => {
+  const [selected, setSelected] = useState(0);
+
+  const _onValueChanged = (newValue = 0, index = 0) => {
+    const item = ITEMS[index];
+    const {props} = item;
+    const {showText} = props;
+    if (!showText) {
+      if (`${newValue}`.length > 4) {
+        newValue = newValue.toFixed(2);
+      }
+      setSelected(newValue);
+    }
+  };
+
+  const {itemId, otherParam} = route.params;
+  const {props, description} = otherParam;
+  const {showText} = props;
+  return (
+    <View style={styles.content}>
+      {!showText && <Text style={styles.selected}>{selected}</Text>}
+      <SimpleStepper
+        {...props}
+        valueChanged={(newValue) => _onValueChanged(newValue, itemId)}
+      />
+      <Text style={styles.value}>{description}</Text>
+    </View>
+  );
+};
+
+const App = () => {
+  const Stack = createStackNavigator();
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={'Steppers'}>
+        <Stack.Screen name={'Steppers'} component={HomeScreen} />
+        <Stack.Screen name={'Detail'} component={DetailScreen} options={({ route }) => ({ title: route.params.otherParam.name })} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9EEEF',
-  },
-  column: {
-    padding: 8,
-  },
-  value: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#222222',
-    padding: 8,
-  },
-  key: {
-    fontSize: 14,
-    color: '#222222',
+    backgroundColor: 'beige',
   },
   content: {
-    paddingVertical: 8,
-    justifyContent: 'space-evenly',
+    flex: 1,
+    alignItems: 'center',
+    marginVertical: 4,
   },
   stepper: {
     flexDirection: 'row',
-    margin: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  value: {
+    fontSize: 16,
+    color: '#202020',
+    padding: 8,
+  },
+  selected: {
+    fontSize: 50,
+    color: '#202020',
+    padding: 8,
   },
   separator: {
-    backgroundColor: 'black',
-    height: 1,
+    backgroundColor: '#202020',
+    height: StyleSheet.hairlineWidth,
   },
 });
 

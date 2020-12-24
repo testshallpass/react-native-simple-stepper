@@ -9,7 +9,7 @@ exports[`SimpleStepper renders snapshot 1`] = `
         "backgroundColor": "transparent",
         "borderColor": "blue",
         "borderRadius": 8,
-        "borderWidth": 2,
+        "borderWidth": 1,
         "flexDirection": "row",
         "overflow": "hidden",
       }
@@ -18,7 +18,6 @@ exports[`SimpleStepper renders snapshot 1`] = `
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -29,21 +28,21 @@ exports[`SimpleStepper renders snapshot 1`] = `
       style={
         Object {
           "opacity": 1,
-          "padding": 8,
+          "padding": 4,
         }
       }
     >
       <Image
         source={
           Object {
-            "testUri": "../../../src/assets/decrement.png",
+            "testUri": "../../../assets/decrement.png",
           }
         }
         style={
           Array [
             Object {
-              "height": 36,
-              "width": 36,
+              "height": 26,
+              "width": 26,
             },
             Object {
               "opacity": 0.5,
@@ -64,7 +63,6 @@ exports[`SimpleStepper renders snapshot 1`] = `
     <View
       accessible={true}
       focusable={true}
-      isTVSelectable={true}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -75,21 +73,21 @@ exports[`SimpleStepper renders snapshot 1`] = `
       style={
         Object {
           "opacity": 1,
-          "padding": 8,
+          "padding": 4,
         }
       }
     >
       <Image
         source={
           Object {
-            "testUri": "../../../src/assets/increment.png",
+            "testUri": "../../../assets/increment.png",
           }
         }
         style={
           Array [
             Object {
-              "height": 36,
-              "width": 36,
+              "height": 26,
+              "width": 26,
             },
             Object {
               "opacity": 1,

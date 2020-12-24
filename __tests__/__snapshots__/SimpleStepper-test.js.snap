@@ -41,8 +41,8 @@ exports[`SimpleStepper renders snapshot 1`] = `
         style={
           Array [
             Object {
-              "height": 26,
-              "width": 26,
+              "height": 30,
+              "width": 30,
             },
             Object {
               "opacity": 0.5,
@@ -86,8 +86,8 @@ exports[`SimpleStepper renders snapshot 1`] = `
         style={
           Array [
             Object {
-              "height": 26,
-              "width": 26,
+              "height": 30,
+              "width": 30,
             },
             Object {
               "opacity": 1,

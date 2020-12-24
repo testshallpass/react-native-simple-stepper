@@ -104,12 +104,12 @@ const SimpleStepper = ({
     padding: 4,
   },
   incrementImageStyle = {
-    height: 26,
-    width: 26,
+    height: 30,
+    width: 30,
   },
   decrementImageStyle = {
-    height: 26,
-    width: 26,
+    height: 30,
+    width: 30,
   },
   textPosition = TEXT_POSITION.center,
 }) => {
@@ -137,7 +137,7 @@ const SimpleStepper = ({
         _validateValue(value);
       }
     }
-  }, [initialValue, disabled, stepValue, minimumValue, maximumValue, value]);
+  }, [initialValue, disabled, stepValue, minimumValue, maximumValue]);
 
   const _decrementAction = () => {
     const nextValue = value - stepValue;

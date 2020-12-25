@@ -12,8 +12,8 @@ const TEXT_POSITION = {
 
 const ImageView = ({
   style = {
-    height: 36,
-    width: 36,
+    height: 30,
+    width: 30,
   },
   source = {},
   opacity = 1,
@@ -30,8 +30,8 @@ const Step = ({
   renderImage = undefined,
   disabled = false,
   imageStyle = {
-    height: 36,
-    width: 36,
+    height: 30,
+    width: 30,
   },
   imageOpacity = 1,
   imageSource = undefined,
@@ -55,64 +55,65 @@ const Step = ({
   );
 };
 
-const SimpleStepper = ({
-  initialValue = 0,
-  minimumValue = 0,
-  maximumValue = 10,
-  stepValue = 1,
-  valueChanged = () => {},
-  decrementImage = require('./assets/decrement.png'),
-  incrementImage = require('./assets/increment.png'),
-  activeOpacity = 0.4,
-  disabledOpacity = 0.5,
-  disabled = false,
-  renderDecrementImage = undefined,
-  renderIncrementImage = undefined,
-  renderDecrementStep = undefined,
-  renderIncrementStep = undefined,
-  wraps = false,
-  onMin = () => {},
-  onMax = () => {},
-  onIncrement = () => {},
-  onDecrement = () => {},
-  showText = false,
-  renderText = undefined,
-  textStyle = {
-    padding: 4,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'blue',
-  },
-  containerStyle = {
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 8,
-    overflow: 'hidden',
-    alignItems: 'center',
-    borderColor: 'blue',
-  },
-  separatorStyle = {
-    width: StyleSheet.hairlineWidth,
-    backgroundColor: 'blue',
-    height: '100%',
-  },
-  incrementStepStyle = {
-    padding: 4,
-  },
-  decrementStepStyle = {
-    padding: 4,
-  },
-  incrementImageStyle = {
-    height: 30,
-    width: 30,
-  },
-  decrementImageStyle = {
-    height: 30,
-    width: 30,
-  },
-  textPosition = TEXT_POSITION.center,
-}) => {
+const SimpleStepper = (props) => {
+  const {
+    initialValue = 0,
+    minimumValue = 0,
+    maximumValue = 10,
+    stepValue = 1,
+    valueChanged = () => {},
+    decrementImage = require('./assets/decrement.png'),
+    incrementImage = require('./assets/increment.png'),
+    activeOpacity = 0.4,
+    disabledOpacity = 0.5,
+    disabled = false,
+    renderDecrementImage = undefined,
+    renderIncrementImage = undefined,
+    renderDecrementStep = undefined,
+    renderIncrementStep = undefined,
+    wraps = false,
+    onMin = () => {},
+    onMax = () => {},
+    onIncrement = () => {},
+    onDecrement = () => {},
+    showText = false,
+    renderText = undefined,
+    textStyle = {
+      padding: 4,
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'blue',
+    },
+    containerStyle = {
+      backgroundColor: 'transparent',
+      flexDirection: 'row',
+      borderWidth: 1,
+      borderRadius: 8,
+      overflow: 'hidden',
+      alignItems: 'center',
+      borderColor: 'blue',
+    },
+    separatorStyle = {
+      width: StyleSheet.hairlineWidth,
+      backgroundColor: 'blue',
+      height: '100%',
+    },
+    incrementStepStyle = {
+      padding: 4,
+    },
+    decrementStepStyle = {
+      padding: 4,
+    },
+    incrementImageStyle = {
+      height: 30,
+      width: 30,
+    },
+    decrementImageStyle = {
+      height: 30,
+      width: 30,
+    },
+    textPosition = TEXT_POSITION.center,
+  } = props;
   const [value, setValue] = useState(initialValue);
   const prevInitialValue = useRef(initialValue);
   const prevDisabled = useRef(disabled);
@@ -219,8 +220,8 @@ const SimpleStepper = ({
 
   const _getImageViewProps = (type, opacity) => {
     let style = {
-      height: 36,
-      width: 36,
+      height: 30,
+      width: 30,
     };
     let imageSource = null;
     switch (type) {
@@ -267,7 +268,7 @@ const SimpleStepper = ({
         {isLeft && _renderText(value, renderText, textStyle)}
         {isLeft && <View style={separatorStyle} />}
         {renderDecrementStep ? (
-          renderDecrementStep()
+          renderDecrementStep(props)
         ) : (
           <Step
             style={decrementStepStyle}
@@ -284,7 +285,7 @@ const SimpleStepper = ({
         {isCenter && _renderText(value)}
         <View style={separatorStyle} />
         {renderIncrementStep ? (
-          renderIncrementStep()
+          renderIncrementStep(props)
         ) : (
           <Step
             style={incrementStepStyle}

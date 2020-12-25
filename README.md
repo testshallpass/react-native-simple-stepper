@@ -7,7 +7,7 @@
 [![codecov](https://codecov.io/gh/testshallpass/react-native-simple-stepper/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-simple-stepper)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
 
-A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. To note, customization is available, see [Props](#props) for more info.
+A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. Customization is available, see [Props](#props) and [example project](./example/README.md).
 
 ## Table of contents
 
@@ -27,21 +27,17 @@ A simple react-native implementation of the [UIStepper](https://developer.apple.
 ## Usage
 
 ```javascript
-import React, { Component } from 'react';
-import { SimpleStepper } from 'react-native-simple-stepper';
+import React, {useState} from 'react';
+import SimpleStepper from 'react-native-simple-stepper';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: 0 };
-  }
-  _valueChanged = value => {
-    this.setState({ value });
-  };
-  render() {
-    return <SimpleStepper valueChanged={value => this._valueChanged(value)} />;
-  }
-}
+const App = () => {
+  const [value, setValue] = useState(0);
+  return (
+    <SimpleStepper 
+      valueChanged={(newValue) => setValue(newValue)}
+    />
+  );
+};
 ```
 
 ## Using Text Position
@@ -90,10 +86,10 @@ First, set prop `showText` to `true`. Second, set prop `textPosition` to be `lef
 
 | Name | Type | Description | Default |
 | --- | :---: | --- | --- |
-| ```textStyle``` | Object  | text component style | `{ padding: 8, fontSize: 20, fontWeight: 'bold', color: 'blue' }`
-| ```containerStyle``` | Object  | container component style | `{ backgroundColor: 'transparent', flexDirection: 'row', borderWidth: 2, borderRadius: 8, overflow: 'hidden', alignItems: 'center', borderColor: 'blue' }`
+| ```textStyle``` | Object  | text component style | `{ padding: 4, fontSize: 20, fontWeight: 'bold', color: 'blue' }`
+| ```containerStyle``` | Object  | container component style | `{ backgroundColor: 'transparent', flexDirection: 'row', borderWidth: 1, borderRadius: 8, overflow: 'hidden', alignItems: 'center', borderColor: 'blue' }`
 | ```separatorStyle``` | Object  | separator component style | `{ width: StyleSheet.hairlineWidth, backgroundColor: 'blue', height: '100%' }`
-| ```incrementStepStyle``` | Object  | increment step component style | `{ padding: 8 }`
-| ```decrementStepStyle``` | Object  | decrement step component style | `{ padding: 8 }`
-| ```incrementImageStyle``` | Object  | increment image component styles | `{ height: 36, width: 36 }`
-| ```decrementImageStyle``` | Object  | decrement image component styles | `{ height: 36, width: 36 }`
+| ```incrementStepStyle``` | Object  | increment step component style | `{ padding: 4 }`
+| ```decrementStepStyle``` | Object  | decrement step component style | `{ padding: 4 }`
+| ```incrementImageStyle``` | Object  | increment image component styles | `{ height: 30, width: 30 }`
+| ```decrementImageStyle``` | Object  | decrement image component styles | `{ height: 30, width: 30 }`

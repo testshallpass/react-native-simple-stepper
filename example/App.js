@@ -17,13 +17,14 @@ const HomeScreen = ({navigation}) => {
   const detailScreen = 'Detail';
 
   const _renderItem = ({item, index}) => {
-    const {name} = item;
+    const {name, description} = item;
     const passParam = {itemId: index, otherParam: item};
     return (
       <Pressable
         style={styles.stepper}
         onPress={() => navigation.navigate(detailScreen, passParam)}>
-        <Text style={styles.value}>{name}</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.description}>{description}</Text>
       </Pressable>
     );
   };
@@ -67,9 +68,9 @@ const DetailScreen = ({route}) => {
       {!showText && <Text style={styles.selected}>{selected}</Text>}
       <SimpleStepper
         {...props}
-        valueChanged={(newValue) => _onValueChanged(newValue, itemId)}
+        valueChanged={newValue => _onValueChanged(newValue, itemId)}
       />
-      <Text style={styles.value}>{description}</Text>
+      <Text style={styles.description}>{description}</Text>
     </View>
   );
 };
@@ -100,15 +101,15 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   stepper: {
-    flexDirection: 'row',
     paddingHorizontal: 4,
     paddingVertical: 8,
-    alignItems: 'center',
+    margin: 4,
   },
-  value: {
+  name: {
     fontSize: 16,
-    color: '#202020',
-    padding: 8,
+  },
+  description: {
+    fontSize: 16,
   },
   selected: {
     fontSize: 50,

@@ -46,16 +46,16 @@ export const ITEMS = [
       'Stepper invokes functions: onMin, onMax, onIncrement and onDecrement.',
     value: 0,
     props: {
-      onMin: (value) => {
+      onMin: value => {
         console.log('[onMin] value: ', value);
       },
-      onMax: (value) => {
+      onMax: value => {
         console.log('[onMax] value: ', value);
       },
-      onIncrement: (value) => {
+      onIncrement: value => {
         console.log('[onIncrement] value: ', value);
       },
-      onDecrement: (value) => {
+      onDecrement: value => {
         console.log('[onDecrement] value: ', value);
       },
     },

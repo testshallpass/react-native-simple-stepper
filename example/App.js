@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -9,22 +8,43 @@ import {
   View,
 } from 'react-native';
 import SimpleStepper from './src/SimpleStepper';
-import {ITEMS} from './constants';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {STEPPERS} from './constants';
 
-const HomeScreen = ({navigation}) => {
-  const detailScreen = 'Detail';
+const StepperHolder = ({
+  stepper = {},
+  value = 0,
+  onValueChanged = () => {},
+}) => {
+  const {props} = stepper;
+  return (
+    <View style={styles.holder}>
+      <View style={styles.stepper}>
+        <SimpleStepper
+          {...props}
+          valueChanged={newValue => onValueChanged(newValue)}
+        />
+      </View>
+      {!props.showText && (
+        <Text style={styles.value}>{`value is ${value}`}</Text>
+      )}
+    </View>
+  );
+};
+
+const App = () => {
+  const [stepper, setStepper] = useState(STEPPERS[0]);
+  const [value, setValue] = useState(stepper.value);
 
   const _renderItem = ({item, index}) => {
     const {name, description} = item;
-    const passParam = {itemId: index, otherParam: item};
+    let nameStyle = styles.name;
+    if (stepper.name === item.name) {
+      nameStyle = [styles.name, {fontWeight: '800'}];
+    }
     return (
-      <Pressable
-        style={styles.stepper}
-        onPress={() => navigation.navigate(detailScreen, passParam)}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
+      <Pressable style={styles.button} onPress={() => setStepper(item)}>
+        <Text style={nameStyle}>{name}</Text>
+        <Text style={styles.description}>{description}</Text>
       </Pressable>
     );
   };
@@ -35,59 +55,20 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StepperHolder
+        stepper={stepper}
+        value={value}
+        onValueChanged={newValue => setValue(newValue)}
+      />
       <FlatList
-        data={ITEMS}
+        data={STEPPERS}
         renderItem={_renderItem}
         keyExtractor={(item, index) => `${index}`}
+        ListHeaderComponent={_renderSeparator}
+        ListFooterComponent={_renderSeparator}
         ItemSeparatorComponent={_renderSeparator}
       />
     </SafeAreaView>
-  );
-};
-
-const DetailScreen = ({route}) => {
-  const [selected, setSelected] = useState(0);
-
-  const _onValueChanged = (newValue = 0, index = 0) => {
-    const item = ITEMS[index];
-    const {props} = item;
-    const {showText} = props;
-    if (!showText) {
-      if (`${newValue}`.length > 4) {
-        newValue = newValue.toFixed(2);
-      }
-      setSelected(newValue);
-    }
-  };
-
-  const {itemId, otherParam} = route.params;
-  const {props, description} = otherParam;
-  const {showText} = props;
-  return (
-    <View style={styles.content}>
-      {!showText && <Text style={styles.selected}>{selected}</Text>}
-      <SimpleStepper
-        {...props}
-        valueChanged={newValue => _onValueChanged(newValue, itemId)}
-      />
-      <Text style={styles.description}>{description}</Text>
-    </View>
-  );
-};
-
-const App = () => {
-  const Stack = createStackNavigator();
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={'Steppers'}>
-        <Stack.Screen name={'Steppers'} component={HomeScreen} />
-        <Stack.Screen
-          name={'Detail'}
-          component={DetailScreen}
-          options={({route}) => ({title: route.params.otherParam.name})}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 
@@ -95,29 +76,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    marginVertical: 4,
+  holder: {
+    margin: 10,
   },
   stepper: {
-    paddingHorizontal: 4,
-    paddingVertical: 8,
-    margin: 4,
+    alignSelf: 'center',
+  },
+  button: {
+    margin: 8,
   },
   name: {
     fontSize: 16,
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
   },
-  selected: {
-    fontSize: 50,
-    color: '#202020',
-    padding: 8,
+  value: {
+    textAlign: 'center',
+    fontSize: 18,
   },
   separator: {
-    backgroundColor: '#202020',
+    backgroundColor: 'black',
     height: StyleSheet.hairlineWidth,
   },
 });

@@ -35,7 +35,7 @@ const App = () => {
   const [stepper, setStepper] = useState(STEPPERS[0]);
   const [value, setValue] = useState(stepper.value);
 
-  const _renderItem = ({item, index}) => {
+  const _renderItem = ({item}) => {
     const {name, description} = item;
     let nameStyle = styles.name;
     if (stepper.name === item.name) {

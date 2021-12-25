@@ -5,24 +5,24 @@ export const COLOR = {
   purple: '#4F3D9E',
 };
 
-export const ITEMS = [
+export const STEPPERS = [
   {
-    name: 'Default Stepper',
-    description: 'Stepper that has default styles and values.',
+    name: 'Default',
+    description: 'Default styles and values',
     value: 0,
     props: {},
   },
   {
-    name: 'Wraps Stepper',
-    description: 'Stepper with wraps enabled in which it cycles around as dictated by minimum and maximum values.',
+    name: 'Wraps enabled',
+    description: 'Cycles around as dictated by minimum and maximum values',
     value: 0,
     props: {
       wraps: true,
     },
   },
   {
-    name: 'Decimal Stepper',
-    description: 'Stepper that has initial and step values set to decimal numbers.',
+    name: 'Decimal values',
+    description: 'initial and step values are decimal numbers',
     value: 0.99,
     props: {
       initialValue: 0.99,
@@ -30,8 +30,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Image Stepper',
-    description: 'Stepper that has images as step buttons.',
+    name: 'Image Steps',
+    description: 'Step buttons are remote images',
     value: 0,
     props: {
       incrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
@@ -39,27 +39,27 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Action Stepper',
-    description: 'Stepper invokes functions: onMin, onMax, onIncrement and onDecrement.',
+    name: 'Actions',
+    description: 'Functions: onMin, onMax, onIncrement and onDecrement',
     value: 0,
     props: {
-      onMin: (value) => {
+      onMin: value => {
         console.log('[onMin] value: ', value);
       },
-      onMax: (value) => {
+      onMax: value => {
         console.log('[onMax] value: ', value);
       },
-      onIncrement: (value) => {
+      onIncrement: value => {
         console.log('[onIncrement] value: ', value);
       },
-      onDecrement: (value) => {
+      onDecrement: value => {
         console.log('[onDecrement] value: ', value);
       },
     },
   },
   {
-    name: 'Blue Stepper',
-    description: 'Stepper that has blue styles.',
+    name: 'Blue styles',
+    description: 'Custom styles using a blue color',
     value: 0,
     props: {
       showText: false,
@@ -89,8 +89,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Text Position: Green stepper',
-    description: 'Stepper that uses text position center (default) with green styles.',
+    name: 'Text Position: center (default)',
+    description: 'showText enabled with green custom styles',
     value: 0,
     props: {
       showText: true,
@@ -126,8 +126,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Text Position: Red Stepper',
-    description: 'Stepper that uses text position right with red styles.',
+    name: 'Text Position: right',
+    description: 'showText enabled with red custom styles',
     value: 0,
     props: {
       showText: true,
@@ -164,8 +164,8 @@ export const ITEMS = [
     },
   },
   {
-    name: 'Text Position: Purple Stepper',
-    description: 'Stepper that uses text position left with purple styles.',
+    name: 'Text Position: left',
+    description: 'showText enabled with purple custom styles',
     value: 0,
     props: {
       showText: true,

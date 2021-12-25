@@ -3,36 +3,31 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android",
-    "ios": "npx react-native run-ios",
     "start": "npx react-native start",
-    "test": "jest",
+    "ios": "npx react-native run-ios",
+    "android": "npx react-native run-android",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "ios:pod": "cd ios && pod install && cd ..",
-    "doctor": "npx react-native doctor"
+    "android:clean": "cd android && ./gradlew clean && cd ..",
+    "doctor": "npx react-native doctor",
+    "prettier": "npx prettier --check ."
   },
   "dependencies": {
-    "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "5.8.10",
-    "@react-navigation/stack": "5.12.8",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
-    "react-native-gesture-handler": "1.9.0",
-    "react-native-reanimated": "1.13.2",
-    "react-native-safe-area-context": "3.1.9",
-    "react-native-screens": "2.16.1",
+    "react": "17.0.2",
+    "react-native": "0.66.4",
     "react-native-simple-stepper": "3.0.3"
   },
   "devDependencies": {
-    "@babel/core": "7.8.4",
-    "@babel/runtime": "7.8.4",
-    "@react-native-community/eslint-config": "1.1.0",
-    "babel-jest": "25.1.0",
-    "eslint": "6.5.1",
-    "jest": "25.1.0",
-    "metro-react-native-babel-preset": "0.59.0",
-    "react-test-renderer": "16.13.1"
+    "@babel/core": "7.12.9",
+    "@babel/runtime": "7.12.5",
+    "@react-native-community/eslint-config": "2.0.0",
+    "babel-jest": "26.6.3",
+    "eslint": "7.14.0",
+    "eslint-config-prettier": "8.3.0",
+    "jest": "26.6.3",
+    "metro-react-native-babel-preset": "0.66.2",
+    "react-test-renderer": "17.0.2"
   },
   "jest": {
     "preset": "react-native"

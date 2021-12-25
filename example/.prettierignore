@@ -1,4 +1,5 @@
-android
-ios
-node_modules
-src
+android/
+ios/
+node_modules/
+src/
+coverage/

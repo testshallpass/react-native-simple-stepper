@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "test": "npx jest --coverage",
     "start": "npx react-native start",
     "ios": "npx react-native run-ios",
     "android": "npx react-native run-android",

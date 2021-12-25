@@ -1,6 +1,6 @@
 import React from 'react';
 import SimpleStepper from '../SimpleStepper';
-// import { shallow } from 'enzyme';
+// import { mount, shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 // const reactNativeLogo = 'https://reactnative.dev/docs/assets/favicon.png';
 // const STEP = {
@@ -26,6 +26,7 @@ describe('SimpleStepper', () => {
     test('showText with text position right to be right', () => {
       const wrapper = renderer.create(<SimpleStepper showText={true} position={'right'} />);
       expect(wrapper).toBeDefined();
+      console.log(wrapper.root);
     });
   });
   // describe('useEffect', () => {
@@ -103,31 +104,30 @@ describe('SimpleStepper', () => {
   //   });
   // });
   // describe('_decrementAction', () => {
-  //   test('test value decrements', () => {
-  //     this.value = 0;
-  //     const wrapper = shallow(
-  //       <SimpleStepper
-  //         valueChanged={value => {
-  //           this.value = value;
-  //         }}
-  //       />
-  //     );
-  //     wrapper.instance()._decrementAction();
-  //     expect(this.value).toBe(0);
-  //   });
-  //   test('test value decrements with wraps', () => {
-  //     this.value = 0;
-  //     const wrapper = shallow(
-  //       <SimpleStepper
-  //         wraps={true}
-  //         valueChanged={value => {
-  //           this.value = value;
-  //         }}
-  //       />
-  //     );
-  //     wrapper.instance()._decrementAction();
-  //     expect(this.value).toBe(10);
-  //   });
+    // test('test value decrements', () => {
+    //   let wrapper;
+    //   let vcf = value => { console.log(value); }
+    //   renderer.act(() => { wrapper = renderer.create(
+    //       <SimpleStepper
+    //         valueChanged={vcf}
+    //       />
+    //     );
+    //   });
+    //   const testInstance = wrapper.root;
+    //   console.log(testInstance.props);
+    //   // wrapper.instance()._decrementAction();
+    // });
+    // test('test value decrements with wraps', () => {
+    //   const wrapper = renderer.create(
+    //     <SimpleStepper
+    //       wraps={true}
+    //       valueChanged={value => {
+    //         console.log(value);
+    //       }}
+    //     />
+    //   );
+    //   // wrapper.getInstance()._decrementAction();
+    // });
   // });
   // describe('_incrementAction', () => {
   //   test('test value increments', () => {

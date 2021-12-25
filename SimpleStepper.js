@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
 const STEP = {
   increment: 'increment',
@@ -55,102 +55,77 @@ const Step = ({
   );
 };
 
-const SimpleStepper = (props) => {
-  const {
-    initialValue = 0,
-    minimumValue = 0,
-    maximumValue = 10,
-    stepValue = 1,
-    valueChanged = () => {},
-    decrementImage = require('./assets/decrement.png'),
-    incrementImage = require('./assets/increment.png'),
-    activeOpacity = 0.4,
-    disabledOpacity = 0.5,
-    disabled = false,
-    renderDecrementImage = undefined,
-    renderIncrementImage = undefined,
-    renderDecrementStep = undefined,
-    renderIncrementStep = undefined,
-    wraps = false,
-    onMin = () => {},
-    onMax = () => {},
-    onIncrement = () => {},
-    onDecrement = () => {},
-    showText = false,
-    renderText = undefined,
-    textStyle = {
-      padding: 4,
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: 'blue',
-    },
-    containerStyle = {
-      backgroundColor: 'transparent',
-      flexDirection: 'row',
-      borderWidth: 1,
-      borderRadius: 8,
-      overflow: 'hidden',
-      alignItems: 'center',
-      borderColor: 'blue',
-    },
-    separatorStyle = {
-      width: StyleSheet.hairlineWidth,
-      backgroundColor: 'blue',
-      height: '100%',
-    },
-    incrementStepStyle = {
-      padding: 4,
-    },
-    decrementStepStyle = {
-      padding: 4,
-    },
-    incrementImageStyle = {
-      height: 30,
-      width: 30,
-    },
-    decrementImageStyle = {
-      height: 30,
-      width: 30,
-    },
-    textPosition = TEXT_POSITION.center,
-  } = props;
+const SimpleStepper = ({
+  initialValue = 0,
+  minimumValue = 0,
+  maximumValue = 10,
+  stepValue = 1,
+  valueChanged = () => {},
+  decrementImage = require('./assets/decrement.png'),
+  incrementImage = require('./assets/increment.png'),
+  activeOpacity = 0.4,
+  disabledOpacity = 0.5,
+  disabled = false,
+  renderDecrementImage = undefined,
+  renderIncrementImage = undefined,
+  renderDecrementStep = undefined,
+  renderIncrementStep = undefined,
+  wraps = false,
+  onMin = () => {},
+  onMax = () => {},
+  onIncrement = () => {},
+  onDecrement = () => {},
+  showText = false,
+  renderText = undefined,
+  textStyle = {
+    padding: 4,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'blue',
+  },
+  containerStyle = {
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderRadius: 8,
+    overflow: 'hidden',
+    alignItems: 'center',
+    borderColor: 'blue',
+  },
+  separatorStyle = {
+    width: StyleSheet.hairlineWidth,
+    backgroundColor: 'blue',
+    height: '100%',
+  },
+  incrementStepStyle = {
+    padding: 4,
+  },
+  decrementStepStyle = {
+    padding: 4,
+  },
+  incrementImageStyle = {
+    height: 30,
+    width: 30,
+  },
+  decrementImageStyle = {
+    height: 30,
+    width: 30,
+  },
+  textPosition = TEXT_POSITION.center,
+}) => {
   const [value, setValue] = useState(initialValue);
-  const prevInitialValue = useRef(initialValue);
-  const prevDisabled = useRef(disabled);
-  const prevStepValue = useRef(stepValue);
-  const prevMinValue = useRef(minimumValue);
-  const prevMaxValue = useRef(maximumValue);
-
-  useEffect(() => {
-    if (initialValue !== prevInitialValue.current) {
-      _validateValue(initialValue, value !== prevInitialValue.current);
-    } else if (
-      disabled !== prevDisabled.current ||
-      stepValue !== prevStepValue.current
-    ) {
-      _validateValue(value);
-    } else if (
-      minimumValue !== prevMinValue.current ||
-      maximumValue !== prevMaxValue.current
-    ) {
-      const isOkay = minimumValue < maximumValue;
-      if (isOkay) {
-        _validateValue(value);
-      }
-    }
-  }, [initialValue, disabled, stepValue, minimumValue, maximumValue]);
 
   const _decrementAction = () => {
     const nextValue = value - stepValue;
-    _validateValue(nextValue, true, onDecrement);
+    _processValue(nextValue, true, onDecrement);
   };
 
   const _incrementAction = () => {
     const nextValue = value + stepValue;
-    _validateValue(nextValue, true, onIncrement);
+    _processValue(nextValue, true, onIncrement);
   };
 
-  const _validateValue = (
+  const _processValue = (
     newValue = 0,
     changed = false,
     onAction = () => {},
@@ -241,7 +216,7 @@ const SimpleStepper = (props) => {
     };
   };
 
-  const _renderText = (newValue) => {
+  const _renderText = newValue => {
     if (renderText) {
       return renderText(newValue);
     }
@@ -268,7 +243,7 @@ const SimpleStepper = (props) => {
         {isLeft && _renderText(value, renderText, textStyle)}
         {isLeft && <View style={separatorStyle} />}
         {renderDecrementStep ? (
-          renderDecrementStep(props)
+          renderDecrementStep()
         ) : (
           <Step
             style={decrementStepStyle}
@@ -285,7 +260,7 @@ const SimpleStepper = (props) => {
         {isCenter && _renderText(value)}
         <View style={separatorStyle} />
         {renderIncrementStep ? (
-          renderIncrementStep(props)
+          renderIncrementStep()
         ) : (
           <Step
             style={incrementStepStyle}

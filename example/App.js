@@ -37,12 +37,15 @@ const App = () => {
 
   const _renderItem = ({item}) => {
     const {name, description} = item;
+    const isSelected = stepper.name === item.name;
     let nameStyle = styles.name;
-    if (stepper.name === item.name) {
+    let buttonStyle = styles.button;
+    if (isSelected) {
       nameStyle = [styles.name, {fontWeight: '800'}];
+      buttonStyle = [styles.button, {backgroundColor: 'whitesmoke'}];
     }
     return (
-      <Pressable style={styles.button} onPress={() => setStepper(item)}>
+      <Pressable style={buttonStyle} onPress={() => setStepper(item)}>
         <Text style={nameStyle}>{name}</Text>
         <Text style={styles.description}>{description}</Text>
       </Pressable>
@@ -60,6 +63,7 @@ const App = () => {
         value={value}
         onValueChanged={newValue => setValue(newValue)}
       />
+      <Text style={styles.title}>{'Stepper examples'}</Text>
       <FlatList
         data={STEPPERS}
         renderItem={_renderItem}
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   button: {
-    margin: 8,
+    padding: 8,
   },
   name: {
     fontSize: 16,
@@ -98,6 +102,11 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: 'black',
     height: StyleSheet.hairlineWidth,
+  },
+  title: {
+    fontSize: 16,
+    padding: 4,
+    fontWeight: 'bold',
   },
 });
 

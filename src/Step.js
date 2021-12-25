@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import ImageView from './ImageView';
 
 export default class Step extends Component {
@@ -32,10 +32,31 @@ export default class Step extends Component {
   };
 
   render() {
-    const { activeOpacity, style, onPress, disabled, renderImage, imageStyle, imageOpacity, imageSource } = this.props;
+    const {
+      activeOpacity,
+      style,
+      onPress,
+      disabled,
+      renderImage,
+      imageStyle,
+      imageOpacity,
+      imageSource,
+    } = this.props;
     return (
-      <TouchableOpacity activeOpacity={activeOpacity} style={style} onPress={onPress} disabled={disabled}>
-        {renderImage ? renderImage(this.props) : <ImageView style={imageStyle} opacity={imageOpacity} source={imageSource} />}
+      <TouchableOpacity
+        activeOpacity={activeOpacity}
+        style={style}
+        onPress={onPress}
+        disabled={disabled}>
+        {renderImage ? (
+          renderImage(this.props)
+        ) : (
+          <ImageView
+            style={imageStyle}
+            opacity={imageOpacity}
+            source={imageSource}
+          />
+        )}
       </TouchableOpacity>
     );
   }

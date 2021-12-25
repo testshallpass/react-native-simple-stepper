@@ -1,6 +1,6 @@
 import React from 'react';
 import SimpleStepper from '../src/SimpleStepper';
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
 const reactNativeLogo = 'https://reactnative.dev/docs/assets/favicon.png';
 const STEP = {
@@ -16,7 +16,9 @@ describe('SimpleStepper', () => {
       expect(wrapper).toMatchSnapshot();
     });
     test('showText with text position left to be left', () => {
-      const wrapper = renderer.create(<SimpleStepper showText={true} position={'left'} />);
+      const wrapper = renderer.create(
+        <SimpleStepper showText={true} position={'left'} />,
+      );
       expect(wrapper).toBeDefined();
     });
     test('showText with default to be text position center', () => {
@@ -24,7 +26,9 @@ describe('SimpleStepper', () => {
       expect(wrapper).toBeDefined();
     });
     test('showText with text position right to be right', () => {
-      const wrapper = renderer.create(<SimpleStepper showText={true} position={'right'} />);
+      const wrapper = renderer.create(
+        <SimpleStepper showText={true} position={'right'} />,
+      );
       expect(wrapper).toBeDefined();
     });
   });
@@ -108,10 +112,10 @@ describe('SimpleStepper', () => {
       this.value = 0;
       const wrapper = shallow(
         <SimpleStepper
-          valueChanged={value => {
+          valueChanged={(value) => {
             this.value = value;
           }}
-        />
+        />,
       );
       wrapper.instance().decrementAction();
       expect(this.value).toBe(0);
@@ -121,10 +125,10 @@ describe('SimpleStepper', () => {
       const wrapper = shallow(
         <SimpleStepper
           wraps={true}
-          valueChanged={value => {
+          valueChanged={(value) => {
             this.value = value;
           }}
-        />
+        />,
       );
       wrapper.instance().decrementAction();
       expect(this.value).toBe(10);
@@ -135,10 +139,10 @@ describe('SimpleStepper', () => {
       this.value = 0;
       const wrapper = shallow(
         <SimpleStepper
-          valueChanged={value => {
+          valueChanged={(value) => {
             this.value = value;
           }}
-        />
+        />,
       );
       wrapper.instance().incrementAction();
       expect(this.value).toBe(1);
@@ -147,19 +151,40 @@ describe('SimpleStepper', () => {
   describe('validateValue', () => {
     test('test value equals maximumValue', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const props = { minimumValue: 0, maximumValue: 10, wraps: false, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
+      const props = {
+        minimumValue: 0,
+        maximumValue: 10,
+        wraps: false,
+        valueChanged: () => {},
+        onMin: () => {},
+        onMax: () => {},
+      };
       wrapper.instance().validateValue(10, props, true);
       expect(wrapper.instance().state.value).toEqual(10);
     });
     test('test value greater than maximumValue', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const props = { minimumValue: 0, maximumValue: 10, wraps: false, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
+      const props = {
+        minimumValue: 0,
+        maximumValue: 10,
+        wraps: false,
+        valueChanged: () => {},
+        onMin: () => {},
+        onMax: () => {},
+      };
       wrapper.instance().validateValue(11, props, true);
       expect(wrapper.instance().state.value).toEqual(10);
     });
     test('test value greater than maximumValue with wraps', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const props = { minimumValue: 0, maximumValue: 10, wraps: true, valueChanged: () => {}, onMin: () => {}, onMax: () => {} };
+      const props = {
+        minimumValue: 0,
+        maximumValue: 10,
+        wraps: true,
+        valueChanged: () => {},
+        onMin: () => {},
+        onMax: () => {},
+      };
       wrapper.instance().validateValue(11, props, true);
       expect(wrapper.instance().state.value).toEqual(0);
     });
@@ -174,7 +199,9 @@ describe('SimpleStepper', () => {
   describe('_getHasMinMax', () => {
     test('test stepValue less than zero', () => {
       const wrapper = shallow(<SimpleStepper stepValue={-5} />);
-      const { hasReachedMin, hasReachedMax } = wrapper.instance()._getHasMinMax(1);
+      const {hasReachedMin, hasReachedMax} = wrapper
+        .instance()
+        ._getHasMinMax(1);
       expect(hasReachedMin).toBeFalsy();
       expect(hasReachedMax).toBeFalsy();
     });
@@ -182,7 +209,9 @@ describe('SimpleStepper', () => {
   describe('_getImageSource', () => {
     test('test image source to be uri object', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const source = wrapper.instance()._getImageSource(STEP.increment, reactNativeLogo);
+      const source = wrapper
+        .instance()
+        ._getImageSource(STEP.increment, reactNativeLogo);
       expect(source).toEqual({
         uri: reactNativeLogo,
       });
@@ -190,7 +219,7 @@ describe('SimpleStepper', () => {
     test('increment type source to be local asset number', () => {
       const wrapper = shallow(<SimpleStepper />);
       const source = wrapper.instance()._getImageSource(STEP.increment, '');
-      expect(source).toEqual({ testUri: '../../../src/assets/increment.png' });
+      expect(source).toEqual({testUri: '../../../src/assets/increment.png'});
     });
     test('increment type source to be null', () => {
       const wrapper = shallow(<SimpleStepper />);
@@ -200,11 +229,13 @@ describe('SimpleStepper', () => {
     test('decrement type source to be local asset number', () => {
       const wrapper = shallow(<SimpleStepper />);
       const source = wrapper.instance()._getImageSource(STEP.decrement, '');
-      expect(source).toEqual({ testUri: '../../../src/assets/decrement.png' });
+      expect(source).toEqual({testUri: '../../../src/assets/decrement.png'});
     });
     test('decrement type source to be undefined', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const source = wrapper.instance()._getImageSource(STEP.decrement, undefined);
+      const source = wrapper
+        .instance()
+        ._getImageSource(STEP.decrement, undefined);
       expect(source).toBeUndefined();
     });
     test('unknown type source to be empty string', () => {
@@ -215,23 +246,27 @@ describe('SimpleStepper', () => {
     test("unknown type source to be {uri: ' '}", () => {
       const wrapper = shallow(<SimpleStepper />);
       const source = wrapper.instance()._getImageSource(STEP.unknown, ' ');
-      expect(source).toEqual({ uri: ' ' });
+      expect(source).toEqual({uri: ' '});
     });
   });
   describe('_getImageViewProps', () => {
     test('test increment to be defined', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const imageProps = wrapper.instance()._getImageViewProps(STEP.increment, 1);
+      const imageProps = wrapper
+        .instance()
+        ._getImageViewProps(STEP.increment, 1);
       expect(imageProps).toBeDefined();
-      expect(imageProps.style).toEqual({ height: 36, width: 36 });
+      expect(imageProps.style).toEqual({height: 36, width: 36});
       expect(imageProps.opacity).toEqual(1);
       expect(imageProps.source).toBeDefined();
     });
     test('test decrement to be defined', () => {
       const wrapper = shallow(<SimpleStepper />);
-      const imageProps = wrapper.instance()._getImageViewProps(STEP.decrement, 1);
+      const imageProps = wrapper
+        .instance()
+        ._getImageViewProps(STEP.decrement, 1);
       expect(imageProps).toBeDefined();
-      expect(imageProps.style).toEqual({ height: 36, width: 36 });
+      expect(imageProps.style).toEqual({height: 36, width: 36});
       expect(imageProps.opacity).toEqual(1);
       expect(imageProps.source).toBeDefined();
     });
@@ -258,7 +293,7 @@ describe('SimpleStepper', () => {
           renderIncrementStep={() => {
             return null;
           }}
-        />
+        />,
       );
       expect(wrapper).toBeDefined();
     });

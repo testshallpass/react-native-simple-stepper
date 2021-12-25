@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 
 export default class ImageView extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ export default class ImageView extends Component {
   };
 
   render() {
-    const { style, source, opacity } = this.props;
-    return <Image style={[style, { opacity }]} source={source} />;
+    const {style, source, opacity} = this.props;
+    return <Image style={[style, {opacity}]} source={source} />;
   }
 }

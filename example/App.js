@@ -7,7 +7,7 @@ import {
   FlatList,
   View,
 } from 'react-native';
-import SimpleStepper from './src/SimpleStepper';
+import {SimpleStepper} from 'react-native-simple-stepper';
 import {STEPPERS} from './constants';
 
 const StepperHolder = ({

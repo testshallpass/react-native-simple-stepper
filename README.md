@@ -1,9 +1,10 @@
 # react-native-simple-stepper
 
-[![Platform](https://img.shields.io/badge/platform-react--native-blue.svg?style=flat-square)](https://reactnative.dev)
-[![npm version](https://img.shields.io/npm/v/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
-[![npm version](https://img.shields.io/npm/dm/react-native-simple-stepper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-simple-stepper)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
+[![Platform](https://img.shields.io/badge/-react--native-grey.svg?style=for-the-badge&logo=react)](https://reactnative.dev)
+[![npm version](https://img.shields.io/npm/v/react-native-simple-stepper.svg?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![npm version](https://img.shields.io/npm/dm/react-native-simple-stepper.svg?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/react-native-simple-stepper)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://raw.github.com/testshallpass/react-native-simple-stepper/master/LICENSE)
+[![CI](https://github.com/testshallpass/react-native-simple-stepper/actions/workflows/ci.yml/badge.svg)](https://github.com/testshallpass/react-native-simple-stepper/actions/workflows/ci.yml)
 
 A simple react-native implementation of the [UIStepper](https://developer.apple.com/reference/uikit/uistepper) control from iOS. To note, customization is available, see [Props](#props) for more info.
 
@@ -25,23 +26,15 @@ A simple react-native implementation of the [UIStepper](https://developer.apple.
 ## Usage
 
 ```javascript
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {SimpleStepper} from 'react-native-simple-stepper';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: 0};
-  }
-  _valueChanged = (value) => {
-    this.setState({value});
-  };
-  render() {
-    return (
-      <SimpleStepper valueChanged={(value) => this._valueChanged(value)} />
-    );
-  }
-}
+const App = () => {
+  const [value, setValue] = useState(0);
+  return <SimpleStepper valueChanged={(newValue) => setValue(newValue)} />;
+};
+
+export default App;
 ```
 
 ## Using Text Position

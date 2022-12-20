@@ -7,29 +7,8 @@ import {
   FlatList,
   View,
 } from 'react-native';
-import {SimpleStepper} from 'react-native-simple-stepper';
+import SimpleStepper from './src/SimpleStepper';
 import {STEPPERS} from './constants';
-
-const StepperHolder = ({
-  stepper = {},
-  value = 0,
-  onValueChanged = () => {},
-}) => {
-  const {props} = stepper;
-  return (
-    <View style={styles.holder}>
-      <View style={styles.stepper}>
-        <SimpleStepper
-          {...props}
-          valueChanged={newValue => onValueChanged(newValue)}
-        />
-      </View>
-      {!props.showText && (
-        <Text style={styles.value}>{`value is ${value}`}</Text>
-      )}
-    </View>
-  );
-};
 
 const App = () => {
   const [stepper, setStepper] = useState(STEPPERS[0]);
@@ -52,25 +31,23 @@ const App = () => {
     );
   };
 
-  const _renderSeparator = () => {
-    return <View style={styles.separator} />;
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <StepperHolder
-        stepper={stepper}
-        value={value}
-        onValueChanged={newValue => setValue(newValue)}
-      />
-      <Text style={styles.title}>{'Stepper examples'}</Text>
+      <View style={styles.holder}>
+        <View style={styles.stepper}>
+          <SimpleStepper
+            {...stepper.props}
+            valueChanged={newValue => setValue(newValue)}
+          />
+        </View>
+        <Text style={styles.value}>{`value is ${value}`}</Text>
+      </View>
       <FlatList
         data={STEPPERS}
+        extraData={stepper}
         renderItem={_renderItem}
         keyExtractor={(item, index) => `${index}`}
-        ListHeaderComponent={_renderSeparator}
-        ListFooterComponent={_renderSeparator}
-        ItemSeparatorComponent={_renderSeparator}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
     </SafeAreaView>
   );
@@ -102,11 +79,6 @@ const styles = StyleSheet.create({
   separator: {
     backgroundColor: 'black',
     height: StyleSheet.hairlineWidth,
-  },
-  title: {
-    fontSize: 16,
-    padding: 4,
-    fontWeight: 'bold',
   },
 });
 

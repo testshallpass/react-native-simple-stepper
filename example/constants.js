@@ -10,7 +10,9 @@ export const STEPPERS = [
     name: 'Default',
     description: 'Default styles and values',
     value: 0,
-    props: {},
+    props: {
+      showText: false,
+    },
   },
   {
     name: 'Wraps enabled',
@@ -36,6 +38,14 @@ export const STEPPERS = [
     props: {
       incrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
       decrementImage: 'https://reactnative.dev/docs/assets/favicon.png',
+      incrementImageStyle: {
+        height: 30,
+        width: 30,
+      },
+      decrementImageStyle: {
+        height: 30,
+        width: 30,
+      },
     },
   },
   {

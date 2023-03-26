@@ -5776,10 +5776,10 @@ react-native-gradle-plugin@^0.71.16:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.16.tgz#822bb0c680e03b5df5aa65f2e5ffc2bc2930854a"
   integrity sha512-H2BjG2zk7B7Wii9sXvd9qhCVRQYDAHSWdMw9tscmZBqSP62DkIWEQSk4/B2GhQ4aK9ydVXgtqR6tBeg3yy8TSA==
 
-react-native-simple-stepper@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-simple-stepper/-/react-native-simple-stepper-4.0.0.tgz#c507fa69c1b7c1a4d511726d0707eb72a2bbf2d1"
-  integrity sha512-col/7XSHE6DeMKM2OrlurqGoUyXLkZXYh6euC2UIvOFM6mZ3w3aNNtGg+s7n2J4va3v3Ulw9e5l/dhyKAR72cA==
+react-native-simple-stepper@4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-simple-stepper/-/react-native-simple-stepper-4.0.1.tgz#aeb0539bbea4407e660ffe3175d10c16e5b56636"
+  integrity sha512-s/muOi9yPYWnMfn9qRfQWKhW6+GhiZpqZWryc+loxmNTWz5oD0gpTTm5g7vBKUI47Tdtc2wFL7ULUbGJGERO4g==
 
 react-native@0.71.4:
   version "0.71.4"

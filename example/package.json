@@ -16,7 +16,7 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.71.4",
-    "react-native-simple-stepper": "3.0.3"
+    "react-native-simple-stepper": "4.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",

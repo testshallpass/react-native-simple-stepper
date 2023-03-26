@@ -8,6 +8,8 @@
 
 A parity version of the iOS [UIStepper](https://developer.apple.com/reference/uikit/uistepper).
 
+![screenshot](./screenshots/stepper.png)
+
 ## Table of contents
 
 - [Installation](#installation)

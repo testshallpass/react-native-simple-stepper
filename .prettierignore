@@ -9,4 +9,3 @@ LICENSE
 .gitignore
 .npmignore
 .eslintignore
-tsconfig.json

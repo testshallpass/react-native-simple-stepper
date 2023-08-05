@@ -1,6 +1,6 @@
 {
   "name": "react-native-simple-stepper",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "A parity version of the iOS UIStepper.",
   "main": "SimpleStepper.tsx",
   "scripts": {

@@ -97,7 +97,7 @@ type StepperExample = {
   index: number;
 };
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const _renderItem = (example: StepperExample) => {
     const {name, description, stepper} = example.item;
     return (
@@ -151,9 +151,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginVertical: 4,
+    color: 'black',
   },
   description: {
     fontSize: 14,
+    color: 'black',
   },
   separator: {
     backgroundColor: 'black',

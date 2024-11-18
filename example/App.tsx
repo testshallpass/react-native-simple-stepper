@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  Pressable,
   SafeAreaView,
   FlatList,
   View,
@@ -52,13 +51,13 @@ const steppers = [
         onMin={(value: number) => {
           console.log('[onMin] value: ', value);
         }}
-        onMax={(value: any) => {
+        onMax={(value: number) => {
           console.log('[onMax] value: ', value);
         }}
-        onIncrement={(value: any) => {
+        onIncrement={(value: number) => {
           console.log('[onIncrement] value: ', value);
         }}
-        onDecrement={(value: any) => {
+        onDecrement={(value: number) => {
           console.log('[onDecrement] value: ', value);
         }}
       />
@@ -97,25 +96,26 @@ type StepperExample = {
   index: number;
 };
 
-function App(): React.JSX.Element {
-  const _renderItem = (example: StepperExample) => {
+export default function App(): React.JSX.Element {
+
+  function _renderItem(example: StepperExample) {
     const {name, description, stepper} = example.item;
     return (
-      <Pressable style={styles.button}>
+      <View style={styles.row}>
         <View style={styles.content}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.description}>{description}</Text>
         </View>
         {stepper}
-      </Pressable>
+      </View>
     );
   };
 
-  const _renderSeparator = () => {
+  function _renderSeparator() {
     return <View style={styles.separator} />;
   };
 
-  const _renderHeader = () => {
+  function _renderHeader() {
     return (
       <View style={styles.header}>
         <Text style={styles.title}>{'Stepper examples'}</Text>
@@ -129,7 +129,7 @@ function App(): React.JSX.Element {
         data={steppers}
         initialNumToRender={steppers.length}
         renderItem={_renderItem}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(_item, index) => `${index}`}
         ItemSeparatorComponent={_renderSeparator}
         ListHeaderComponent={_renderHeader}
       />
@@ -138,7 +138,7 @@ function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  button: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
@@ -172,5 +172,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default App;

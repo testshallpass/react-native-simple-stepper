@@ -34,7 +34,7 @@ exports[`it renders 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -173,7 +173,7 @@ exports[`render increment and decrement 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -403,7 +403,7 @@ exports[`render text 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -555,7 +555,7 @@ exports[`show center text 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -734,7 +734,7 @@ exports[`show left text 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -873,7 +873,7 @@ exports[`show right text 1`] = `
       }
       accessible={true}
       collapsable={false}
-      focusable={true}
+      focusable={false}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}

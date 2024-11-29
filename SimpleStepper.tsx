@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,6 +11,11 @@ import {
   ImageSourcePropType,
   ColorValue,
 } from 'react-native';
+
+type HasReachedMaxMin = {
+  hasReachedMax: boolean;
+  hasReachedMin: boolean;
+};
 
 export type SimpleStepperProps = {
   initialValue?: number;
@@ -47,9 +52,15 @@ export type SimpleStepperProps = {
   useColor?: boolean;
   color?: ColorValue;
   textDecimalPlaces?: number;
+  containerTestID?: string;
+  separatorTestID?: string;
+  incrementImageTestID?: string;
+  decrementImageTestID?: string;
+  incrementButtonTestID?: string;
+  decrementButtonTestID?: string;
 };
 
-const SimpleStepper: React.FC<SimpleStepperProps> = ({
+const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   initialValue = 0,
   minimumValue = 0,
   maximumValue = 10,
@@ -107,26 +118,32 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
   useColor = false,
   color = 'blue',
   textDecimalPlaces = 2,
+  containerTestID = 'container',
+  separatorTestID = 'separator',
+  incrementImageTestID = 'incrementImage',
+  decrementImageTestID = 'decrementImage',
+  incrementButtonTestID = 'incrementButton',
+  decrementButtonTestID = 'decrementButton',
 }) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = React.useState(initialValue);
 
-  const _decrementAction = () => {
+  function _decrementAction(): void {
     const nextValue = value - stepValue;
     const actualValue = _processValue(nextValue);
     onDecrement(actualValue);
     setValue(actualValue);
     valueChanged(actualValue);
-  };
+  }
 
-  const _incrementAction = () => {
+  function _incrementAction(): void {
     const nextValue = value + stepValue;
     const actualValue = _processValue(nextValue);
     onIncrement(actualValue);
     setValue(actualValue);
     valueChanged(actualValue);
-  };
+  }
 
-  const _processValue = (actualValue: number) => {
+  function _processValue(actualValue: number): number {
     if (actualValue > maximumValue) {
       return wraps ? minimumValue : maximumValue;
     } else if (actualValue === maximumValue) {
@@ -137,9 +154,9 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
       return minimumValue;
     }
     return actualValue;
-  };
+  }
 
-  const _getHasMinMax = () => {
+  function _getHasMinMax(): HasReachedMaxMin {
     let hasReachedMax = true;
     let hasReachedMin = true;
     switch (true) {
@@ -160,9 +177,9 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
       hasReachedMax,
       hasReachedMin,
     };
-  };
+  }
 
-  const _renderText = () => {
+  function _renderText(): React.JSX.Element {
     if (renderText) {
       return renderText(value);
     }
@@ -175,9 +192,9 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
       displayValue = Number(value.toFixed(textDecimalPlaces));
     }
     return <Text style={textStyle}>{displayValue}</Text>;
-  };
+  }
 
-  const _renderIncrementImage = (opacity: number) => {
+  function _renderIncrementImage(opacity: number): React.JSX.Element {
     if (renderIncrementImage) {
       return renderIncrementImage(opacity);
     }
@@ -190,14 +207,14 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
     }
     return (
       <Image
-        testID={'incrementImage'}
+        testID={incrementImageTestID}
         style={[_incrementImageStyle, {opacity}]}
         source={incrementImage}
       />
     );
-  };
+  }
 
-  const _renderDecrementImage = (opacity: number) => {
+  function _renderDecrementImage(opacity: number): React.JSX.Element {
     if (renderDecrementImage) {
       return renderDecrementImage(opacity);
     }
@@ -210,12 +227,12 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
     }
     return (
       <Image
-        testID={'decrementImage'}
+        testID={decrementImageTestID}
         style={[_decrementImageStyle, {opacity}]}
         source={decrementImage}
       />
     );
-  };
+  }
 
   const {hasReachedMin, hasReachedMax} = _getHasMinMax();
   const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
@@ -240,14 +257,14 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
 
   return (
     <View>
-      <View testID={'container'} style={_containerStyle}>
+      <View testID={containerTestID} style={_containerStyle}>
         {isLeft && _renderText()}
-        {isLeft && <View testID={'separator'} style={_separatorStyle} />}
+        {isLeft && <View testID={separatorTestID} style={_separatorStyle} />}
         {renderDecrementStep ? (
           renderDecrementStep(value, _decrementAction)
         ) : (
           <TouchableOpacity
-            testID={'decrementButton'}
+            testID={decrementButtonTestID}
             style={decrementStepStyle}
             activeOpacity={activeOpacity}
             onPress={_decrementAction}
@@ -255,14 +272,14 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
             {_renderDecrementImage(decrementOpacity)}
           </TouchableOpacity>
         )}
-        {isCenter && <View testID={'separator'} style={_separatorStyle} />}
+        {isCenter && <View testID={separatorTestID} style={_separatorStyle} />}
         {isCenter && _renderText()}
         <View style={_separatorStyle} />
         {renderIncrementStep ? (
           renderIncrementStep(value, _incrementAction)
         ) : (
           <TouchableOpacity
-            testID={'incrementButton'}
+            testID={incrementButtonTestID}
             style={incrementStepStyle}
             activeOpacity={activeOpacity}
             onPress={_incrementAction}
@@ -270,7 +287,7 @@ const SimpleStepper: React.FC<SimpleStepperProps> = ({
             {_renderIncrementImage(incrementOpacity)}
           </TouchableOpacity>
         )}
-        {isRight && <View testID={'separator'} style={_separatorStyle} />}
+        {isRight && <View testID={separatorTestID} style={_separatorStyle} />}
         {isRight && _renderText()}
       </View>
     </View>

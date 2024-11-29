@@ -9,7 +9,7 @@ import {
 import SimpleStepper from 'react-native-simple-stepper';
 
 const reactNativeFavicon = {
-  uri: 'https://reactnative.dev/docs/assets/favicon.png',
+  uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
 };
 
 const steppers = [
@@ -30,7 +30,7 @@ const steppers = [
     stepper: <SimpleStepper showText initialValue={0.99} stepValue={0.99} />,
   },
   {
-    name: 'Remote stepper',
+    name: 'Custom image stepper',
     description: 'incrementImage and decrementImage set to remote images.',
     stepper: (
       <SimpleStepper
@@ -64,13 +64,13 @@ const steppers = [
     ),
   },
   {
-    name: 'Red stepper',
+    name: 'Red color stepper',
     description:
       'textPosition is center by default. useColor and showText are enabled. color set to red.',
     stepper: <SimpleStepper useColor showText color={'red'} />,
   },
   {
-    name: 'Green stepper',
+    name: 'Green color stepper',
     description:
       'textPosition set to right. useColor and showText are enabled. color set to green.',
     stepper: (
@@ -78,7 +78,7 @@ const steppers = [
     ),
   },
   {
-    name: 'Blue stepper',
+    name: 'Blue color stepper',
     description:
       'textPosition set to left. useColor and showText are enabled. color set to blue.',
     stepper: (
@@ -91,14 +91,14 @@ type StepperExample = {
   item: {
     name: string;
     description: string;
-    stepper: JSX.Element;
+    stepper: React.JSX.Element;
   };
   index: number;
 };
 
 export default function App(): React.JSX.Element {
 
-  function _renderItem(example: StepperExample) {
+  function _renderItem(example: StepperExample): React.JSX.Element {
     const {name, description, stepper} = example.item;
     return (
       <View style={styles.row}>
@@ -111,11 +111,11 @@ export default function App(): React.JSX.Element {
     );
   };
 
-  function _renderSeparator() {
+  function _renderSeparator(): React.JSX.Element {
     return <View style={styles.separator} />;
   };
 
-  function _renderHeader() {
+  function _renderHeader(): React.JSX.Element {
     return (
       <View style={styles.header}>
         <Text style={styles.title}>{'Stepper examples'}</Text>
@@ -159,12 +159,12 @@ const styles = StyleSheet.create({
   },
   separator: {
     backgroundColor: 'black',
-    height: StyleSheet.hairlineWidth,
+    height: 1,
   },
   header: {
     padding: 8,
     borderBottomColor: 'black',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: 1,
   },
   title: {
     fontSize: 18,

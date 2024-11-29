@@ -60,3 +60,11 @@ example/jsconfig.json
 example/src
 coverage
 RELEASE_NOTES.md
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

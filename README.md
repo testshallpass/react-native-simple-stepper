@@ -28,13 +28,12 @@ A parity version of the iOS [UIStepper](https://developer.apple.com/reference/ui
 ## Usage
 
 ```javascript
+import React from 'react';
 import SimpleStepper from 'react-native-simple-stepper';
 
-function Example() {
+export default function Example(): React.JSX.Element {
   return <SimpleStepper valueChanged={value => console.log(value)} />;
 }
-
-export default Example;
 ```
 
 ## Text Position
@@ -44,11 +43,10 @@ export default Example;
 | ![screenshot](./screenshots/left.png) | ![screenshot](./screenshots/center.png) | ![screenshot](./screenshots/right.png) |
 
 ```javascript
+import React from 'react';
 import SimpleStepper from 'react-native-simple-stepper';
 
-function TextPositionExample() {
+export default function TextPositionExample(): React.JSX.Element {
   return <SimpleStepper showText={true} textPosition={'right'} />;
 }
-
-export default TextPositionExample;
 ```

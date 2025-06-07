@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   FlatList,
   View,
+  StatusBar,
 } from 'react-native';
 import SimpleStepper from 'react-native-simple-stepper';
 
@@ -126,6 +127,7 @@ export default function App(): React.JSX.Element {
   return (
     <SafeAreaView>
       <FlatList
+        style={styles.list}
         data={steppers}
         initialNumToRender={steppers.length}
         renderItem={_renderItem}
@@ -138,6 +140,9 @@ export default function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  list: {
+    marginTop: StatusBar.currentHeight,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

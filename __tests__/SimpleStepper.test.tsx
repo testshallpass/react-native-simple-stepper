@@ -1,6 +1,5 @@
 import React from 'react';
 import {TouchableOpacity, Text, Image} from 'react-native';
-import '@testing-library/jest-native/extend-expect';
 import {
   render,
   cleanup,

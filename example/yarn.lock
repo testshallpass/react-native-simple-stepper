@@ -5233,10 +5233,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-simple-stepper@npm:4.2.0":
-  version: 4.2.0
-  resolution: "react-native-simple-stepper@npm:4.2.0"
-  checksum: 10c0/e14379d76b07d7a30313568f777e898a885ef4510a2678ff7c621161b1900033ebe7ea366154fa4aa362531a62cf641bfc4005c2d2e567936e05f03b37aca86c
+"react-native-simple-stepper@npm:4.3.1":
+  version: 4.3.1
+  resolution: "react-native-simple-stepper@npm:4.3.1"
+  checksum: 10c0/9df8949ace7d7538f7273e96bafdf03235a4550b307038d24f560662a7ad7849a119be3a6341e5f690ba9370d65c1cdc5878c5d2d2633d3f507ade2c01c07419
   languageName: node
   linkType: hard
 
@@ -5684,7 +5684,7 @@ __metadata:
     expo: "npm:~53.0.9"
     react: "npm:19.0.0"
     react-native: "npm:0.79.2"
-    react-native-simple-stepper: "npm:4.2.0"
+    react-native-simple-stepper: "npm:4.3.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft

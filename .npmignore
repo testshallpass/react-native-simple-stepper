@@ -21,3 +21,12 @@ jest.config.js
 tsconfig.json
 RELEASE_NOTES.md
 .yarnrc.yml
+
+# Yarn
+example/.yarn/*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

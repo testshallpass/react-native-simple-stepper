@@ -52,7 +52,7 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
-example/SimpleStepper.js
+example/src/
 
 jsconfig.json
 

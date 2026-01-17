@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text, Image} from 'react-native';
+import { TouchableOpacity, Text, Image } from 'react-native';
 import {
   render,
   cleanup,
@@ -55,6 +55,7 @@ test('increment by 1 until hit maximum value of 3', async () => {
   const decrementButton = await screen.findByTestId('incrementButton');
   expect(decrementButton).toBeDefined();
 
+  // eslint-disable-next-line for-direction
   for (let index = 2; index < 0; index--) {
     fireEvent.press(decrementButton);
     expect(actualValue).toBe(index);
@@ -177,10 +178,11 @@ test('negative step value', async () => {
 });
 
 test('disable tint color', async () => {
+  const imageStyle = { height: 30, width: 30, tintColor: 'blue' };
   render(
     <SimpleStepper
-      incrementImageStyle={{height: 30, width: 30, tintColor: 'blue'}}
-      decrementImageStyle={{height: 30, width: 30, tintColor: 'blue'}}
+      incrementImageStyle={{ ...imageStyle }}
+      decrementImageStyle={{ ...imageStyle }}
       disableIncrementImageTintColor
       disableDecrementImageTintColor
     />,
@@ -209,10 +211,10 @@ test('render increment and decrement', () => {
   const component = render(
     <SimpleStepper
       renderIncrementImage={opacity => (
-        <Image source={reactNativeFavicon} style={{opacity}} />
+        <Image source={reactNativeFavicon} style={{ opacity }} />
       )}
       renderDecrementImage={opacity => (
-        <Image source={reactNativeFavicon} style={{opacity}} />
+        <Image source={reactNativeFavicon} style={{ opacity }} />
       )}
     />,
   );

@@ -28,8 +28,14 @@ export type SimpleStepperProps = {
   activeOpacity?: number;
   disabledOpacity?: number;
   disabled?: boolean;
-  renderDecrementStep?: (value: number, onDecrement: () => void) => React.JSX.Element;
-  renderIncrementStep?: (value: number, onIncrement: () => void) => React.JSX.Element;
+  renderDecrementStep?: (
+    value: number,
+    onDecrement: () => void,
+  ) => React.JSX.Element;
+  renderIncrementStep?: (
+    value: number,
+    onIncrement: () => void,
+  ) => React.JSX.Element;
   renderIncrementImage?: (opacity: number) => React.JSX.Element;
   renderDecrementImage?: (opacity: number) => React.JSX.Element;
   wraps?: boolean;
@@ -183,7 +189,7 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     if (renderText) {
       return renderText(value);
     }
-    let _textStyle = textStyle;
+    const _textStyle = textStyle;
     if (useColor && color) {
       _textStyle.color = color;
     }
@@ -208,7 +214,7 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     return (
       <Image
         testID={incrementImageTestID}
-        style={[_incrementImageStyle, {opacity}]}
+        style={[_incrementImageStyle, { opacity }]}
         source={incrementImage}
       />
     );
@@ -228,13 +234,13 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     return (
       <Image
         testID={decrementImageTestID}
-        style={[_decrementImageStyle, {opacity}]}
+        style={[_decrementImageStyle, { opacity }]}
         source={decrementImage}
       />
     );
   }
 
-  const {hasReachedMin, hasReachedMax} = _getHasMinMax();
+  const { hasReachedMin, hasReachedMax } = _getHasMinMax();
   const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
   const incrementOpacity = hasReachedMax || disabled ? disabledOpacity : 1;
   const isLeft = showText && textPosition === 'left';
@@ -248,8 +254,8 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     onMax(value);
   }
 
-  let _containerStyle = containerStyle;
-  let _separatorStyle = separatorStyle;
+  const _containerStyle = containerStyle;
+  const _separatorStyle = separatorStyle;
   if (useColor && color) {
     _containerStyle.borderColor = color;
     _separatorStyle.backgroundColor = color;
@@ -268,7 +274,8 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
             style={decrementStepStyle}
             activeOpacity={activeOpacity}
             onPress={_decrementAction}
-            disabled={hasReachedMin || disabled}>
+            disabled={hasReachedMin || disabled}
+          >
             {_renderDecrementImage(decrementOpacity)}
           </TouchableOpacity>
         )}
@@ -283,7 +290,8 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
             style={incrementStepStyle}
             activeOpacity={activeOpacity}
             onPress={_incrementAction}
-            disabled={hasReachedMax || disabled}>
+            disabled={hasReachedMax || disabled}
+          >
             {_renderIncrementImage(incrementOpacity)}
           </TouchableOpacity>
         )}

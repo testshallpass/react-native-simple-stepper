@@ -27,7 +27,7 @@ A parity version of the iOS [UIStepper](https://developer.apple.com/reference/ui
 
 ## Usage
 
-```javascript
+```tsx
 import React from 'react';
 import SimpleStepper from 'react-native-simple-stepper';
 
@@ -42,7 +42,7 @@ export default function Example(): React.JSX.Element {
 | :-----------------------------------: | :-------------------------------------: | :------------------------------------: |
 | ![screenshot](./screenshots/left.png) | ![screenshot](./screenshots/center.png) | ![screenshot](./screenshots/right.png) |
 
-```javascript
+```tsx
 import React from 'react';
 import SimpleStepper from 'react-native-simple-stepper';
 

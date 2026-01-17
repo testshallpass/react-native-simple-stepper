@@ -1,32 +1,20 @@
-# directories
-node_modules/
-example/
 __tests__/
-coverage/
 .github/
+.yarn/
+coverage/
+example/
+node_modules/
 screenshots/
-.vscode/
-
-# files
 .DS_Store
-npm-debug.log
 .gitignore
 .npmignore
 .prettierignore
-.prettierrc.js
-.eslintignore
-.eslintrc.js
-babel.config.js
-jest.config.js
-tsconfig.json
-RELEASE_NOTES.md
 .yarnrc.yml
-
-# Yarn
-example/.yarn/*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+babel.config.mjs
+eslint.config.mjs
+jest.config.mjs
+npm-debug.log
+prettier.config.mjs
+RELEASE_NOTES.md
+tsconfig.json
+yarn.lock

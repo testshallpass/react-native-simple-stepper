@@ -7,18 +7,24 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "doctor": "npx expo-doctor"
   },
   "dependencies": {
-    "expo": "~53.0.9",
-    "react": "19.0.0",
-    "react-native": "0.79.2",
-    "react-native-simple-stepper": "4.3.1"
+    "expo": "~54.0.30",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "5.6.2",
+    "react-native-simple-stepper": "4.3.1",
+    "react-native-web": "^0.21.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@types/react": "~19.0.10",
-    "typescript": "^5.8.3"
+    "@types/react": "19.1.10",
+    "@types/react-dom": "^19",
+    "@types/react-native-web": "^0",
+    "expo-doctor": "1.17.11",
+    "typescript": "5.9.3"
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "yarn@4.12.0"
 }

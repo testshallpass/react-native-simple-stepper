@@ -2,18 +2,29 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
   FlatList,
   View,
-  StatusBar,
+  ImageSourcePropType,
 } from 'react-native';
 import SimpleStepper from 'react-native-simple-stepper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const reactNativeFavicon = {
+interface StepperItem {
+  name: string;
+  description: string;
+  stepper: React.JSX.Element;
+}
+
+interface StepperExample {
+  item: StepperItem;
+  index: number;
+}
+
+const reactNativeImage: ImageSourcePropType = {
   uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
 };
 
-const steppers = [
+const steppers: StepperItem[] = [
   {
     name: 'Default stepper',
     description: 'Default everything.',
@@ -35,8 +46,8 @@ const steppers = [
     description: 'incrementImage and decrementImage set to remote images.',
     stepper: (
       <SimpleStepper
-        incrementImage={reactNativeFavicon}
-        decrementImage={reactNativeFavicon}
+        incrementImage={reactNativeImage}
+        decrementImage={reactNativeImage}
         valueChanged={(value: number) => {
           console.log('[onValueChanged] value: ', value);
         }}
@@ -88,33 +99,21 @@ const steppers = [
   },
 ];
 
-type StepperExample = {
-  item: {
-    name: string;
-    description: string;
-    stepper: React.JSX.Element;
-  };
-  index: number;
-};
-
 export default function App(): React.JSX.Element {
-
   function _renderItem(example: StepperExample): React.JSX.Element {
-    const {name, description, stepper} = example.item;
+    const { name, description, stepper } = example.item;
     return (
-      <View style={styles.row}>
-        <View style={styles.content}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
-        </View>
+      <View style={styles.item}>
+        <Text style={styles.name}>{name}</Text>
         {stepper}
+        <Text style={styles.description}>{description}</Text>
       </View>
     );
-  };
+  }
 
   function _renderSeparator(): React.JSX.Element {
     return <View style={styles.separator} />;
-  };
+  }
 
   function _renderHeader(): React.JSX.Element {
     return (
@@ -122,12 +121,11 @@ export default function App(): React.JSX.Element {
         <Text style={styles.title}>{'Stepper examples'}</Text>
       </View>
     );
-  };
+  }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.safeAreaView}>
       <FlatList
-        style={styles.list}
         data={steppers}
         initialNumToRender={steppers.length}
         renderItem={_renderItem}
@@ -139,37 +137,35 @@ export default function App(): React.JSX.Element {
   );
 }
 
+const color = {
+  black: 'black',
+  whitesmoke: 'whitesmoke',
+};
+
 const styles = StyleSheet.create({
-  list: {
-    marginTop: StatusBar.currentHeight,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-  },
-  content: {
-    flex: 1,
-    marginHorizontal: 8,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: '500',
-    marginVertical: 4,
-    color: 'black',
-  },
   description: {
-    fontSize: 14,
-    color: 'black',
-  },
-  separator: {
-    backgroundColor: 'black',
-    height: 1,
+    fontSize: 16,
   },
   header: {
-    padding: 8,
-    borderBottomColor: 'black',
+    borderBottomColor: color.black,
     borderBottomWidth: 1,
+    padding: 8,
+  },
+  item: {
+    flexDirection: 'column',
+    marginHorizontal: 16,
+    padding: 8,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  safeAreaView: {
+    backgroundColor: color.whitesmoke,
+  },
+  separator: {
+    backgroundColor: color.black,
+    height: 1,
   },
   title: {
     fontSize: 18,

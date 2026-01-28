@@ -1,12 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  FlatList,
-  View,
-  ImageSourcePropType,
-} from 'react-native';
-import SimpleStepper from 'react-native-simple-stepper';
+import { StyleSheet, Text, FlatList, View } from 'react-native';
+import SimpleStepper from './src/SimpleStepper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface StepperItem {
@@ -20,36 +14,48 @@ interface StepperExample {
   index: number;
 }
 
-const reactNativeImage: ImageSourcePropType = {
-  uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
-};
-
 const steppers: StepperItem[] = [
   {
     name: 'Default stepper',
-    description: 'Default everything.',
+    description:
+      'This stepper does not have any properties defined so defaults are used.',
     stepper: <SimpleStepper />,
+  },
+  {
+    name: 'Vertical stepper',
+    description:
+      'This stepper has vertical layout because horizontal is set to false.',
+    stepper: <SimpleStepper horizontal={false} />,
   },
   {
     name: 'Wraps stepper',
     description:
-      'It shall cycle around dictated by minimum (0) and maximum (10) values. showText enabled to help demonstrate it',
+      'This stepper has wraps set to true so it can cycle around minimum (0) and maximum (10). It displays value with showText.',
     stepper: <SimpleStepper wraps showText />,
   },
   {
     name: 'Decimal stepper',
-    description: 'initialValue and stepValue set to 0.99.',
-    stepper: <SimpleStepper showText initialValue={0.99} stepValue={0.99} />,
+    description:
+      'This stepper has initialValue and stepValue set to a decimal number (0.99). It displays value with showText.',
+    stepper: <SimpleStepper initialValue={0.99} stepValue={0.99} showText />,
   },
   {
-    name: 'Custom image stepper',
-    description: 'incrementImage and decrementImage set to remote images.',
+    name: 'Negative stepper',
+    description:
+      'This stepper has stepValue set to a negative number (-1). It displays value with showText.',
+    stepper: <SimpleStepper stepValue={-1} showText />,
+  },
+  {
+    name: 'Remote image stepper',
+    description:
+      'This stepper has incrementImage and decrementImage set to remote images.',
     stepper: (
       <SimpleStepper
-        incrementImage={reactNativeImage}
-        decrementImage={reactNativeImage}
-        valueChanged={(value: number) => {
-          console.log('[onValueChanged] value: ', value);
+        incrementImage={{
+          uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
+        }}
+        decrementImage={{
+          uri: 'https://prettier.io/icon.png',
         }}
       />
     ),
@@ -57,7 +63,7 @@ const steppers: StepperItem[] = [
   {
     name: 'Action stepper',
     description:
-      'onMin, onMax, onIncrement and onDecrement functions are used to log value.',
+      'This stepper uses onMin, onMax, onIncrement, onDecrement and valueChanged functions to log values.',
     stepper: (
       <SimpleStepper
         onMin={(value: number) => {
@@ -72,29 +78,32 @@ const steppers: StepperItem[] = [
         onDecrement={(value: number) => {
           console.log('[onDecrement] value: ', value);
         }}
+        valueChanged={(value: number) => {
+          console.log('[valueChanged] value: ', value);
+        }}
       />
     ),
   },
   {
-    name: 'Red color stepper',
+    name: 'Red stepper',
     description:
-      'textPosition is center by default. useColor and showText are enabled. color set to red.',
-    stepper: <SimpleStepper useColor showText color={'red'} />,
+      'This stepper uses color and useColor to make it red. It also displays value with showText.',
+    stepper: <SimpleStepper color={'red'} useColor showText />,
   },
   {
-    name: 'Green color stepper',
+    name: 'Green stepper',
     description:
-      'textPosition set to right. useColor and showText are enabled. color set to green.',
+      'This stepper sets textPosition to right (default is center). It also uses color and useColor to make it green. It displays value with showText.',
     stepper: (
-      <SimpleStepper useColor showText textPosition={'right'} color={'green'} />
+      <SimpleStepper textPosition={'right'} color={'green'} useColor showText />
     ),
   },
   {
-    name: 'Blue color stepper',
+    name: 'Blue stepper',
     description:
-      'textPosition set to left. useColor and showText are enabled. color set to blue.',
+      'This stepper sets textPosition to left (default is center). It also uses color and useColor to make it blue. It displays value with showText.',
     stepper: (
-      <SimpleStepper useColor showText textPosition={'left'} color={'blue'} />
+      <SimpleStepper textPosition={'left'} color={'blue'} useColor showText />
     ),
   },
 ];
@@ -145,6 +154,7 @@ const color = {
 const styles = StyleSheet.create({
   description: {
     fontSize: 16,
+    paddingVertical: 4,
   },
   header: {
     borderBottomColor: color.black,
@@ -153,12 +163,13 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'column',
-    marginHorizontal: 16,
-    padding: 8,
+    marginHorizontal: 8,
+    padding: 4,
   },
   name: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '500',
+    paddingVertical: 4,
   },
   safeAreaView: {
     backgroundColor: color.whitesmoke,

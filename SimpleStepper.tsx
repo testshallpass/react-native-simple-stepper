@@ -8,14 +8,10 @@ import {
   TextStyle,
   ViewStyle,
   ImageStyle,
-  ImageSourcePropType,
   ColorValue,
+  FlatList,
+  ImageSourcePropType,
 } from 'react-native';
-
-type HasReachedMaxMin = {
-  hasReachedMax: boolean;
-  hasReachedMin: boolean;
-};
 
 export type SimpleStepperProps = {
   initialValue?: number;
@@ -64,7 +60,14 @@ export type SimpleStepperProps = {
   decrementImageTestID?: string;
   incrementButtonTestID?: string;
   decrementButtonTestID?: string;
+  textTestID?: string;
+  horizontal?: boolean;
 };
+
+interface SimpleStepperListItem {
+  item: React.JSX.Element;
+  index: number;
+}
 
 const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   initialValue = 0,
@@ -89,26 +92,26 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   showText = false,
   renderText = undefined,
   textStyle = {
-    marginHorizontal: 8,
+    textAlign: 'center',
+    padding: 8,
     fontSize: 24,
   },
   containerStyle = {
-    flexDirection: 'row',
+    alignSelf: 'flex-start',
     borderWidth: 1,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
   },
   separatorStyle = {
-    width: StyleSheet.hairlineWidth,
     backgroundColor: 'black',
-    height: '100%',
+    width: StyleSheet.hairlineWidth,
   },
   incrementStepStyle = {
-    padding: 4,
+    alignItems: 'center',
+    padding: 8,
   },
   decrementStepStyle = {
-    padding: 4,
+    alignItems: 'center',
+    padding: 8,
   },
   incrementImageStyle = {
     height: 30,
@@ -122,7 +125,7 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   disableIncrementImageTintColor = false,
   disableDecrementImageTintColor = false,
   useColor = false,
-  color = 'blue',
+  color = undefined,
   textDecimalPlaces = 2,
   containerTestID = 'container',
   separatorTestID = 'separator',
@@ -130,8 +133,10 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   decrementImageTestID = 'decrementImage',
   incrementButtonTestID = 'incrementButton',
   decrementButtonTestID = 'decrementButton',
+  textTestID = 'text',
+  horizontal = true,
 }) => {
-  const [value, setValue] = React.useState(initialValue);
+  const [value, setValue] = React.useState<number>(initialValue);
 
   function _decrementAction(): void {
     const nextValue = value - stepValue;
@@ -162,59 +167,62 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     return actualValue;
   }
 
-  function _getHasMinMax(): HasReachedMaxMin {
-    let hasReachedMax = true;
-    let hasReachedMin = true;
-    switch (true) {
-      case wraps:
-        hasReachedMin = false;
-        hasReachedMax = false;
-        break;
-      case stepValue >= 0:
-        hasReachedMax = value >= maximumValue;
-        hasReachedMin = value <= minimumValue;
-        break;
-      case stepValue < 0:
-        hasReachedMax = value <= minimumValue;
-        hasReachedMin = value >= maximumValue;
-        break;
+  function hasReachedMax(): boolean {
+    if (stepValue < 0) {
+      return value <= minimumValue;
     }
-    return {
-      hasReachedMax,
-      hasReachedMin,
-    };
+    return value >= maximumValue;
+  }
+
+  function hasReachedMin(): boolean {
+    if (stepValue < 0) {
+      return value >= maximumValue;
+    }
+    return value <= minimumValue;
+  }
+
+  if (hasReachedMin()) {
+    onMin(value);
+  }
+  if (hasReachedMax()) {
+    onMax(value);
   }
 
   function _renderText(): React.JSX.Element {
     if (renderText) {
       return renderText(value);
     }
-    const _textStyle = textStyle;
-    if (useColor && color) {
-      _textStyle.color = color;
-    }
     let displayValue = value;
     if (!Number.isInteger(value)) {
       displayValue = Number(value.toFixed(textDecimalPlaces));
     }
-    return <Text style={textStyle}>{displayValue}</Text>;
+    return (
+      <Text
+        testID={textTestID}
+        style={[textStyle, { color: useColor ? color : textStyle.color }]}
+        disabled={disabled}
+      >
+        {displayValue}
+      </Text>
+    );
   }
 
   function _renderIncrementImage(opacity: number): React.JSX.Element {
     if (renderIncrementImage) {
       return renderIncrementImage(opacity);
     }
-    const _incrementImageStyle = incrementImageStyle;
-    if (useColor && color && !disableIncrementImageTintColor) {
-      _incrementImageStyle.tintColor = color;
-    }
-    if (disableIncrementImageTintColor && _incrementImageStyle.tintColor) {
+    const _incrementImageStyle = Object.assign({}, incrementImageStyle);
+    _incrementImageStyle.opacity = opacity;
+
+    if (disableIncrementImageTintColor) {
       _incrementImageStyle.tintColor = undefined;
+    } else if (useColor) {
+      _incrementImageStyle.tintColor = color;
     }
     return (
       <Image
         testID={incrementImageTestID}
-        style={[_incrementImageStyle, { opacity }]}
+        style={_incrementImageStyle}
         source={incrementImage}
       />
     );
@@ -224,81 +232,107 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     if (renderDecrementImage) {
       return renderDecrementImage(opacity);
     }
-    const _decrementImageStyle = decrementImageStyle;
-    if (useColor && color && !disableDecrementImageTintColor) {
-      _decrementImageStyle.tintColor = color;
-    }
-    if (disableDecrementImageTintColor && _decrementImageStyle.tintColor) {
+    const _decrementImageStyle = Object.assign({}, decrementImageStyle);
+    _decrementImageStyle.opacity = opacity;
+
+    if (disableDecrementImageTintColor) {
       _decrementImageStyle.tintColor = undefined;
+    } else if (useColor) {
+      _decrementImageStyle.tintColor = color;
     }
     return (
       <Image
         testID={decrementImageTestID}
-        style={[_decrementImageStyle, { opacity }]}
+        style={_decrementImageStyle}
         source={decrementImage}
       />
     );
   }
 
-  const { hasReachedMin, hasReachedMax } = _getHasMinMax();
-  const decrementOpacity = hasReachedMin || disabled ? disabledOpacity : 1;
-  const incrementOpacity = hasReachedMax || disabled ? disabledOpacity : 1;
-  const isLeft = showText && textPosition === 'left';
-  const isCenter = showText && textPosition === 'center';
-  const isRight = showText && textPosition === 'right';
-
-  if (hasReachedMin) {
-    onMin(value);
-  }
-  if (hasReachedMax) {
-    onMax(value);
-  }
-
-  const _containerStyle = containerStyle;
-  const _separatorStyle = separatorStyle;
-  if (useColor && color) {
-    _containerStyle.borderColor = color;
-    _separatorStyle.backgroundColor = color;
+  function _renderIncrement(): React.JSX.Element {
+    if (renderIncrementStep) {
+      return renderIncrementStep(value, _incrementAction);
+    }
+    const isDisabled = disabled || (!wraps && hasReachedMax());
+    const opacity = isDisabled ? disabledOpacity : 1;
+    return (
+      <TouchableOpacity
+        testID={incrementButtonTestID}
+        style={incrementStepStyle}
+        activeOpacity={activeOpacity}
+        onPress={_incrementAction}
+        disabled={isDisabled}
+      >
+        {_renderIncrementImage(opacity)}
+      </TouchableOpacity>
+    );
   }
 
+  function _renderDecrement(): React.JSX.Element {
+    if (renderDecrementStep) {
+      return renderDecrementStep(value, _decrementAction);
+    }
+    const isDisabled = disabled || (!wraps && hasReachedMin());
+    const opacity = isDisabled ? disabledOpacity : 1;
+    return (
+      <TouchableOpacity
+        testID={decrementButtonTestID}
+        style={decrementStepStyle}
+        activeOpacity={activeOpacity}
+        onPress={_decrementAction}
+        disabled={isDisabled}
+      >
+        {_renderDecrementImage(opacity)}
+      </TouchableOpacity>
+    );
+  }
+
+  function _renderItem(obj: SimpleStepperListItem): React.JSX.Element {
+    return obj.item;
+  }
+
+  function _renderSeparator(): React.JSX.Element {
+    const _separatorStyle = Object.assign({}, separatorStyle);
+    if (useColor && color) {
+      _separatorStyle.backgroundColor = color;
+    }
+    if (!horizontal) {
+      _separatorStyle.height = StyleSheet.hairlineWidth;
+      _separatorStyle.width = undefined;
+    }
+    return <View testID={separatorTestID} style={_separatorStyle} />;
+  }
+
+  function _getData(): React.JSX.Element[] {
+    if (!showText) {
+      return [_renderDecrement(), _renderIncrement()];
+    }
+    switch (textPosition) {
+      case 'left':
+        return [_renderText(), _renderDecrement(), _renderIncrement()];
+      case 'center':
+        return [_renderDecrement(), _renderText(), _renderIncrement()];
+      case 'right':
+        return [_renderDecrement(), _renderIncrement(), _renderText()];
+    }
+  }
+
+  const data = _getData();
   return (
-    <View>
-      <View testID={containerTestID} style={_containerStyle}>
-        {isLeft && _renderText()}
-        {isLeft && <View testID={separatorTestID} style={_separatorStyle} />}
-        {renderDecrementStep ? (
-          renderDecrementStep(value, _decrementAction)
-        ) : (
-          <TouchableOpacity
-            testID={decrementButtonTestID}
-            style={decrementStepStyle}
-            activeOpacity={activeOpacity}
-            onPress={_decrementAction}
-            disabled={hasReachedMin || disabled}
-          >
-            {_renderDecrementImage(decrementOpacity)}
-          </TouchableOpacity>
-        )}
-        {isCenter && <View testID={separatorTestID} style={_separatorStyle} />}
-        {isCenter && _renderText()}
-        <View style={_separatorStyle} />
-        {renderIncrementStep ? (
-          renderIncrementStep(value, _incrementAction)
-        ) : (
-          <TouchableOpacity
-            testID={incrementButtonTestID}
-            style={incrementStepStyle}
-            activeOpacity={activeOpacity}
-            onPress={_incrementAction}
-            disabled={hasReachedMax || disabled}
-          >
-            {_renderIncrementImage(incrementOpacity)}
-          </TouchableOpacity>
-        )}
-        {isRight && <View testID={separatorTestID} style={_separatorStyle} />}
-        {isRight && _renderText()}
-      </View>
-    </View>
+    <FlatList
+      style={[
+        containerStyle,
+        { borderColor: useColor ? color : containerStyle.borderColor },
+      ]}
+      testID={containerTestID}
+      data={data}
+      keyExtractor={(_item, index) => `${index}`}
+      initialNumToRender={data.length}
+      renderItem={_renderItem}
+      ItemSeparatorComponent={_renderSeparator}
+      horizontal={horizontal}
+      scrollEnabled={false}
+    />
   );
 };
 

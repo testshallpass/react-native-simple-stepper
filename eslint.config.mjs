@@ -8,6 +8,7 @@ import jsEslint from '@eslint/js';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactEslint from 'eslint-plugin-react';
 import reactNativeEslint from 'eslint-plugin-react-native';
+import reactNativeTestLib from 'eslint-plugin-testing-library';
 
 export default defineConfig([
   {
@@ -39,6 +40,10 @@ export default defineConfig([
         { allow: ['/*\\.png$'] },
       ],
     },
+  },
+  {
+    files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+    plugins: { reactNativeTestLib },
   },
   {
     files: ['**/*.{mjs}'],

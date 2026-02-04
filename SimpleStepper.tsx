@@ -46,6 +46,7 @@ export type SimpleStepperProps = {
   separatorStyle?: ViewStyle;
   incrementStepStyle?: ViewStyle;
   decrementStepStyle?: ViewStyle;
+  itemStyle?: ViewStyle;
   incrementImageStyle?: ImageStyle;
   decrementImageStyle?: ImageStyle;
   textPosition?: 'left' | 'center' | 'right';
@@ -56,6 +57,7 @@ export type SimpleStepperProps = {
   textDecimalPlaces?: number;
   containerTestID?: string;
   separatorTestID?: string;
+  itemTestID?: string;
   incrementImageTestID?: string;
   decrementImageTestID?: string;
   incrementButtonTestID?: string;
@@ -92,8 +94,6 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   showText = false,
   renderText = undefined,
   textStyle = {
-    textAlign: 'center',
-    padding: 8,
     fontSize: 24,
   },
   containerStyle = {
@@ -105,13 +105,10 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     backgroundColor: 'black',
     width: StyleSheet.hairlineWidth,
   },
-  incrementStepStyle = {
-    alignItems: 'center',
-    padding: 8,
-  },
-  decrementStepStyle = {
-    alignItems: 'center',
-    padding: 8,
+  incrementStepStyle = undefined,
+  decrementStepStyle = undefined,
+  itemStyle = {
+    padding: 10,
   },
   incrementImageStyle = {
     height: 30,
@@ -129,6 +126,7 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
   textDecimalPlaces = 2,
   containerTestID = 'container',
   separatorTestID = 'separator',
+  itemTestID = 'item',
   incrementImageTestID = 'incrementImage',
   decrementImageTestID = 'decrementImage',
   incrementButtonTestID = 'incrementButton',
@@ -207,13 +205,13 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     );
   }
 
-  function _renderIncrementImage(opacity: number): React.JSX.Element {
+  function _renderIncrementImage(isDisabled: boolean): React.JSX.Element {
+    const opacity = isDisabled ? disabledOpacity : 1;
     if (renderIncrementImage) {
       return renderIncrementImage(opacity);
     }
     const _incrementImageStyle = Object.assign({}, incrementImageStyle);
     _incrementImageStyle.opacity = opacity;
-
     if (disableIncrementImageTintColor) {
       _incrementImageStyle.tintColor = undefined;
     } else if (useColor) {
@@ -228,13 +226,13 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
     );
   }
 
-  function _renderDecrementImage(opacity: number): React.JSX.Element {
+  function _renderDecrementImage(isDisabled: boolean): React.JSX.Element {
+    const opacity = isDisabled ? disabledOpacity : 1;
     if (renderDecrementImage) {
       return renderDecrementImage(opacity);
     }
     const _decrementImageStyle = Object.assign({}, decrementImageStyle);
     _decrementImageStyle.opacity = opacity;
-
     if (disableDecrementImageTintColor) {
       _decrementImageStyle.tintColor = undefined;
     } else if (useColor) {
@@ -254,7 +252,6 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
       return renderIncrementStep(value, _incrementAction);
     }
     const isDisabled = disabled || (!wraps && hasReachedMax());
-    const opacity = isDisabled ? disabledOpacity : 1;
     return (
       <TouchableOpacity
         testID={incrementButtonTestID}
@@ -263,7 +260,7 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
         onPress={_incrementAction}
         disabled={isDisabled}
       >
-        {_renderIncrementImage(opacity)}
+        {_renderIncrementImage(isDisabled)}
       </TouchableOpacity>
     );
   }
@@ -273,7 +270,6 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
       return renderDecrementStep(value, _decrementAction);
     }
     const isDisabled = disabled || (!wraps && hasReachedMin());
-    const opacity = isDisabled ? disabledOpacity : 1;
     return (
       <TouchableOpacity
         testID={decrementButtonTestID}
@@ -282,13 +278,17 @@ const SimpleStepper: React.FunctionComponent<SimpleStepperProps> = ({
         onPress={_decrementAction}
         disabled={isDisabled}
       >
-        {_renderDecrementImage(opacity)}
+        {_renderDecrementImage(isDisabled)}
       </TouchableOpacity>
     );
   }
 
   function _renderItem(obj: SimpleStepperListItem): React.JSX.Element {
-    return obj.item;
+    return (
+      <View testID={`${itemTestID}-${obj.index}`} style={itemStyle}>
+        {obj.item}
+      </View>
+    );
   }
 
   function _renderSeparator(): React.JSX.Element {

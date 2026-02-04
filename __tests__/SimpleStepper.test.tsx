@@ -17,6 +17,12 @@ describe('SimpleStepper', () => {
       borderRadius: 8,
     });
 
+    for (let index = 0; index < 2; index++) {
+      const item = component.getByTestId(`item-${index}`);
+      expect(item).toBeOnTheScreen();
+      expect(item).toHaveStyle({ padding: 10 });
+    }
+
     const decrementButton = component.getByTestId('decrementButton');
     expect(decrementButton).toBeOnTheScreen();
     expect(decrementButton).toBeDisabled();
@@ -27,11 +33,21 @@ describe('SimpleStepper', () => {
 
     const decrementImage = component.getByTestId('decrementImage');
     expect(decrementImage).toBeOnTheScreen();
-    expect(decrementImage).toHaveStyle({ opacity: 0.5, tintColor: undefined });
+    expect(decrementImage).toHaveStyle({
+      height: 30,
+      width: 30,
+      opacity: 0.5,
+      tintColor: undefined,
+    });
 
     const incrementImage = component.getByTestId('incrementImage');
     expect(incrementImage).toBeOnTheScreen();
-    expect(incrementImage).toHaveStyle({ opacity: 1, tintColor: undefined });
+    expect(incrementImage).toHaveStyle({
+      height: 30,
+      width: 30,
+      opacity: 1,
+      tintColor: undefined,
+    });
 
     const separator = component.getByTestId('separator');
     expect(separator).toBeOnTheScreen();
@@ -41,6 +57,7 @@ describe('SimpleStepper', () => {
     });
 
     expect(component.queryByTestId('text')).not.toBeOnTheScreen();
+    expect(component.queryByTestId('item-2')).not.toBeOnTheScreen();
   });
 
   test('increment by 1 and decrement by 1', () => {
@@ -381,11 +398,7 @@ describe('SimpleStepper', () => {
     const text = component.getByTestId('text');
     expect(text).toBeOnTheScreen();
     expect(text).toBeEnabled();
-    expect(text).toHaveStyle({
-      textAlign: 'center',
-      padding: 8,
-      fontSize: 24,
-    });
+    expect(text).toHaveStyle({ fontSize: 24 });
   });
 
   test('show center text', () => {
@@ -393,11 +406,7 @@ describe('SimpleStepper', () => {
     const text = component.getByTestId('text');
     expect(text).toBeOnTheScreen();
     expect(text).toBeEnabled();
-    expect(text).toHaveStyle({
-      textAlign: 'center',
-      padding: 8,
-      fontSize: 24,
-    });
+    expect(text).toHaveStyle({ fontSize: 24 });
   });
 
   test('show right text', () => {
@@ -405,10 +414,6 @@ describe('SimpleStepper', () => {
     const text = component.getByTestId('text');
     expect(text).toBeOnTheScreen();
     expect(text).toBeEnabled();
-    expect(text).toHaveStyle({
-      textAlign: 'center',
-      padding: 8,
-      fontSize: 24,
-    });
+    expect(text).toHaveStyle({ fontSize: 24 });
   });
 });

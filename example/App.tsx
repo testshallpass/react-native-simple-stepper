@@ -31,19 +31,21 @@ const steppers: StepperItem[] = [
     name: 'Wraps stepper',
     description:
       'This stepper has wraps set to true so it can cycle around minimum (0) and maximum (10). It displays value with showText.',
-    stepper: <SimpleStepper wraps showText />,
+    stepper: <SimpleStepper wraps={true} showText={true} />,
   },
   {
     name: 'Decimal stepper',
     description:
       'This stepper has initialValue and stepValue set to a decimal number (0.99). It displays value with showText.',
-    stepper: <SimpleStepper initialValue={0.99} stepValue={0.99} showText />,
+    stepper: (
+      <SimpleStepper initialValue={0.99} stepValue={0.99} showText={true} />
+    ),
   },
   {
     name: 'Negative stepper',
     description:
       'This stepper has stepValue set to a negative number (-1). It displays value with showText.',
-    stepper: <SimpleStepper stepValue={-1} showText />,
+    stepper: <SimpleStepper stepValue={-1} showText={true} />,
   },
   {
     name: 'Remote image stepper',
@@ -88,14 +90,19 @@ const steppers: StepperItem[] = [
     name: 'Red stepper',
     description:
       'This stepper uses color and useColor to make it red. It also displays value with showText.',
-    stepper: <SimpleStepper color={'red'} useColor showText />,
+    stepper: <SimpleStepper color={'red'} useColor={true} showText={true} />,
   },
   {
     name: 'Green stepper',
     description:
       'This stepper sets textPosition to right (default is center). It also uses color and useColor to make it green. It displays value with showText.',
     stepper: (
-      <SimpleStepper textPosition={'right'} color={'green'} useColor showText />
+      <SimpleStepper
+        textPosition={'right'}
+        color={'green'}
+        useColor={true}
+        showText={true}
+      />
     ),
   },
   {
@@ -103,7 +110,12 @@ const steppers: StepperItem[] = [
     description:
       'This stepper sets textPosition to left (default is center). It also uses color and useColor to make it blue. It displays value with showText.',
     stepper: (
-      <SimpleStepper textPosition={'left'} color={'blue'} useColor showText />
+      <SimpleStepper
+        textPosition={'left'}
+        color={'blue'}
+        useColor={true}
+        showText={true}
+      />
     ),
   },
 ];

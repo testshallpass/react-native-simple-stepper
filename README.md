@@ -50,3 +50,16 @@ export default function TextPositionExample(): React.JSX.Element {
   return <SimpleStepper showText={true} textPosition={'right'} />;
 }
 ```
+
+## Vertical layout
+
+![screenshot](./screenshots/vertical.png)
+
+```tsx
+import React from 'react';
+import SimpleStepper from 'react-native-simple-stepper';
+
+export default function VerticalExample(): React.JSX.Element {
+  return <SimpleStepper horizontal={false} />;
+}
+```

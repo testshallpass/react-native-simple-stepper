@@ -17,7 +17,7 @@
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-safe-area-context": "5.6.2",
-    "react-native-simple-stepper": "4.3.1",
+    "react-native-simple-stepper": "5.0.0",
     "react-native-web": "^0.21.0"
   },
   "devDependencies": {

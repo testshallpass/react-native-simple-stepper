@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, FlatList, View } from 'react-native';
-import SimpleStepper from './src/SimpleStepper';
+import SimpleStepper from 'react-native-simple-stepper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface StepperItem {
